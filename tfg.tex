@@ -51,32 +51,37 @@ Primero de todo, una arquitectura orientada a microservicios es aquella formada 
 \end{figure}
 
 La comparativa de esta aproximación frente a la arquitectura tradicional monolítica es la siguiente:
-•	Posibilidad de desplegar en diferentes máquinas
+
+\begin{itemize}
+
+	\item Posibilidad de desplegar en diferentes máquinas
 No es necesario disponer de un servidor moderno con mucha capacidad de cómputo, se puede utilizar servidores más pequeños alojados, además, en diferentes lugares. Sin embargo, una aplicación hecha por microservicios puede ser potencialmente desplegada en la misma máquina si se requiere.
 
-•	Multi instancia
+	\item Multi instancia
 Se puede ejecutar más de una instancia del mismo microservicio de manera simultánea en máquinas diferentes. Esto permite realizar balanceo de carga y hace que no se constituya un punto único de fallada. No obstante, esto puede acarrear otros problemas como puede ser el uso bases de datos diferentes entre instancias del mismo microservicio, lo que supondría tener un mecanismo de unificación y actualización.
 
-•	Uso de diferentes tecnologías
+	\item Uso de diferentes tecnologías
 Cada microservicio puede estar construido con una tecnología diferente y puede utilizar diferentes mecanismos de persistencia tales como bases de datos SQLite, SQL Server o archivos XML. Permite adaptar la tecnología a las necesidades concretas de cada parte de la aplicación, por ejemplo, puede ser interesante desarrollar un microservicio de inteligencia artificial con una tecnología más puntera y enfocada a este ámbito.
 
-•	Mejor maniobrabilidad en los despliegues
+	\item Mejor maniobrabilidad en los despliegues
 Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados en el cambio. Esto reduce los tiempos para volver a poner en marcha el software en cuestión, incluyendo compilación, publicación, distribución y otras tareas que puedan ser necesarias. Por contraparte, no hay que olvidar que este proceso se puede complicar debido a que la aplicación posiblemente esté distribuida en varias máquinas.
 
-•	Reutilización en diferentes aplicaciones
+	\item Reutilización en diferentes aplicaciones
 Ciertos microservicios, como los que se ocupan del sistema de autenticación o de la gestión de los permisos de cada usuario, son necesarios en una gran mayoría de aplicaciones, por lo que pueden ser reutilizados si se construyen con ese fin. Las aplicaciones monolíticas tienen un grado fuerte de acoplamiento y no tienen esta flexibilidad, sin embargo, suelen ser más eficientes al estar hechas por código exclusivo para ellas.
 
-•	Mejor mantenibilidad
+	\item Mejor mantenibilidad
 Mantener aplicaciones con este enfoque suele ser más sencillo debido a la separación funcional que va ligada a los microservicios, son componentes independientes. Ahora bien, no hay que olvidar que el hecho de ejecutarse en diferentes procesos y, posiblemente, en diferentes máquinas hace que las comunicaciones entre ellos pueda ser un tema delicado y requiere un trabajo extra.
 
-•	Escalabilidad
+	\item Escalabilidad
 Los microservicios, y la separación de funcionalidad que otorgan, facilitan el escalado de las partes de la aplicación que así lo requieran de una manera más fácil.
 
-•	Especialización de equipos
+	\item Especialización de equipos
 Se puede tener personas o equipos centrados en microservicios concretos, lo que facilita el desarrollo y mantenimiento de la aplicación al no obligar a los desarrolladores a cambiar de contexto en exceso entre varios componentes. Por otro lado, si todos los microservicios siguen un mismo patrón arquitectónico, puede ser relativamente sencillo para un desarrollador adaptarse a uno en el que no ha trabajado nunca.
 
-•	Despliegue continuo
+	\item Despliegue continuo
 Se adapta muy bien a procesos de integración continua y despliegue continuo, se trata de una práctica que está en auge hoy en día.
+
+\end{itemize}
 
 Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado “Microservices” [1].
 Centrándonos en el tema central del proyecto, un API Gateway, o Gateway para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (backend). Actúa como intermediario y es el único punto de entrada al mencionado backend.
@@ -181,24 +186,11 @@ Como se aprecia en la definición anterior, un Gateway puede ser implementado ta
 
 \begin{thebibliography}{10}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ARTÍCULO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{light}
-   Jennifer~S. Light.
-   \newblock When computers were women.
-   \newblock \textit{Technology and Culture}, 40:3:455--483, juliol, 1999.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{ifrah}
-   Georges Ifrah.
-   \newblock \textit{Historia universal de las cifras}.
-   \newblock Espasa Calpe, S.A., Madrid, sisena edició, 2008.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% URL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibitem{WAR}
-   Comunicado de prensa del Departamento de la Guerra, 
-   emitido el 16 de Febrero de 1946. 
+   J. Lewis y M. Fowler.
+   \newblock \textit{Microservices}.
    \newblock Consultado en 
-   \url{http://americanhistory.si.edu/comphist/pr1.pdf}.
+   \url{https://martinfowler.com/articles/microservices.html}.
 
 \end{thebibliography}
 \cleardoublepage
