@@ -18,7 +18,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESUMEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{abstract}
+\begin{abstract}[spanish]
 ????
 \end{abstract}
 \begin{abstract}[catalan]
@@ -40,9 +40,9 @@ No habrà tfgs relacionados en la etsinf xk normalmente se usa productos hechos.
 
 \section{Motivación}
 
-La principal motivación de este proyecto es resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos, así como permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el API Gateway que se va a realizar como solución es un punto clave en su arquitectura, como se detallará más adelante.
+La principal motivación de este proyecto es resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos, así como permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el \emph{API Gateway} que se va a realizar como solución es un punto clave en su arquitectura, como se detallará más adelante.
 
-Primero de todo, una arquitectura orientada a microservicios es aquella formada por servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Para ilustrar mejor este enfoque arquitectónico, se muestra a continuación un diagrama que representa una aplicación cuyo backend está formado por los microservicios de “Clientes”, “Vendedores” y “Compras”:
+Primero de todo, una arquitectura orientada a microservicios es aquella formada por servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Para ilustrar mejor este enfoque arquitectónico, se muestra a continuación un diagrama que representa una aplicación cuyo \emph{backend} está formado por los microservicios de “Clientes”, “Vendedores” y “Compras”:
 
 \begin{figure}
 	\centering
@@ -57,7 +57,7 @@ La comparativa de esta aproximación frente a la arquitectura tradicional monol�
 	\item Posibilidad de desplegar en diferentes máquinas
 No es necesario disponer de un servidor moderno con mucha capacidad de cómputo, se puede utilizar servidores más pequeños alojados, además, en diferentes lugares. Sin embargo, una aplicación hecha por microservicios puede ser potencialmente desplegada en la misma máquina si se requiere.
 
-	\item Multi instancia
+	\item Multi-instancia
 Se puede ejecutar más de una instancia del mismo microservicio de manera simultánea en máquinas diferentes. Esto permite realizar balanceo de carga y hace que no se constituya un punto único de fallada. No obstante, esto puede acarrear otros problemas como puede ser el uso bases de datos diferentes entre instancias del mismo microservicio, lo que supondría tener un mecanismo de unificación y actualización.
 
 	\item Uso de diferentes tecnologías
@@ -83,14 +83,16 @@ Se adapta muy bien a procesos de integración continua y despliegue continuo, se
 
 \end{itemize}
 
-Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado “Microservices” [1].
-Centrándonos en el tema central del proyecto, un API Gateway, o Gateway para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (backend). Actúa como intermediario y es el único punto de entrada al mencionado backend.
-Como se aprecia en la definición anterior, un Gateway puede ser implementado tanto en arquitecturas monolíticas como en las de microservicios, si bien constituye una parte fundamental en las segundas. Con él se consigue que estos pequeños servicios no tengan que conocerse entre ellos y que puedan tener varias instancias en ejecución al mismo tiempo. El punto realmente importante es el segundo, pues es una de las ventajas antes comentadas de este enfoque arquitectónico.
+Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' [1].
+
+Centrándonos en el tema central del proyecto, un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}.
+
+Como se aprecia en la definición anterior, un \emph{Gateway} puede ser implementado tanto en arquitecturas monolíticas como en las de microservicios, si bien constituye una parte fundamental en las segundas. Con él se consigue que estos pequeños servicios no tengan que conocerse entre ellos y que puedan tener varias instancias en ejecución al mismo tiempo. El punto realmente importante es el segundo, pues es una de las ventajas antes comentadas de este enfoque arquitectónico.
 
 \begin{figure}
 	\centering
 	\includegraphics{images/arquitecturaMicroserviciosConGateway}
-	\caption{Aplicación con arquitectura de microservicios con API Gateway}
+	\caption{Aplicación con arquitectura de microservicios con \emph{API Gateway}}
 \end{figure}
 
 \section{Objetivos}
@@ -116,7 +118,7 @@ Como se aprecia en la definición anterior, un Gateway puede ser implementado ta
 •	WSO2, AWS API Gateway, Kong, 42crunch y 3scale
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANÁLISI DEL PROBLEMA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANÁLISIS DEL PROBLEMA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Análisis del problema}
 
@@ -186,13 +188,17 @@ Como se aprecia en la definición anterior, un Gateway puede ser implementado ta
 
 \begin{thebibliography}{10}
 
-\bibitem{WAR}
-   J. Lewis y M. Fowler.
-   \newblock \textit{Microservices}.
-   \newblock Consultado en 
-   \url{https://martinfowler.com/articles/microservices.html}.
+\bibitem{LewisAndFowler}
+	J. Lewis y M. Fowler.
+	\newblock \textit{Microservices}.
+	\newblock Consultado en 
+	\url{https://martinfowler.com/articles/microservices.html}.
+
+\bibitem{MicrosoftGateway}
+	Documentación de Microsoft acerca de los \emph{API Gateway}.
+	\newblock Consultado en 
+	\url{https://docs.microsoft.com/es-es/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern}.
 
 \end{thebibliography}
-\cleardoublepage
 
 \end{document}
