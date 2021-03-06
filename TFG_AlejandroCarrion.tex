@@ -10,9 +10,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PALABRAS CLAVE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\keywords{????, ?????????, ????, ?????????????????} % Paraules clau 
-         {?????, ???, ???????????????}              % Palabras clave
-         {?????, ????? ?????, ?????????????}        % Key words
+\keywords{????, ?????????} % Paraules clau 
+         {?????, ???} % Palabras clave
+         {?????, ?????} % Key words
 
 \begin{document}
 
@@ -34,70 +34,64 @@
 
 \chapter{Introducción}
 
-Este tfg surge en el contexto de una práctica en empresa.
-
-No habrà tfgs relacionados en la etsinf xk normalmente se usa productos hechos. Se va a creat uno propio xk está relacionado con el sistema de despliegue.
-
-\section{Motivación}
-
-La principal motivación de este proyecto es resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos, así como permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el \emph{API Gateway} que se va a realizar como solución es un punto clave en su arquitectura, como se detallará más adelante.
-
-Primero de todo, una arquitectura orientada a microservicios es aquella formada por servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Para ilustrar mejor este enfoque arquitectónico, se muestra a continuación un diagrama que representa una aplicación cuyo \emph{backend} está formado por los microservicios de “Clientes”, “Vendedores” y “Compras”:
-
-\begin{figure}
-	\centering
-	\includegraphics{images/arquitecturaMicroserviciosBasica}
-	\caption{Aplicación con arquitectura de microservicios básica}
-\end{figure}
-
-La comparativa de esta aproximación frente a la arquitectura tradicional monolítica es la siguiente:
+El uso de arquitecturas de microservicios es una práctica ya establecida hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
-	\item Posibilidad de desplegar en diferentes máquinas
-No es necesario disponer de un servidor moderno con mucha capacidad de cómputo, se puede utilizar servidores más pequeños alojados, además, en diferentes lugares. Sin embargo, una aplicación hecha por microservicios puede ser potencialmente desplegada en la misma máquina si se requiere.
+	\item \textbf{Uso de diferentes tecnologías}.
+Cada microservicio puede estar construido con una tecnología diferente y puede utilizar diferentes mecanismos de persistencia.
 
-	\item Multi-instancia
-Se puede ejecutar más de una instancia del mismo microservicio de manera simultánea en máquinas diferentes. Esto permite realizar balanceo de carga y hace que no se constituya un punto único de fallada. No obstante, esto puede acarrear otros problemas como puede ser el uso bases de datos diferentes entre instancias del mismo microservicio, lo que supondría tener un mecanismo de unificación y actualización.
+	\item \textbf{Maniobrabilidad en los despliegues}.
+Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados.
 
-	\item Uso de diferentes tecnologías
-Cada microservicio puede estar construido con una tecnología diferente y puede utilizar diferentes mecanismos de persistencia tales como bases de datos SQLite, SQL Server o archivos XML. Permite adaptar la tecnología a las necesidades concretas de cada parte de la aplicación, por ejemplo, puede ser interesante desarrollar un microservicio de inteligencia artificial con una tecnología más puntera y enfocada a este ámbito.
-
-	\item Mejor maniobrabilidad en los despliegues
-Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados en el cambio. Esto reduce los tiempos para volver a poner en marcha el software en cuestión, incluyendo compilación, publicación, distribución y otras tareas que puedan ser necesarias. Por contraparte, no hay que olvidar que este proceso se puede complicar debido a que la aplicación posiblemente esté distribuida en varias máquinas.
-
-	\item Reutilización en diferentes aplicaciones
-Ciertos microservicios, como los que se ocupan del sistema de autenticación o de la gestión de los permisos de cada usuario, son necesarios en una gran mayoría de aplicaciones, por lo que pueden ser reutilizados si se construyen con ese fin. Las aplicaciones monolíticas tienen un grado fuerte de acoplamiento y no tienen esta flexibilidad, sin embargo, suelen ser más eficientes al estar hechas por código exclusivo para ellas.
-
-	\item Mejor mantenibilidad
-Mantener aplicaciones con este enfoque suele ser más sencillo debido a la separación funcional que va ligada a los microservicios, son componentes independientes. Ahora bien, no hay que olvidar que el hecho de ejecutarse en diferentes procesos y, posiblemente, en diferentes máquinas hace que las comunicaciones entre ellos pueda ser un tema delicado y requiere un trabajo extra.
-
-	\item Escalabilidad
-Los microservicios, y la separación de funcionalidad que otorgan, facilitan el escalado de las partes de la aplicación que así lo requieran de una manera más fácil.
-
-	\item Especialización de equipos
-Se puede tener personas o equipos centrados en microservicios concretos, lo que facilita el desarrollo y mantenimiento de la aplicación al no obligar a los desarrolladores a cambiar de contexto en exceso entre varios componentes. Por otro lado, si todos los microservicios siguen un mismo patrón arquitectónico, puede ser relativamente sencillo para un desarrollador adaptarse a uno en el que no ha trabajado nunca.
-
-	\item Despliegue continuo
-Se adapta muy bien a procesos de integración continua y despliegue continuo, se trata de una práctica que está en auge hoy en día.
+	\item \textbf{Escalabilidad y mantenibilidad}.
+Los microservicios, y la separación funcional que otorgan, facilitan el escalado de las diferentes partes de la aplicación de manera independiente. Lo mismo sucede con el mantenimiento, pudiendo crear equipos especializados.
 
 \end{itemize}
 
-Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' [1].
+Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}.
 
-Centrándonos en el tema central del proyecto, un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}.
+Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello se pretende realizar un \emph{API Gateway}.
 
-Como se aprecia en la definición anterior, un \emph{Gateway} puede ser implementado tanto en arquitecturas monolíticas como en las de microservicios, si bien constituye una parte fundamental en las segundas. Con él se consigue que estos pequeños servicios no tengan que conocerse entre ellos y que puedan tener varias instancias en ejecución al mismo tiempo. El punto realmente importante es el segundo, pues es una de las ventajas antes comentadas de este enfoque arquitectónico.
+Un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}.
 
-\begin{figure}
+Como se aprecia en la definición anterior, el uso de un \emph{Gateway} no está restringido a arquitecturas de microservicios, también puede ser utilizado en monolíticas, si bien constituye una parte fundamental en las primeras. Con él se consigue ocultar estos pequeños servicios que componen la aplicación además de poder tener varias instancias en ejecución al mismo tiempo. La figura \ref{figura:gateway_o_no} muestra la comparativa de arquitecturas cuando se utiliza un \emph{Gateway} y cuando no.
+
+// TODO: Buscar o crear imágenes que representen arquitectura de microservicios sin y con Gateway.
+\begin{figure}[ht]
 	\centering
-	\includegraphics{images/arquitecturaMicroserviciosConGateway}
-	\caption{Aplicación con arquitectura de microservicios con \emph{API Gateway}}
+	\label{figura:gateway_o_no}
+	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
+	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConGateway}
+	\caption{Arquitectura de microservicios básica frente a una con \emph{API Gateway}.}
 \end{figure}
+
+\section{Motivación}
+
+Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de la compañía \emph{ADD Informática} durante el periodo de un año. \emph{ADD} es una empresa española que se dedica a desarrollar y comercializar un \emph{software} de gestión geriátrica llamado \emph{ResiPlus} \cite{ResiPlus}. Actualmente cuenta con casi cien trabajadores, es líder del mercado nacional y se encuentra en proceso de expansión internacional.
+
+La temática del trabajo es el desarrollo de un \emph{API Gateway} para una aplicación con arquitectura de microservicios. Esta fue elegida debido a la relación que guarda con el desempeño del autor en la empresa comentada en el párrafo anterior. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET Core}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
+
+En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
 
 \section{Objetivos}
 
-?????
+Este proyecto pretende resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos, así como permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el \emph{API Gateway} que se va a realizar como solución es un punto clave en su arquitectura. A raíz de lo comentado se obtienen los siguientes objetivos sobre la aplicación en construcción:
+
+\begin{itemize}
+
+	\item \textbf{Ocultar los microservicios} de forma que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
+	
+	\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por objetivos:
+		\begin{itemize}
+		
+			\item Conseguir que la aplicación sea \textbf{tolerante a fallos} gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
+			
+			\item \textbf{Aumentar la eficiencia} al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
+			
+		\end{itemize}
+
+\end{itemize}
 
 \section{Estructura del documento}
 
@@ -107,15 +101,7 @@ Como se aprecia en la definición anterior, un \emph{Gateway} puede ser implemen
 
 \chapter{Contexto tecnológico}
 
-•	AWS API Gateway: Situada para manejar todas las interacciones alrededor de las llamadas API, el API Gateway de Amazon maneja las API REST y websocket y funciona muy bien con el resto del ecosistema de AWS.
-
-•	Apigee: Ahora parte del ecosistema de productos para desarrolladores de Google, el gateway Apigee incluye muchas herramientas no solo para administrar las API, sino también para crearlas.
-
-•	Kong: Mencionado anteriormente, Kong es una alternativa de código abierto que ofrece todas las características principales que hemos mencionado en este artículo.
-
-•	Tyk: Otra opción de código abierto, Tyk es una puerta de enlace API popular que ofrece las características principales que esperaría para las API y una arquitectura de microservicios, pero también ofrece un conjunto de herramientas adyacentes que funcionan con sus ofertas de servicios.
-
-•	WSO2, AWS API Gateway, Kong, 42crunch y 3scale
+Ocelot, YARP, AWS, Apigee, Kong, Tyk
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANÁLISIS DEL PROBLEMA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,7 +122,7 @@ Como se aprecia en la definición anterior, un \emph{Gateway} puede ser implemen
 
 ?????
 
-\section{Plan de trabajo}
+\section{Plan de trabajo y metodología}
 
 ?????
 
@@ -155,10 +141,6 @@ Como se aprecia en la definición anterior, un \emph{Gateway} puede ser implemen
 ?????
 
 \section{Tecnología utilizada}
-
-?????
-
-\section{Metodología software}
 
 ?????
 
@@ -189,15 +171,14 @@ Como se aprecia en la definición anterior, un \emph{Gateway} puede ser implemen
 \begin{thebibliography}{10}
 
 \bibitem{LewisAndFowler}
-	J. Lewis y M. Fowler.
-	\newblock \textit{Microservices}.
-	\newblock Consultado en 
-	\url{https://martinfowler.com/articles/microservices.html}.
+	Artíclo de J. Lewis y M. Fowler acerca de los microservicios.
+	\newblock Disponible en
+	\url{www.martinfowler.com/articles/microservices.html}.
 
-\bibitem{MicrosoftGateway}
-	Documentación de Microsoft acerca de los \emph{API Gateway}.
-	\newblock Consultado en 
-	\url{https://docs.microsoft.com/es-es/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern}.
+\bibitem{ResiPlus}
+	Página web de \emph{ADD Informática} y su producto \emph{ResiPlus}.
+	\newblock Disponible en
+	\url{www.addinformatica.com}.
 
 \end{thebibliography}
 
