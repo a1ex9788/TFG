@@ -53,17 +53,16 @@ Se puede obtener más información acerca de los microservicios en el artículo 
 
 Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello se pretende realizar un \emph{API Gateway}.
 
-Un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}.
+Un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}. Además, es habitual que realice tareas de autenticación, monitorización u orquestación.
 
-Como se aprecia en la definición anterior, el uso de un \emph{Gateway} no está restringido a arquitecturas de microservicios, también puede ser utilizado en monolíticas, si bien constituye una parte fundamental en las primeras. Con él se consigue ocultar estos pequeños servicios que componen la aplicación además de poder tener varias instancias en ejecución al mismo tiempo. La figura \ref{figura:gateway_o_no} muestra la comparativa de arquitecturas cuando se utiliza un \emph{Gateway} y cuando no.
+Como se aprecia en la definición anterior, el uso de un \emph{Gateway} no queda restringido a arquitecturas de microservicios, también puede ser utilizado en monolíticas, si bien constituye una parte fundamental en las primeras. En estas, consigue ocultar los pequeños servicios que componen la aplicación y permite tener varias instancias de ellos en ejecución al mismo tiempo. La figura \ref{figura:gateway_o_no} muestra la comparativa de arquitecturas de microservicios cuando se utiliza un \emph{Gateway} y cuando no.
 
-// TODO: Buscar o crear imágenes que representen arquitectura de microservicios sin y con Gateway.
 \begin{figure}[ht]
 	\centering
 	\label{figura:gateway_o_no}
 	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
 	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConGateway}
-	\caption{Arquitectura de microservicios básica frente a una con \emph{API Gateway}.}
+	\caption{Arquitectura de microservicios básica frente a una con \emph{API Gateway}. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
 \end{figure}
 
 \section{Motivación}
@@ -106,22 +105,20 @@ En la actualidad existen en el mercado muchas aplicaciones y servicios que resue
 \section{\emph{Amazon API Gateway}}
 \emph{Amazon API Gateway} \cite{Amazon} es
 	
-\section{Kong}
-\emph{Kong} \cite{Kong} es
+\section{\emph{Kong}}
+Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway} más conocido. Se trata de una herramienta gratuita optimizada para microservicios, concebida para ser altamente escalable y que posee un gran número de \emph{plugins} desarrollados por la propia compañía y por su comunidad, que es bastante grande al ser una aplicación tan popular. Además, actualmente es utilizado por grandes empresas como \emph{Intel}, \emph{Ferrari} o \emph{Yahoo!}.
 	
-\section{Apigee}
+\section{\emph{Apigee}}
 \emph{Apigee} \cite{Apigee} es
 	
-\section{Tyk}
+\section{\emph{Tyk}}
 \emph{Tyk} \cite{Tyk} es
 	
-\section{Ocelot}
+\section{\emph{Ocelot}}
 \emph{Ocelot} \cite{Ocelot} es
 	
-\section{YARP}
+\section{\emph{YARP}}
 \emph{YARP} \cite{YARP} es
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANÁLISIS DEL PROBLEMA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -212,7 +209,7 @@ En la actualidad existen en el mercado muchas aplicaciones y servicios que resue
 	
 \bibitem{Tyk}
 	Documentación oficial de \emph{Tyk}:\\
-	\url{https://tyk.io/}
+	\url{https://tyk.io}
 
 \bibitem{Ocelot}
 	Documentación oficial de \emph{Ocelot}:\\
