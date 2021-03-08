@@ -53,9 +53,14 @@ Se puede obtener más información acerca de los microservicios en el artículo 
 
 Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello se pretende realizar un \emph{API Gateway}.
 
-Un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}. Además, es habitual que realice tareas de autenticación, monitorización u orquestación.
+Un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}. Además, es habitual que realice tareas de autenticación, autorización, monitorización u orquestación.
 
 Como se aprecia en la definición anterior, el uso de un \emph{Gateway} no queda restringido a arquitecturas de microservicios, también puede ser utilizado en monolíticas, si bien constituye una parte fundamental en las primeras. En estas, consigue ocultar los pequeños servicios que componen la aplicación y permite tener varias instancias de ellos en ejecución al mismo tiempo. La figura \ref{figura:gateway_o_no} muestra la comparativa de arquitecturas de microservicios cuando se utiliza un \emph{Gateway} y cuando no.
+
+Hay bastante confusión acerca de las diferencias entre ellos pero creo k las más importantes son tres:
+- API Gateway interpreta el mensaje y puede hacer transformaciones, proxy inverso solo redirije
+- API Gateway ofrece agregaciones
+- API Gateway realiza tareas transversales como la autenticación y autorización
 
 \begin{figure}[ht]
 	\centering
@@ -69,7 +74,7 @@ Como se aprecia en la definición anterior, el uso de un \emph{Gateway} no queda
 
 Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de la compañía \emph{ADD Informática} durante el periodo de un año. \emph{ADD} es una empresa española que se dedica a desarrollar y comercializar un \emph{software} de gestión geriátrica llamado \emph{ResiPlus} \cite{ResiPlus}. Actualmente cuenta con casi cien trabajadores, es líder del mercado nacional y se encuentra en proceso de expansión internacional.
 
-La temática del trabajo es el desarrollo de un \emph{API Gateway} para una aplicación con arquitectura de microservicios. Esta fue elegida debido a la relación que guarda con el desempeño del autor en la empresa comentada en el párrafo anterior. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET Core}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
+La temática del trabajo es el desarrollo de un \emph{API Gateway} para una aplicación con arquitectura de microservicios. Esta fue elegida debido a la relación que guarda con el desempeño del autor en la empresa comentada en el párrafo anterior. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
 
 En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
 
@@ -106,17 +111,37 @@ En la actualidad existen en el mercado muchas aplicaciones y servicios que resue
 \emph{Amazon API Gateway} \cite{Amazon} es
 	
 \section{\emph{Kong}}
-Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway} más conocido. Se trata de una herramienta gratuita optimizada para microservicios, concebida para ser altamente escalable y que posee un gran número de \emph{plugins} desarrollados por la propia compañía y por su comunidad, que es bastante grande al ser una aplicación tan popular. Además, actualmente es utilizado por grandes empresas como \emph{Intel}, \emph{Ferrari} o \emph{Yahoo!}.
-	
+Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway} más conocido a nivel mundial. Cuenta con las siguientes características:
+
+\begin{itemize}
+
+	\item Está optimizado para arquitecturas de microservicios.
+	\item Está concebido para ser altamente escalable.
+	\item Ha sido creado sobre el \emph{proxy} inverso \emph{NGINX}, lo que hace que su eficiencia destaque.
+	\item Es gratuito, aunque ofrece la versión \emph{Enterprise}, que facilita la gestión del API Gateway, y la \emph{SaaS}, llamada \emph{Kong Cloud}.
+	\item Posee un gran número de \emph{plugins} desarrollados por la propia compañía y por su comunidad, que es bastante grande al ser una aplicación tan popular.
+	\item Actualmente es utilizado por grandes empresas como \emph{Intel}, \emph{Ferrari} o \emph{Yahoo!}.
+
+\end{itemize}
+
 \section{\emph{Apigee}}
 \emph{Apigee} \cite{Apigee} es
-	
+
 \section{\emph{Tyk}}
 \emph{Tyk} \cite{Tyk} es
-	
+
 \section{\emph{Ocelot}}
-\emph{Ocelot} \cite{Ocelot} es
-	
+\emph{Ocelot} \cite{Ocelot} es una librería para \emph{.NET Core} que permite a una aplicación de ese \emph{framework} actuar como API Gateway. Posee las características siguientes:
+
+\begin{itemize}
+
+	\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
+	\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete \emph{NuGet} más.
+	\item Su configuración es muy básica, teniendo que especificarla en un fichero \emph{json}.
+	\item No permite cambiar su configuración de manera dinámica.
+
+\end{itemize}
+
 \section{\emph{YARP}}
 \emph{YARP} \cite{YARP} es
 
@@ -213,7 +238,7 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 
 \bibitem{Ocelot}
 	Documentación oficial de \emph{Ocelot}:\\
-	\url{https://ocelot.readthedocs.io/en/latest}
+	\url{https://threemammals.com/ocelot}
 
 \bibitem{YARP}
 	Documentación oficial de \emph{YARP}:\\
