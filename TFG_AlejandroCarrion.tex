@@ -34,12 +34,12 @@
 
 \chapter{Introducción}
 
-El uso de arquitecturas de microservicios es una práctica ya establecida hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
+El uso de arquitecturas de microservicios es una práctica ya consolidada hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
 	\item \textbf{Uso de diferentes tecnologías}.
-Cada microservicio puede estar construido con una tecnología diferente y puede utilizar diferentes mecanismos de persistencia.
+Cada microservicio puede estar construido con una tecnología diferente y puede utilizar distintos mecanismos de persistencia.
 
 	\item \textbf{Maniobrabilidad en los despliegues}.
 Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados.
@@ -51,36 +51,19 @@ Los microservicios, y la separación funcional que otorgan, facilitan el escalad
 
 Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}.
 
-Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello se pretende realizar un \emph{API Gateway}.
-
-Un \emph{API Gateway}, o \emph{Gateway} para abreviar, se entiende como un componente que se interpone entre la interfaz de usuario (frontend) de una aplicación y los servicios en los que se basa (\emph{backend}). Actúa como intermediario y es el único punto de entrada al mencionado \emph{backend}. Además, es habitual que realice tareas de autenticación, autorización, monitorización u orquestación.
-
-Como se aprecia en la definición anterior, el uso de un \emph{Gateway} no queda restringido a arquitecturas de microservicios, también puede ser utilizado en monolíticas, si bien constituye una parte fundamental en las primeras. En estas, consigue ocultar los pequeños servicios que componen la aplicación y permite tener varias instancias de ellos en ejecución al mismo tiempo. La figura \ref{figura:gateway_o_no} muestra la comparativa de arquitecturas de microservicios cuando se utiliza un \emph{Gateway} y cuando no.
-
-Hay bastante confusión acerca de las diferencias entre ellos pero creo k las más importantes son tres:
-- API Gateway interpreta el mensaje y puede hacer transformaciones, proxy inverso solo redirije
-- API Gateway ofrece agregaciones
-- API Gateway realiza tareas transversales como la autenticación y autorización
-
-\begin{figure}[ht]
-	\centering
-	\label{figura:gateway_o_no}
-	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
-	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConGateway}
-	\caption{Arquitectura de microservicios básica frente a una con \emph{API Gateway}. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
-\end{figure}
+Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello, se quiere desarrollar un nuevo componente que actúe de intermediario.
 
 \section{Motivación}
 
 Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de la compañía \emph{ADD Informática} durante el periodo de un año. \emph{ADD} es una empresa española que se dedica a desarrollar y comercializar un \emph{software} de gestión geriátrica llamado \emph{ResiPlus} \cite{ResiPlus}. Actualmente cuenta con casi cien trabajadores, es líder del mercado nacional y se encuentra en proceso de expansión internacional.
 
-La temática del trabajo es el desarrollo de un \emph{API Gateway} para una aplicación con arquitectura de microservicios. Esta fue elegida debido a la relación que guarda con el desempeño del autor en la empresa comentada en el párrafo anterior. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
+La temática del trabajo es el desarrollo de un intermediario entre la interfaz de usuario de una aplicación y sus microservicios. Esta fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas en el párrafo anterior. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
 
 En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
 
 \section{Objetivos}
 
-Este proyecto pretende resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos, así como permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el \emph{API Gateway} que se va a realizar como solución es un punto clave en su arquitectura. A raíz de lo comentado se obtienen los siguientes objetivos sobre la aplicación en construcción:
+Este proyecto pretende resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos. Por otro lado, también se quiere permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el componente intermediario que se va a realizar como solución es un punto clave en su arquitectura. A raíz de lo comentado se obtienen los siguientes objetivos sobre la aplicación en construcción:
 
 \begin{itemize}
 
@@ -89,9 +72,9 @@ Este proyecto pretende resolver un problema real. Este consiste en otorgar a una
 	\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por objetivos:
 		\begin{itemize}
 		
-			\item Conseguir que la aplicación sea \textbf{tolerante a fallos} gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
+			\item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
 			
-			\item \textbf{Aumentar la eficiencia} al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
+			\item \textbf{Aumentar la eficiencia}, al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
 			
 		\end{itemize}
 
@@ -105,11 +88,18 @@ Este proyecto pretende resolver un problema real. Este consiste en otorgar a una
 
 \chapter{Contexto tecnológico}
 
-En la actualidad existen en el mercado muchas aplicaciones y servicios que resuelven problemas parecidos al planteado. Algunos de estos productos \emph{software} son de pago, otros gratuitos e incluso algunos de código abierto. Se comentan los más relevantes a continuación.
+En la actualidad existen en el mercado muchas aplicaciones y servicios que resuelven problemas parecidos al planteado. Estas herramientas se pueden dividir en dos tipos: los \emph{API Gateway} y los \emph{proxy} inversos. Ambos patrones comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un \emph{API Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
-\section{\emph{Amazon API Gateway}}
-\emph{Amazon API Gateway} \cite{Amazon} es
-	
+\begin{itemize}
+
+	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos; los \emph{proxy} inversos solo los redirigen donde corresponda.
+	\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
+	\item Realizan tareas transversales a todos los microservicios como autenticación, autorización o monitorización.
+
+\end{itemize}
+
+Algunos de estos productos \emph{software} son de pago, otros gratuitos e incluso algunos de código abierto. Se comentan los más relevantes a continuación.
+
 \section{\emph{Kong}}
 Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway} más conocido a nivel mundial. Cuenta con las siguientes características:
 
@@ -123,9 +113,6 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 	\item Actualmente es utilizado por grandes empresas como \emph{Intel}, \emph{Ferrari} o \emph{Yahoo!}.
 
 \end{itemize}
-
-\section{\emph{Apigee}}
-\emph{Apigee} \cite{Apigee} es
 
 \section{\emph{Tyk}}
 \emph{Tyk} \cite{Tyk} es
@@ -141,6 +128,9 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 	\item No permite cambiar su configuración de manera dinámica.
 
 \end{itemize}
+
+\section{\emph{NGINX}}
+\emph{NGINX} \cite{NGINX} es
 
 \section{\emph{YARP}}
 \emph{YARP} \cite{YARP} es
@@ -220,18 +210,10 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 	Página web de \emph{ADD Informática} y su producto \emph{ResiPlus}:\\
 	\url{https://addinformatica.com}
 
-\bibitem{Amazon}
-	Documentación oficial de \emph{Amazon API Gateway}:\\
-	\url{https://aws.amazon.com/es/api-gateway}
-	
 \bibitem{Kong}
 	Documentación oficial de \emph{Kong}:\\
 	\url{https://konghq.com/kong}
-	
-\bibitem{Apigee}
-	Documentación oficial de \emph{Apigee}:\\
-	\url{https://cloud.google.com/apigee}
-	
+
 \bibitem{Tyk}
 	Documentación oficial de \emph{Tyk}:\\
 	\url{https://tyk.io}
@@ -239,6 +221,10 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 \bibitem{Ocelot}
 	Documentación oficial de \emph{Ocelot}:\\
 	\url{https://threemammals.com/ocelot}
+
+\bibitem{NGINX}
+	Documentación oficial de \emph{NGINX}:\\
+	\url{https://www.nginx.com/}
 
 \bibitem{YARP}
 	Documentación oficial de \emph{YARP}:\\
