@@ -51,7 +51,15 @@ Los microservicios, y la separación funcional que otorgan, facilitan el escalad
 
 Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}.
 
-Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello, se quiere desarrollar un nuevo componente que actúe de intermediario.
+Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello, se quiere desarrollar un nuevo componente que actúe de intermediario. La figura \ref{figura:intermediario_o_no} muestra la comparativa de una arquitectura de microservicios basíca y otra que utiliza el componente mencionado.
+
+\begin{figure}[ht]
+	\centering
+	\label{figura:intermediario_o_no}
+	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
+	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConIntermediario}
+	\caption{Arquitectura de microservicios básica frente a una con intermediario. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
+\end{figure}
 
 \section{Motivación}
 
@@ -115,7 +123,16 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 \end{itemize}
 
 \section{\emph{Tyk}}
-\emph{Tyk} \cite{Tyk} es
+\emph{Tyk} \cite{Tyk} es un \emph{API Gateway} de código abierto.
+
+\begin{itemize}
+
+	\item Permite alojar sus servicios tanto en la nube como en una infraestructura propia. También ofrece un modelo híbrido.
+	\item Dispone de extensiones para integrarlo con diferentes mecanismos de autenticación como \emph{OAuth} o \emph{LDPA}.
+	\item Necesita una base de datos \emph{Redis}.
+	\item Puede escalar horizontalmente y verticalmente.
+
+\end{itemize}
 
 \section{\emph{Ocelot}}
 \emph{Ocelot} \cite{Ocelot} es una librería para \emph{.NET Core} que permite a una aplicación de ese \emph{framework} actuar como API Gateway. Posee las características siguientes:
@@ -130,10 +147,27 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 \end{itemize}
 
 \section{\emph{NGINX}}
-\emph{NGINX} \cite{NGINX} es
+Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor web, como por ejemplo \emph{Apache}, pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
+
+\begin{itemize}
+
+	\item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento
+	\item Ofrece una versión gratuita y otra de pago, \emph{NGINX Plus}, la cual ofrece funcionalidades extra.
+	\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, es configurable dinámicamente.
+
+\end{itemize}
 
 \section{\emph{YARP}}
-\emph{YARP} \cite{YARP} es
+\emph{YARP} \cite{YARP} es otra librería para \emph{.NET} hecha por el propio \emph{Microsoft}. En este caso, facilita la creación de \emph{proxies} inversos. Sus aspectos más destacables son:
+
+\begin{itemize}
+
+	\item Se encuentra todavía en desarrollo y la única versión lanzada hasta la fecha es una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de la gente.
+	\item Fue diseñada para construir \emph{proxies} inversos dentro de la propia infraestructura de \emph{Microsoft} ya que en muchas áreas de la compañía necesitaban algo así.
+	\item A raíz de la heterogeneidad de casos de uso que debe cubrir derivado del punto anterior, está pensada para ser muy personalizable y flexible.
+	\item Permite cambiar su configuración de forma dinámica.
+
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANÁLISIS DEL PROBLEMA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -182,6 +216,18 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DESARROLLO DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Desarrollo de la solución}
+
+?????
+
+\section{Prototipo microservicio básico}
+
+?????
+
+\section{Prototipo microservicio autogenerado}
+
+?????
+
+\section{Comparativa de tiempos}
 
 ?????
 
