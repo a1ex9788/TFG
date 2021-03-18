@@ -3,7 +3,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Implementación de un API Gateway para una arquitectura de microservicios}
+\title{Implementación de un proxy inverso para una arquitectura de microservicios}
 \author{Alejandro Carrión Sanmartín}
 \tutor{Patricio Letelier Torres}
 \curs{2020-2021}
@@ -71,6 +71,7 @@ En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de apro
 
 \section{Objetivos}
 
+El objetivo principal es construir un \emph{proxy} inverso.
 Este proyecto pretende resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos. Por otro lado, también se quiere permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el componente intermediario que se va a realizar como solución es un punto clave en su arquitectura. A raíz de lo comentado se obtienen los siguientes objetivos sobre la aplicación en construcción:
 
 \begin{itemize}
@@ -92,9 +93,9 @@ Este proyecto pretende resolver un problema real. Este consiste en otorgar a una
 
 ?????
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONTEXTO TECNOLÓGICO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTADO DEL ARTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Contexto tecnológico}
+\chapter{Estado del arte}
 
 En la actualidad existen en el mercado muchas aplicaciones y servicios que resuelven problemas parecidos al planteado. Estas herramientas se pueden dividir en dos tipos: los \emph{API Gateway} y los \emph{proxy} inversos. Ambos patrones comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un \emph{API Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
@@ -169,49 +170,9 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANÁLISIS DEL PROBLEMA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\chapter{Análisis del problema}
-
-?????
-
-\section{Especificación de requisitos}
-
-?????
-
-\section{Soluciones posibles}
-
-?????
-
-\section{Solución propuesta}
-
-?????
-
-\section{Plan de trabajo y metodología}
-
-?????
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\chapter{Diseño de la solución}
-
-?????
-
-\section{Arquitectura del sistema}
-
-?????
-
-\section{Diseño detallado}
-
-?????
+\section{Comparativa}
 
 \section{Tecnología utilizada}
-
-?????
-
-\section{Mantenimiento y gestión de versiones}
-
-?????
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DESARROLLO DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -219,21 +180,39 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 ?????
 
-\section{Prototipo microservicio básico}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIÓN DE REQUISITOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Especificación de requisitos}
 
 ?????
 
-\section{Prototipo microservicio autogenerado}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Diseño}
 
 ?????
 
-\section{Comparativa de tiempos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Programación}
+
+?????
+
+\subsection{Prototipo microservicio básico}
+
+?????
+
+\subsection{Prototipo microservicio autogenerado}
+
+?????
+
+\subsection{Comparativa de tiempos}
 
 ?????
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Pruebas}
+\section{Pruebas}
 
 ?????
 
