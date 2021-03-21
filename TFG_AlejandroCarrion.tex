@@ -44,41 +44,55 @@ Cada microservicio puede estar construido con una tecnología diferente y puede 
 	\item \textbf{Maniobrabilidad en los despliegues}.
 Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados.
 
+	\item \textbf{Tolerancia a fallos}.
+La posibilidad de desplegar la aplicación de forma que quede repartida en diferentes máquinas, incluso duplicando microservicios, otorga cierta capacidad para tolerar fallos.
+
 	\item \textbf{Escalabilidad y mantenibilidad}.
 Los microservicios, y la separación funcional que otorgan, facilitan el escalado de las diferentes partes de la aplicación de manera independiente. Lo mismo sucede con el mantenimiento, pudiendo crear equipos especializados.
 
 \end{itemize}
 
-Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}.
+Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}. Para una lectura con más profundidad, el libro ''\emph{Building Microservices} \cite{Newman}'' de Sam Newman.
 
-Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend}. Para ello, se quiere desarrollar un nuevo componente que actúe de intermediario. La figura \ref{figura:intermediario_o_no} muestra la comparativa de una arquitectura de microservicios basíca y otra que utiliza el componente mencionado.
+Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se pretende desarrollar un \emph{proxy} inverso que sea su puerta de acceso.
+
+Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{figura:proxy_vs_proxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 	\centering
-	\label{figura:intermediario_o_no}
+	\label{figura:proxy_vs_proxyInverso}
+	\includegraphics[width=0.45\textwidth]{images/proxy}
+	\includegraphics[width=0.45\textwidth]{images/proxyInverso}
+	\caption{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
+\end{figure}
+
+Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga. La figura \ref{figura:proxyInverso_o_no} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza el componente comentado. En la segunda se observa que con el uso de un \emph{proxy} inverso los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
+
+\begin{figure}[ht]
+	\centering
+	\label{figura:proxyInverso_o_no}
 	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
-	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConIntermediario}
-	\caption{Arquitectura de microservicios básica frente a una con intermediario. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
+	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConProxyInverso}
+	\caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
 \end{figure}
 
 \section{Motivación}
 
-Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de la compañía \emph{ADD Informática} durante el periodo de un año. \emph{ADD} es una empresa española que se dedica a desarrollar y comercializar un \emph{software} de gestión geriátrica llamado \emph{ResiPlus} \cite{ResiPlus}. Actualmente cuenta con casi cien trabajadores, es líder del mercado nacional y se encuentra en proceso de expansión internacional.
+Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de una compañía española del sector sociosanitario. Esta desarrolla y comercializa un \emph{software} de gestión geriátrica y actualmente se encuentra en periodo de renovación del mismo. El departamento recién nombrado se dedica a reconstruirlo desde cero con tecnología de vanguardia como el uso de arquitecturas de microservicios, el desarrollo de software dirigido por modelos y la generación automática de código.
 
-La temática del trabajo es el desarrollo de un intermediario entre la interfaz de usuario de una aplicación y sus microservicios. Esta fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas en el párrafo anterior. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
+La temática del trabajo es el desarrollo de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de la nueva aplicación en desarrollo y sus microservicios. Se pretende desarrollar este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
 
-En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
+La temática comentada fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}. En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
 
 \section{Objetivos}
 
-El objetivo principal es construir un \emph{proxy} inverso.
-Este proyecto pretende resolver un problema real. Este consiste en otorgar a una aplicación con arquitectura de microservicios la capacidad de ocultarlos. Por otro lado, también se quiere permitir la ejecución simultánea de más de una instancia de los mismos. Cabe destacar que la aplicación en cuestión se encuentra todavía en fase de desarrollo y que el componente intermediario que se va a realizar como solución es un punto clave en su arquitectura. A raíz de lo comentado se obtienen los siguientes objetivos sobre la aplicación en construcción:
+El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La construcción de este tiene las siguientes intenciones sobre la aplicación en construcción:
 
 \begin{itemize}
 
 	\item \textbf{Ocultar los microservicios} de forma que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
 	
-	\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por objetivos:
+	\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por finalidad:
 		\begin{itemize}
 		
 			\item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
@@ -97,6 +111,7 @@ Este proyecto pretende resolver un problema real. Este consiste en otorgar a una
 
 \chapter{Estado del arte}
 
+comrpar y usar (estado del arte) vs libreria base
 En la actualidad existen en el mercado muchas aplicaciones y servicios que resuelven problemas parecidos al planteado. Estas herramientas se pueden dividir en dos tipos: los \emph{API Gateway} y los \emph{proxy} inversos. Ambos patrones comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un \emph{API Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
 \begin{itemize}
@@ -158,8 +173,13 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \end{itemize}
 
-\section{\emph{YARP}}
-\emph{YARP} \cite{YARP} es otra librería para \emph{.NET} hecha por el propio \emph{Microsoft}. En este caso, facilita la creación de \emph{proxies} inversos. Sus aspectos más destacables son:
+\section{Comparativa}
+
+?????
+
+\section{Tecnología utilizada}
+
+La tecnología a utilizar para llevar a cabo este proyecto va a ser ''\emph{YARP}'' \cite{YARP}. Se trata de una librería hecha por el propio \emph{Microsoft}. Su objetivo es facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
 
 \begin{itemize}
 
@@ -170,9 +190,9 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \end{itemize}
 
-\section{Comparativa}
+\subsection{Ejemplo de uso básico}
 
-\section{Tecnología utilizada}
+?????
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DESARROLLO DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -186,15 +206,35 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 ?????
 
+\subsection{Diagrama de casos de uso}
+
+?????
+
+\subsection{Pruebas de aceptación}
+
+?????
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Diseño}
 
 ?????
 
+\subsection{Diagrama de componentes}
+
+?????
+
+\subsection{Diagrama de clases}
+
+?????
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Programación}
+
+?????
+
+\subsection{Guión a seguir}
 
 ?????
 
@@ -231,9 +271,10 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 	\newblock Disponible en:\\
 	\url{https://martinfowler.com/articles/microservices.html}
 
-\bibitem{ResiPlus}
-	Página web de \emph{ADD Informática} y su producto \emph{ResiPlus}:\\
-	\url{https://addinformatica.com}
+\bibitem{Newman}
+	Libro de referencia sobre microservicios
+	\newblock Sam Newman
+	\newblock Building Microservices
 
 \bibitem{Kong}
 	Documentación oficial de \emph{Kong}:\\
