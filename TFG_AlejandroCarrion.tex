@@ -34,7 +34,7 @@
 
 \chapter{Introducción}
 
-El uso de arquitecturas de microservicios es una práctica ya consolidada hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
+El uso de arquitecturas de microservicios es una práctica ya consolidada hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
@@ -80,17 +80,17 @@ Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} 
 
 Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de una compañía española del sector sociosanitario. Esta desarrolla y comercializa un \emph{software} de gestión geriátrica y actualmente se encuentra en periodo de renovación del mismo. El departamento recién nombrado se dedica a reconstruirlo desde cero con tecnología de vanguardia como el uso de arquitecturas de microservicios, el desarrollo de software dirigido por modelos y la generación automática de código.
 
-La temática del trabajo es el desarrollo de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de la nueva aplicación en desarrollo y sus microservicios. Se pretende desarrollar este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
+La temática del trabajo es el desarrollo de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de la nueva aplicación en desarrollo y sus microservicios. Se pretende construir este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
 
-La temática comentada fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}. En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
+La temática comentada fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas, esto es, contribuciones a un microservicio específico destinado a orquestar el despliegue de la aplicación. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja así como aumentar el nivel de conocimiento acerca de la misma con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, \emph{.NET}, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}. En cuanto a la motivación de la empresa, esta quiere dar la posibilidad de aprovechar, en cierta medida, el trabajo realizado y a realizar por el autor del documento dentro del marco de trabajo de la entidad, viéndose esta beneficiada también.
 
 \section{Objetivos}
 
-El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La construcción de este tiene las siguientes intenciones sobre la aplicación en construcción:
+El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La construcción de este tiene las siguientes aspiraciones sobre la aplicación en construcción:
 
 \begin{itemize}
 
-	\item \textbf{Ocultar los microservicios} de forma que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
+	\item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
 	
 	\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por finalidad:
 		\begin{itemize}
@@ -179,7 +179,7 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \section{Tecnología utilizada}
 
-La tecnología a utilizar para llevar a cabo este proyecto va a ser ''\emph{YARP}'' \cite{YARP}. Se trata de una librería hecha por el propio \emph{Microsoft}. Su objetivo es facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
+La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} \cite{YARP}. Se trata de una librería hecha por el propio \emph{Microsoft}. Su objetivo es facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
 
 \begin{itemize}
 
