@@ -3,7 +3,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Implementación de un proxy inverso para una arquitectura de microservicios}
+\title{Implementación y despliegue de un proxy inverso para una arquitectura de microservicios}
 \author{Alejandro Carrión Sanmartín}
 \tutor{Patricio Letelier Torres}
 \curs{2020-2021}
@@ -232,29 +232,37 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} 
 
 \section{Programación}
 
-?????
+Para la construcción del \emph{proxy} inverso que protagoniza este trabajo se ha seguido una serie de pasos que se van a comentar a continuación.
 
-\subsection{Guión a seguir}
+\subsection{Construcción de prototipos}
 
-?????
+El desarrollo comenzó con la elaboración de dos prototipos de microservicio con la funcionalidad mínima para redirigir peticiones. Estos prototipos tenían la misión de demostrar si era posible seguir la estructura general de todos los microservicios de la aplicación, con gran parte del código generado a partir de modelos. Precisamente este código autogenerado es lo que generaba ciertas dudas con lo referente al rendimiento final, el cual se podía ver perjudicado debido a un código menos específico y más genérico, así como a un exceso de características innecesarias para el caso en cuestión pero que sí debían poseer el resto de microservicios.
 
-\subsection{Prototipo microservicio básico}
+El primero de los prototipos se hizo lo más simple posible, es decir, con la lógica justa y necesaria para desempeñar su trabajo y sin seguir ninguna estructura concreta. El segundo, fue construido utilizando las mismas herramientas con las que fueron construidos el resto de microservicios de la aplicación, esto es, generación de código a partir de modelos. Cabe destacar que, para no realizar esfuerzos en vano sin saber qué prototipo iba a ser la opción elegida, se dejaron algunos detalles correspondientes a la generación de código pendientes. Esto se debe a que el proceso de generación de código no se adaptaba al cien por cien a las necesidades del nuevo microservicio.
 
-?????
+Una vez construidos los prototipos, se procedió a medir el impacto de seguir la norma para decidir qué prototipo desechar y con cuál seguir adelante.
 
-\subsection{Prototipo microservicio autogenerado}
+Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico. De esta forma, se decidió continuar con la versión autogenerada.
 
-?????
+\subsection{Consolidación del microservicio autogenerado}
 
-\subsection{Comparativa de tiempos}
+Una vez elegida la opción de seguir el estándar, hubo que resolver los aspectos de la generación de código que no quedaron resueltos. Así pues, se tuvo que modificar algunas plantillas de código a partir de las cuales se generan los microservicios. Por otro lado, también fue necesario abordar otros problemas derivados de seguir el patrón de microservicio estándar.
 
-?????
+\subsection{Primeros despliegues}
+
+A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy} inverso perfectamente funcional pero antes de llevar a cabo los primeros despliegues había que adaptarlo al proceso de despliegue que se seguía hasta el momento. La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}.
+
+Más tarde, se hizo que los propios microservicios utilizaran el \emph{proxy} inverso para comunicarse entre ellos.
+
+El único microservicio que no se pudo reemplazar fue el de autorización porque tenía una dirección específica, configurada a través del DNS.
+
+Como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue primero se hicieron pruebas de manera local. Se desplegó el \emph{proxy} inverso en una máquina a parte y se le cargó con rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se comprobó que todo funcionaba correctamente.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Pruebas}
 
-?????
+Durante el proceso de programación ya se realizaron pruebas.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
