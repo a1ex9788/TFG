@@ -1,5 +1,5 @@
 \documentclass[11pt,spanish,listoffigures]{tfgetsinf}
-\usepackage[utf8]{inputenc} 
+\usepackage[utf8]{inputenc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -10,7 +10,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PALABRAS CLAVE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\keywords{????, ?????????} % Paraules clau 
+\keywords{????, ?????????} % Paraules clau
          {?????, ???} % Palabras clave
          {?????, ?????} % Key words
 
@@ -38,16 +38,16 @@ El uso de arquitecturas de microservicios es una práctica ya consolidada hoy en
 
 \begin{itemize}
 
-	\item \textbf{Uso de diferentes tecnologías}.
+\item \textbf{Uso de diferentes tecnologías}.
 Cada microservicio puede estar construido con una tecnología diferente y puede utilizar distintos mecanismos de persistencia.
 
-	\item \textbf{Maniobrabilidad en los despliegues}.
+\item \textbf{Maniobrabilidad en los despliegues}.
 Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados.
 
-	\item \textbf{Tolerancia a fallos}.
+\item \textbf{Tolerancia a fallos}.
 La posibilidad de desplegar la aplicación de forma que quede repartida en diferentes máquinas, incluso duplicando microservicios, otorga cierta capacidad para tolerar fallos.
 
-	\item \textbf{Escalabilidad y mantenibilidad}.
+\item \textbf{Escalabilidad y mantenibilidad}.
 Los microservicios, y la separación funcional que otorgan, facilitan el escalado de las diferentes partes de la aplicación de manera independiente. Lo mismo sucede con el mantenimiento, pudiendo crear equipos especializados.
 
 \end{itemize}
@@ -59,26 +59,26 @@ Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrol
 Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{figura:proxy_vs_proxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
-	\centering
-	\label{figura:proxy_vs_proxyInverso}
-	\includegraphics[width=0.45\textwidth]{images/proxy}
-	\includegraphics[width=0.45\textwidth]{images/proxyInverso}
-	\caption{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
+\centering
+\label{figura:proxy_vs_proxyInverso}
+\includegraphics[width=0.45\textwidth]{images/proxy}
+\includegraphics[width=0.45\textwidth]{images/proxyInverso}
+\caption{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
 \end{figure}
 
 Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga. La figura \ref{figura:proxyInverso_o_no} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza el componente comentado. En la segunda se observa que con el uso de un \emph{proxy} inverso los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
 
 \begin{figure}[ht]
-	\centering
-	\label{figura:proxyInverso_o_no}
-	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
-	\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConProxyInverso}
-	\caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
+\centering
+\label{figura:proxyInverso_o_no}
+\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
+\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConProxyInverso}
+\caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
 \end{figure}
 
 \section{Motivación}
 
-Este proyecto surge en el contexto de una práctica en empresa. El autor del mismo ha formado parte del equipo de \emph{I+D+i} de una compañía española del sector sociosanitario. Esta desarrolla y comercializa un \emph{software} de gestión geriátrica y actualmente se encuentra en periodo de renovación del mismo. El departamento recién nombrado se dedica a reconstruirlo desde cero con tecnología de vanguardia como el uso de arquitecturas de microservicios, el desarrollo de software dirigido por modelos y la generación automática de código.
+Este proyecto surge en el contexto de una práctica en empresa. El autor ha formado parte del equipo de \emph{I+D+i} de una compañía española del sector sociosanitario durante un periodo de tiempo de más de un año. Esta desarrolla y comercializa un \emph{software} de gestión geriátrica y actualmente se encuentra en proceso de renovación del mismo. El departamento nombrado se dedica a reconstruirlo desde cero con tecnología de vanguardia como el uso de arquitecturas de microservicios, el desarrollo de software dirigido por modelos y la generación automática de código.
 
 La temática del trabajo es el desarrollo de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de la nueva aplicación en desarrollo y sus microservicios. Se pretende construir este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
 
@@ -90,16 +90,16 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \begin{itemize}
 
-	\item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
-	
-	\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por finalidad:
-		\begin{itemize}
-		
-			\item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
-			
-			\item \textbf{Aumentar la eficiencia}, al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
-			
-		\end{itemize}
+\item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
+
+\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por finalidad:
+\begin{itemize}
+
+\item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
+
+\item \textbf{Aumentar la eficiencia}, al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
+
+\end{itemize}
 
 \end{itemize}
 
@@ -116,9 +116,9 @@ En la actualidad existen en el mercado muchas aplicaciones y servicios que resue
 
 \begin{itemize}
 
-	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos; los \emph{proxy} inversos solo los redirigen donde corresponda.
-	\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
-	\item Realizan tareas transversales a todos los microservicios como autenticación, autorización o monitorización.
+\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos; los \emph{proxy} inversos solo los redirigen donde corresponda.
+\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
+\item Realizan tareas transversales a todos los microservicios como autenticación, autorización o monitorización.
 
 \end{itemize}
 
@@ -129,12 +129,12 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 
 \begin{itemize}
 
-	\item Está optimizado para arquitecturas de microservicios.
-	\item Está concebido para ser altamente escalable.
-	\item Ha sido creado sobre el \emph{proxy} inverso \emph{NGINX}, lo que hace que su eficiencia destaque.
-	\item Es gratuito, aunque ofrece la versión \emph{Enterprise}, que facilita la gestión del API Gateway, y la \emph{SaaS}, llamada \emph{Kong Cloud}.
-	\item Posee un gran número de \emph{plugins} desarrollados por la propia compañía y por su comunidad, que es bastante grande al ser una aplicación tan popular.
-	\item Actualmente es utilizado por grandes empresas como \emph{Intel}, \emph{Ferrari} o \emph{Yahoo!}.
+\item Está optimizado para arquitecturas de microservicios.
+\item Está concebido para ser altamente escalable.
+\item Ha sido creado sobre el \emph{proxy} inverso \emph{NGINX}, lo que hace que su eficiencia destaque.
+\item Es gratuito, aunque ofrece la versión \emph{Enterprise}, que facilita la gestión del API Gateway, y la \emph{SaaS}, llamada \emph{Kong Cloud}.
+\item Posee un gran número de \emph{plugins} desarrollados por la propia compañía y por su comunidad, que es bastante grande al ser una aplicación tan popular.
+\item Actualmente es utilizado por grandes empresas como \emph{Intel}, \emph{Ferrari} o \emph{Yahoo!}.
 
 \end{itemize}
 
@@ -143,10 +143,10 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 
 \begin{itemize}
 
-	\item Permite alojar sus servicios tanto en la nube como en una infraestructura propia. También ofrece un modelo híbrido.
-	\item Dispone de extensiones para integrarlo con diferentes mecanismos de autenticación como \emph{OAuth} o \emph{LDPA}.
-	\item Necesita una base de datos \emph{Redis}.
-	\item Puede escalar horizontalmente y verticalmente.
+\item Permite alojar sus servicios tanto en la nube como en una infraestructura propia. También ofrece un modelo híbrido.
+\item Dispone de extensiones para integrarlo con diferentes mecanismos de autenticación como \emph{OAuth} o \emph{LDPA}.
+\item Necesita una base de datos \emph{Redis}.
+\item Puede escalar horizontalmente y verticalmente.
 
 \end{itemize}
 
@@ -155,10 +155,10 @@ Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway}
 
 \begin{itemize}
 
-	\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
-	\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete \emph{NuGet} más.
-	\item Su configuración es muy básica, teniendo que especificarla en un fichero \emph{json}.
-	\item No permite cambiar su configuración de manera dinámica.
+\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
+\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete \emph{NuGet} más.
+\item Su configuración es muy básica, teniendo que especificarla en un fichero \emph{json}.
+\item No permite cambiar su configuración de manera dinámica.
 
 \end{itemize}
 
@@ -167,9 +167,9 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \begin{itemize}
 
-	\item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento
-	\item Ofrece una versión gratuita y otra de pago, \emph{NGINX Plus}, la cual ofrece funcionalidades extra.
-	\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, es configurable dinámicamente.
+\item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento
+\item Ofrece una versión gratuita y otra de pago, \emph{NGINX Plus}, la cual ofrece funcionalidades extra.
+\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, es configurable dinámicamente.
 
 \end{itemize}
 
@@ -183,10 +183,10 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} 
 
 \begin{itemize}
 
-	\item Se encuentra todavía en desarrollo y la única versión lanzada hasta la fecha es una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de la gente.
-	\item Fue diseñada para construir \emph{proxies} inversos dentro de la propia infraestructura de \emph{Microsoft} ya que en muchas áreas de la compañía necesitaban algo así.
-	\item A raíz de la heterogeneidad de casos de uso que debe cubrir derivado del punto anterior, está pensada para ser muy personalizable y flexible.
-	\item Permite cambiar su configuración de forma dinámica.
+\item Se encuentra todavía en desarrollo y la única versión lanzada hasta la fecha es una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de la gente.
+\item Fue diseñada para construir \emph{proxies} inversos dentro de la propia infraestructura de \emph{Microsoft} ya que en muchas áreas de la compañía necesitaban algo así.
+\item A raíz de la heterogeneidad de casos de uso que debe cubrir derivado del punto anterior, está pensada para ser muy personalizable y flexible.
+\item Permite cambiar su configuración de forma dinámica.
 
 \end{itemize}
 
@@ -206,11 +206,11 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} 
 
 \begin{itemize}
 
-	\item Redirección de peticiones
-	\item Carga dinámica de rutas
-	\item Eliminación de rutas
-	\item Multi-instacia de microservicios
-	\item Versionado de microservicios
+\item Redirección de peticiones
+\item Carga dinámica de rutas
+\item Eliminación de rutas
+\item Multi-instacia de microservicios
+\item Versionado de microservicios
 
 \end{itemize}
 
@@ -266,11 +266,21 @@ El único microservicio que no se pudo reemplazar fue el de autorización porque
 
 Como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue primero se hicieron pruebas de manera local. Se desplegó el \emph{proxy} inverso en una máquina a parte y se le cargó con rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se comprobó que todo funcionaba correctamente.
 
+Un problema que surgió fue el de los timeouts. Dos microservicios tenían un timeout muy grande debido al elevado coste de sus peticiones. El \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Al final esto resultó culpa de \emph{Yarp}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Pruebas}
 
-Durante el proceso de programación ya se realizaron pruebas.
+Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han realizado dos tipos de pruebas: unas más sencillas, hechas cada vez que se producía un incremento considerable de funcionalidad, y otras más formales, al final del proyecto.
+
+\subsection{Pruebas de regresión}
+
+Se trata de una serie de comprobaciones definidas formalmente que han servido para verificar que las funcionalidades anteriormente implementadas no dejaban de funcionar al añadir nuevas.
+
+\subsection{Pruebas finales}
+
+Con el propósito de garantizar la corrección del comportamiento del producto software desarrollado se llevaron a cabo pruebas finales. A las pruebas de regresión anteriormente comentadas se les añade...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -283,34 +293,34 @@ Durante el proceso de programación ya se realizaron pruebas.
 \begin{thebibliography}{10}
 
 \bibitem{LewisAndFowler}
-	Artíclo de J. Lewis y M. Fowler acerca de los microservicios.
-	\newblock Disponible en:\\
-	\url{https://martinfowler.com/articles/microservices.html}
+Artíclo de J. Lewis y M. Fowler acerca de los microservicios.
+\newblock Disponible en:\\
+\url{https://martinfowler.com/articles/microservices.html}
 
 \bibitem{Newman}
-	Libro de referencia sobre microservicios
-	\newblock Sam Newman
-	\newblock Building Microservices
+Libro de referencia sobre microservicios
+\newblock Sam Newman
+\newblock Building Microservices
 
 \bibitem{Kong}
-	Documentación oficial de \emph{Kong}:\\
-	\url{https://konghq.com/kong}
+Documentación oficial de \emph{Kong}:\\
+\url{https://konghq.com/kong}
 
 \bibitem{Tyk}
-	Documentación oficial de \emph{Tyk}:\\
-	\url{https://tyk.io}
+Documentación oficial de \emph{Tyk}:\\
+\url{https://tyk.io}
 
 \bibitem{Ocelot}
-	Documentación oficial de \emph{Ocelot}:\\
-	\url{https://threemammals.com/ocelot}
+Documentación oficial de \emph{Ocelot}:\\
+\url{https://threemammals.com/ocelot}
 
 \bibitem{NGINX}
-	Documentación oficial de \emph{NGINX}:\\
-	\url{https://www.nginx.com/}
+Documentación oficial de \emph{NGINX}:\\
+\url{https://www.nginx.com/}
 
 \bibitem{YARP}
-	Documentación oficial de \emph{YARP}:\\
-	\url{https://microsoft.github.io/reverse-proxy}
+Documentación oficial de \emph{YARP}:\\
+\url{https://microsoft.github.io/reverse-proxy}
 
 \end{thebibliography}
 
