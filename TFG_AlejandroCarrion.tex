@@ -58,24 +58,24 @@ Se puede obtener más información acerca de los microservicios en el artículo 
 
 Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se pretende desarrollar un \emph{proxy} inverso que sea su puerta de acceso.
 
-Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{figura:proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
+Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
-\label{figura:proxyContraProxyInverso}
 \includegraphics[width=0.45\textwidth]{imagenes/proxy}
 \includegraphics[width=0.45\textwidth]{imagenes/proxyInverso}
 \caption{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
+	\label{proxyContraProxyInverso}
 \end{figure}
 
-Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga. La figura \ref{figura:proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza el componente comentado. En la segunda se observa que con el uso de un \emph{proxy} inverso los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
+Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza el componente comentado. En la segunda se observa que con el uso de un \emph{proxy} inverso los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
 
 \begin{figure}[ht]
 \centering
-\label{figura:proxyInversoContraNoProxyInverso}
 \includegraphics[width=0.45\textwidth]{imagenes/arquitecturaMicroserviciosBasica}
 \includegraphics[width=0.45\textwidth]{imagenes/arquitecturaMicroserviciosConProxyInverso}
 \caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
+	\label{proxyInversoContraNoProxyInverso}
 \end{figure}
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MOTIVACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -206,71 +206,73 @@ particular por lo que la flexibilidad y capacidad de adaptación que ofrece esta
 
 Por último, se ha utilizado Postman \cite{Postman} para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EJEMPLO DE USO BÁSICO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Ejemplo de uso básico}
 
-Una vez comentado la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
+Una vez comentado la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
 
 En lineas generales, empezar a utilizar Yarp no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso sencillo funcionando, si bien utilizar características más avanzadas o personalizarlo en función de las necesidades particulares es más complejo.
 
-Para empezar, se crea un proyecto web básico de .NET
+Para empezar, se crea un proyecto web básico de .NET, tal y como se observa en la figura.
 
 Se puede configurar a través de código pero requiere algo más de trabajo y en esta demostración no se va a utilizar por simplicidad.
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_creacionProyecto}
 \includegraphics[width=1\textwidth]{imagenes/ejemploYarp/creacionProyecto_proyectoWeb}
 \includegraphics[width=1\textwidth]{imagenes/ejemploYarp/creacionProyecto_plantillaVacia}
 \caption{Creación de un proyecto web vacío.}
+	\label{ejemploYARP_creacionProyecto}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_solucion}
 \includegraphics[width=0.35\textwidth]{imagenes/ejemploYARP/solucion}
 \caption{Solución proyecto.}
+	\label{ejemploYARP_solucion}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_instalacionNuGet}
 \includegraphics[width=1\textwidth]{imagenes/ejemploYARP/instalacionNuGet}
 \caption{Instalación del NuGet de YARP.}
+	\label{ejemploYARP_instalacionNuGet}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_startup}
 \includegraphics[width=0.7\textwidth]{imagenes/ejemploYARP/startup}
 \caption{Clase \emph{Startup}.}
+	\label{ejemploYARP_startup}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_appsettings}
 \includegraphics[width=0.50\textwidth]{imagenes/ejemploYARP/appsettings}
 \caption{Fichero \emph{appsettings}.}
+	\label{ejemploYARP_appsettings}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_servicios_preparacion}
 \includegraphics[width=1\textwidth]{imagenes/ejemploYARP/servicios_preparacion}
 \caption{Servicios preparados.}
+	\label{ejemploYARP_servicios_preparacion}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_consultaPostman}
 \includegraphics[width=1\textwidth]{imagenes/ejemploYARP/consultaPostman}
 \caption{Consulta Postman.}
+	\label{ejemploYARP_consultaPostman}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\label{figura:ejemploYARP_servicios_funcionando}
 \includegraphics[width=1\textwidth]{imagenes/ejemploYARP/servicios_funcionando}
 \caption{Servicios con consultas hechas.}
+	\label{ejemploYARP_servicios_funcionando}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DESARROLLO DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
