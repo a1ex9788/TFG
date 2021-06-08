@@ -54,7 +54,7 @@ Los microservicios, y la separación funcional que otorgan, facilitan el escalad
 
 Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}. Para una lectura con más profundidad, el libro ''\emph{Building Microservices} \cite{Newman}'' de Sam Newman.
 
-Por contraparte, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se pretende desarrollar un \emph{proxy} inverso que sea su puerta de acceso.
+Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se pretende desarrollar un \emph{proxy} inverso que sea su puerta de acceso.
 
 Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{figura:proxy_vs_proxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
@@ -111,18 +111,21 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \chapter{Estado del arte}
 
-comrpar y usar (estado del arte) vs libreria base
-En la actualidad existen en el mercado muchas aplicaciones y servicios que resuelven problemas parecidos al planteado. Estas herramientas se pueden dividir en dos tipos: los \emph{API Gateway} y los \emph{proxy} inversos. Ambos patrones comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un \emph{API Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
+En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto y se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. 
+
+\section{\emph{API Gateway}}
+
+A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el \emph{API Gateway}. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un \emph{API Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
 \begin{itemize}
 
 \item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos; los \emph{proxy} inversos solo los redirigen donde corresponda.
 \item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
-\item Realizan tareas transversales a todos los microservicios como autenticación, autorización o monitorización.
+\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
 
 \end{itemize}
 
-Algunos de estos productos \emph{software} son de pago, otros gratuitos e incluso algunos de código abierto. Se comentan los más relevantes a continuación.
+El patrón recién comentado fue descartado desde el primer momento porque no se pretendía otorgar la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez que se quería, era más coherente decantarse por un \emph{proxy} inverso.
 
 \section{\emph{Kong}}
 Tal y como dice su página web, \emph{Kong} \cite{Kong} es el \emph{API Gateway} más conocido a nivel mundial. Cuenta con las siguientes características:
@@ -175,11 +178,11 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \section{Comparativa}
 
-?????
+Precio, API Gateway, Reverse proxy, documentación, previa configuración, configuración, posibilidad de extensión.
 
 \section{Tecnología utilizada}
 
-La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} \cite{YARP}. Se trata de una librería hecha por el propio \emph{Microsoft}. Su objetivo es facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
+La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} \cite{YARP}. Se trata de una librería hecha por el propio \emph{Microsoft}. Su objetivo es precisamente facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
 
 \begin{itemize}
 
@@ -187,6 +190,7 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} 
 \item Fue diseñada para construir \emph{proxies} inversos dentro de la propia infraestructura de \emph{Microsoft} ya que en muchas áreas de la compañía necesitaban algo así.
 \item A raíz de la heterogeneidad de casos de uso que debe cubrir derivado del punto anterior, está pensada para ser muy personalizable y flexible.
 \item Permite cambiar su configuración de forma dinámica.
+\item La documentación propia no es corta pero tampoco excesiva. Además, su juventud hace que no se encuentren referencias o ejemplos de código fácilmente.
 
 \end{itemize}
 
@@ -280,13 +284,13 @@ Se trata de una serie de comprobaciones definidas formalmente que han servido pa
 
 \subsection{Pruebas finales}
 
-Con el propósito de garantizar la corrección del comportamiento del producto software desarrollado se llevaron a cabo pruebas finales. A las pruebas de regresión anteriormente comentadas se les añade...
+Con el propósito de garantizar la corrección del comportamiento del producto \emph{software} desarrollado se llevaron a cabo pruebas finales. A las pruebas de regresión anteriormente comentadas se les añade...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusiones}
 
-?????
+En un futuro se puede querer extender la funcionalidad y convertirlo en un \emph{API Gateway}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
