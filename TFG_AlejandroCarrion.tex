@@ -58,23 +58,23 @@ Se puede obtener más información acerca de los microservicios en el artículo 
 
 Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. Es aquí donde entra este trabajo, pues está enfocado a paliar otra de sus desventajas: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se pretende desarrollar un \emph{proxy} inverso que sea su puerta de acceso.
 
-Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{figura:proxy_vs_proxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
+Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o \emph{proxy} a secas. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{figura:proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
-\label{figura:proxy_vs_proxyInverso}
-\includegraphics[width=0.45\textwidth]{images/proxy}
-\includegraphics[width=0.45\textwidth]{images/proxyInverso}
+\label{figura:proxyContraProxyInverso}
+\includegraphics[width=0.45\textwidth]{imagenes/proxy}
+\includegraphics[width=0.45\textwidth]{imagenes/proxyInverso}
 \caption{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
 \end{figure}
 
-Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga. La figura \ref{figura:proxyInverso_o_no} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza el componente comentado. En la segunda se observa que con el uso de un \emph{proxy} inverso los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
+Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga. La figura \ref{figura:proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza el componente comentado. En la segunda se observa que con el uso de un \emph{proxy} inverso los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
 
 \begin{figure}[ht]
 \centering
-\label{figura:proxyInverso_o_no}
-\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosBasica}
-\includegraphics[width=0.45\textwidth]{images/arquitecturaMicroserviciosConProxyInverso}
+\label{figura:proxyInversoContraNoProxyInverso}
+\includegraphics[width=0.45\textwidth]{imagenes/arquitecturaMicroserviciosBasica}
+\includegraphics[width=0.45\textwidth]{imagenes/arquitecturaMicroserviciosConProxyInverso}
 \caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
 \end{figure}
 
@@ -119,7 +119,9 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \chapter{Estado del arte}
 
-En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de ellas será la tecnología utilizada.
+En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la tecnología utilizada. También se mostrará un ejemplo básico de uso de esta.
+
+Cabe destacar que lo habitual es hacer uso de un producto ya hecho, por lo que no es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se utiliza. En relación con esto, las librerías elegidas son para el lenguaje de programación C\#, utilizado en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -160,7 +162,7 @@ Apache HTTPD \cite{Apache}
 
 \section{YARP}
 
-La tecnología a utilizar para llevar a cabo este proyecto va a ser YARP \cite{YARP}. Se trata de una librería hecha por el propio Microsoft. Su objetivo es precisamente facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
+YARP \cite{YARP} es una librería hecha por el propio Microsoft y su objetivo es precisamente facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
 
 \begin{itemize}
 
@@ -191,17 +193,85 @@ Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicaci�
 
 \section{Comparativa}
 
-Precio, API Gateway, Reverse proxy, documentación, previa configuración, configuración, posibilidad de extensión.
+Precio, API Gateway, Reverse proxy, documentación, previa configuración, configuración, posibilidad de extensión, recarga de configuración dinámica.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Tecnología utilizada}
 
-Cabe destacar que lo habitual es hacer uso de un producto ya hecho, por lo que no es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso. Hay que tener en cuenta la tecnología que se utiliza.
+Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de programación C\# y el entorno de desarrollo habitual para él, Visual Studio, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente.
+
+Por otro lado, se ha utilizado YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
+particular por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración.
+
+Por último, se ha utilizado Postman \cite{Postman} para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
 \subsection{Ejemplo de uso básico}
 
-?????
+Una vez comentado la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
+
+En lineas generales, empezar a utilizar Yarp no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso sencillo funcionando, si bien utilizar características más avanzadas o personalizarlo en función de las necesidades particulares es más complejo.
+
+Para empezar, se crea un proyecto web básico de .NET
+
+Se puede configurar a través de código pero requiere algo más de trabajo y en esta demostración no se va a utilizar por simplicidad.
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_creacionProyecto}
+\includegraphics[width=1\textwidth]{imagenes/ejemploYarp/creacionProyecto_proyectoWeb}
+\includegraphics[width=1\textwidth]{imagenes/ejemploYarp/creacionProyecto_plantillaVacia}
+\caption{Creación de un proyecto web vacío.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_solucion}
+\includegraphics[width=0.35\textwidth]{imagenes/ejemploYARP/solucion}
+\caption{Solución proyecto.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_instalacionNuGet}
+\includegraphics[width=1\textwidth]{imagenes/ejemploYARP/instalacionNuGet}
+\caption{Instalación del NuGet de YARP.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_startup}
+\includegraphics[width=0.7\textwidth]{imagenes/ejemploYARP/startup}
+\caption{Clase \emph{Startup}.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_appsettings}
+\includegraphics[width=0.50\textwidth]{imagenes/ejemploYARP/appsettings}
+\caption{Fichero \emph{appsettings}.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_servicios_preparacion}
+\includegraphics[width=1\textwidth]{imagenes/ejemploYARP/servicios_preparacion}
+\caption{Servicios preparados.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_consultaPostman}
+\includegraphics[width=1\textwidth]{imagenes/ejemploYARP/consultaPostman}
+\caption{Consulta Postman.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\label{figura:ejemploYARP_servicios_funcionando}
+\includegraphics[width=1\textwidth]{imagenes/ejemploYARP/servicios_funcionando}
+\caption{Servicios con consultas hechas.}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DESARROLLO DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -328,6 +398,10 @@ Sitio oficial de YARP:\\
 \bibitem{Ocelot}
 Sitio oficial de Ocelot:\\
 \url{https://threemammals.com/ocelot}
+
+\bibitem{Postman}
+Sitio oficial de Postman:\\
+\url{https://www.postman.com}
 
 \end{thebibliography}
 
