@@ -92,7 +92,7 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a estos por motivos de seguridad.
 
-\item Permitir la \textbf{instanciación múltiple} de los microservicios que, a su vez, tiene por finalidad:
+\item Permitir \textbf{múltiples instancias} en ejecución de los microservicios que, a su vez, tiene por finalidad:
 \begin{itemize}
 
 \item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
@@ -172,7 +172,7 @@ Originariamente \emph{NGINX} \cite{NGINX} fue construido para ser un servidor we
 
 \item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento
 \item Ofrece una versión gratuita y otra de pago, \emph{NGINX Plus}, la cual ofrece funcionalidades extra.
-\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, es configurable dinámicamente.
+\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente.
 
 \end{itemize}
 
@@ -213,7 +213,7 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser \emph{YARP} 
 \item Redirección de peticiones
 \item Carga dinámica de rutas
 \item Eliminación de rutas
-\item Multi-instacia de microservicios
+\item Instancia múltiple de microservicios
 \item Versionado de microservicios
 
 \end{itemize}
@@ -297,7 +297,7 @@ En un futuro se puede querer extender la funcionalidad y convertirlo en un \emph
 \begin{thebibliography}{10}
 
 \bibitem{LewisAndFowler}
-Artíclo de J. Lewis y M. Fowler acerca de los microservicios.
+Artículo de J. Lewis y M. Fowler acerca de los microservicios.
 \newblock Disponible en:\\
 \url{https://martinfowler.com/articles/microservices.html}
 
