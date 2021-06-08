@@ -3,7 +3,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Implementación y despliegue de un proxy inverso para una arquitectura de microservicios}
+\title{Diseño e implementación de un proxy inverso para una arquitectura de microservicios}
 \author{Alejandro Carrión Sanmartín}
 \tutor{Patricio Letelier Torres}
 \curs{2020-2021}
@@ -34,7 +34,9 @@
 
 \chapter{Introducción}
 
-El uso de arquitecturas de microservicios es una práctica ya consolidada hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
+La automatización de los despliegues de programas, combinada o no con el uso de arquitecturas de microservicios, es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps tales como la entrega continua son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
+
+Por otro lado, el uso de arquitecturas de microservicios ya está consolidado hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
@@ -76,13 +78,17 @@ Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} 
 \caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
 \end{figure}
 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MOTIVACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Motivación}
 
 La temática del trabajo es el desarrollo y despliegue de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de la nueva aplicación en desarrollo y sus microservicios. Se pretende construir este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
 
-Este proyecto surge en el contexto de una práctica en empresa. El autor ha formado parte del equipo de I+D+i de una compañía española del sector sociosanitario durante un periodo de tiempo de más de un año. Esta desarrolla y comercializa un \emph{software} de gestión geriátrica y actualmente se encuentra en proceso de renovación del mismo. El departamento nombrado se dedica a reconstruirlo desde cero con tecnología de vanguardia como el uso de arquitecturas de microservicios, el desarrollo de software dirigido por modelos y la generación automática de código.
+Este proyecto surge en el contexto de una práctica en empresa. El autor ha tenido la oportunidad de formar parte del equipo de I+D+i de una empresa de desarrollo de software enfocada al sector sociosanitario, durante un periodo de tiempo de más de un año. Esta empresa comercializa un software de gestión geriátrica y actualmente está desarrollando la nueva versión de su producto, utilizando enfoques y tecnologías de vanguardia, entre ellos: arquitecturas de microservicios, desarrollo de software dirigido por modelos y generación automática de código.
 
 La temática comentada fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas, esto es, contribuciones a un microservicio específico destinado a orquestar el despliegue de la aplicación. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja, así como aumentar el nivel de conocimiento acerca de la misma, con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, .NET, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OBJETIVOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Objetivos}
 
@@ -103,6 +109,8 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \end{itemize}
 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTRUCTURA DEL DOCUMENTO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Estructura del documento}
 
 ?????
@@ -111,7 +119,9 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \chapter{Estado del arte}
 
-En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. Se van a comentar dos herramientas de cada tipo a continuación, además de la tecnología utilizada.
+En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de ellas será la tecnología utilizada.
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{API \emph{Gateway}}
 
@@ -127,43 +137,7 @@ A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} i
 
 El patrón recién comentado fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, era más coherente decantarse por un \emph{proxy} inverso.
 
-\section{Kong}
-Tal y como dice su página web, Kong \cite{Kong} es el API \emph{Gateway} más conocido a nivel mundial. Cuenta con las siguientes características:
-
-\begin{itemize}
-
-\item Está optimizado para arquitecturas de microservicios.
-\item Está concebido para ser altamente escalable.
-\item Ha sido creado sobre el \emph{proxy} inverso NGINX, lo que hace que su eficiencia destaque.
-\item Es gratuito, aunque ofrece la versión \emph{Enterprise}, que facilita la gestión del API \emph{Gateway}, y la SaaS, llamada Kong Cloud.
-\item Posee un gran número de \emph{plugins} desarrollados por la propia compañía y por su comunidad, que es bastante grande al ser una aplicación tan popular.
-\item Actualmente es utilizado por grandes empresas como Intel, Ferrari o Yahoo!.
-
-\end{itemize}
-
-\section{Tyk}
-Tyk \cite{Tyk} es un API \emph{Gateway} de código abierto.
-
-\begin{itemize}
-
-\item Permite alojar sus servicios tanto en la nube como en una infraestructura propia. También ofrece un modelo híbrido.
-\item Dispone de extensiones para integrarlo con diferentes mecanismos de autenticación como OAuth o LDPA.
-\item Necesita una base de datos Redis.
-\item Puede escalar horizontalmente y verticalmente.
-
-\end{itemize}
-
-\section{Ocelot}
-Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
-
-\begin{itemize}
-
-\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
-\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete NuGet más.
-\item Su configuración es muy básica, teniendo que especificarla en un fichero Json.
-\item No permite cambiar su configuración de manera dinámica.
-
-\end{itemize}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NGINX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{NGINX}
 Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web, como por ejemplo Apache, pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
@@ -176,11 +150,15 @@ Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web, como
 
 \end{itemize}
 
-\section{Comparativa}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APACHE HTTPD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Precio, API Gateway, Reverse proxy, documentación, previa configuración, configuración, posibilidad de extensión.
+\section{Apache HTTPD}
 
-\section{Tecnología utilizada}
+Apache HTTPD \cite{Apache}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{YARP}
 
 La tecnología a utilizar para llevar a cabo este proyecto va a ser YARP \cite{YARP}. Se trata de una librería hecha por el propio Microsoft. Su objetivo es precisamente facilitar la creación de \emph{proxies} inversos. Sus aspectos más destacados son:
 
@@ -195,6 +173,32 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser YARP \cite{Y
 
 \end{itemize}
 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Ocelot}
+Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
+
+\begin{itemize}
+
+\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
+\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete NuGet más.
+\item Su configuración es muy básica, teniendo que especificarla en un fichero Json.
+\item No permite cambiar su configuración de manera dinámica.
+
+\end{itemize}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPARATIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Comparativa}
+
+Precio, API Gateway, Reverse proxy, documentación, previa configuración, configuración, posibilidad de extensión.
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Tecnología utilizada}
+
+Cabe destacar que lo habitual es hacer uso de un producto ya hecho, por lo que no es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso. Hay que tener en cuenta la tecnología que se utiliza.
+
 \subsection{Ejemplo de uso básico}
 
 ?????
@@ -205,7 +209,7 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser YARP \cite{Y
 
 ?????
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIÓN DE REQUISITOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIÓN DE REQUISITOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Especificación de requisitos}
 
@@ -227,7 +231,7 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser YARP \cite{Y
 
 ?????
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Diseño}
 
@@ -241,7 +245,7 @@ La tecnología a utilizar para llevar a cabo este proyecto va a ser YARP \cite{Y
 
 ?????
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Programación}
 
@@ -271,9 +275,9 @@ El único microservicio que no se pudo reemplazar fue el de autorización porque
 
 Como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue primero se hicieron pruebas de manera local. Se desplegó el \emph{proxy} inverso en una máquina a parte y se le cargó con rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se comprobó que todo funcionaba correctamente.
 
-Un problema que surgió fue el de los timeouts. Dos microservicios tenían un timeout muy grande debido al elevado coste de sus peticiones. El \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Al final esto resultó culpa de \emph{Yarp}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
+Un problema que surgió fue el de los timeouts. Dos microservicios tenían un timeout muy grande debido al elevado coste de sus peticiones. El \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Al final esto resultó culpa de \emph{YARP}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Pruebas}
 
@@ -291,6 +295,8 @@ Con el propósito de garantizar la corrección del comportamiento del producto \
 
 \chapter{Conclusiones}
 
+Decir que los objetivos se han cumplido.
+
 En un futuro se puede querer extender la funcionalidad y convertirlo en un API \emph{Gateway}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -307,25 +313,21 @@ Libro de referencia sobre microservicios
 \newblock Sam Newman
 \newblock Building Microservices
 
-\bibitem{Kong}
-Documentación oficial de \emph{Kong}:\\
-\url{https://konghq.com/kong}
-
-\bibitem{Tyk}
-Documentación oficial de \emph{Tyk}:\\
-\url{https://tyk.io}
-
-\bibitem{Ocelot}
-Documentación oficial de \emph{Ocelot}:\\
-\url{https://threemammals.com/ocelot}
-
 \bibitem{NGINX}
-Documentación oficial de \emph{NGINX}:\\
-\url{https://www.nginx.com/}
+Sitio oficial de NGINX:\\
+\url{https://www.nginx.com}
+
+\bibitem{Apache}
+¿Cómo utilizar Apache HTTPD como proxy inverso?:\\
+\url{https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html}
 
 \bibitem{YARP}
-Documentación oficial de \emph{YARP}:\\
+Sitio oficial de YARP:\\
 \url{https://microsoft.github.io/reverse-proxy}
+
+\bibitem{Ocelot}
+Sitio oficial de Ocelot:\\
+\url{https://threemammals.com/ocelot}
 
 \end{thebibliography}
 
