@@ -212,26 +212,11 @@ Por último, se ha utilizado Postman \cite{Postman} para realizar consultas de p
 
 Una vez comentado la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
 
-En lineas generales, empezar a utilizar Yarp no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso sencillo funcionando, si bien utilizar características más avanzadas o personalizarlo en función de las necesidades particulares es más complejo.
+En lineas generales, empezar a utilizar Yarp no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso básico funcionando, si bien es más complejo utilizar características avanzadas o personalizarlo en función de las necesidades particulares.
 
-Para empezar, se crea un proyecto web básico de .NET, tal y como se observa en la figura.
+La demostración que se va a realizar consiste en crear un \emph{proxy} inverso que redirija peticiones hacía dos servicios web de prueba, creados anteriormente para el ejemplo. Estos simulan ser un servicio de localización y devuelven siempre \emph{Valencia, Spain}. También muestran este mismo mensaje por consola cuando son consultados.
 
-Se puede configurar a través de código pero requiere algo más de trabajo y en esta demostración no se va a utilizar por simplicidad.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=1\textwidth]{imagenes/ejemploYarp/creacionProyecto_proyectoWeb}
-\includegraphics[width=1\textwidth]{imagenes/ejemploYarp/creacionProyecto_plantillaVacia}
-\caption{Creación de un proyecto web vacío.}
-	\label{ejemploYARP_creacionProyecto}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.35\textwidth]{imagenes/ejemploYARP/solucion}
-\caption{Solución proyecto.}
-	\label{ejemploYARP_solucion}
-\end{figure}
+Para empezar con el ejemplo, se crea un proyecto web vacío de .NET. Una vez el proyecto se ha creado, hay que añadir la referencia a la librería de YARP. En .NET las librerías se añaden como paquete NuGet y para buscar qué paquetes hay disponibles e instalarlos se puede utilizar un asistente gráfico, figura \ref{ejemploYARP_instalacionNuGet}.
 
 \begin{figure}[ht]
 \centering
@@ -240,38 +225,41 @@ Se puede configurar a través de código pero requiere algo más de trabajo y en
 	\label{ejemploYARP_instalacionNuGet}
 \end{figure}
 
+Acto seguido, es necesario añadir un poco de código para poner en marcha un \emph{proxy} inverso sencillo. En la clase \emph{Startup} hay que modificar los métodos por defecto \emph{ConfigureServices} y \emph{Configure}. En el primero de ellos es necesario registrar el código del \emph{proxy} inverso, haciendo \emph{services.AddReverseProxy()}, y cargar la configuración de las rutas, \emph{proxyBuilder.LoadFromConfig()}. En el segundo basta con asegurarse de que se haga la llamada \emph{app.UseRouting()} y añadir  \emph{endpoints.MapReverseProxy()} dentro del \emph{UseEndpoint}. Para visualizar mejor estos cambios, figura \ref{ejemploYARP_startup}.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/ejemploYARP/startup}
-\caption{Clase \emph{Startup}.}
+\caption{Clase \emph{Startup} después de añadir el código del \emph{proxy} inverso.}
 	\label{ejemploYARP_startup}
 \end{figure}
+
+Por otro lado, hay que configurar las rutas que va a tener el \emph{proxy} inverso, es decir, los enrutamientos que debe hacer en tiempo de ejecución. Para ello se necesita especificar dichas rutas en el archivo \emph{appsettings}. Este archivo se utiliza para especificar cualquier tipo de configuración y se podría haber utilizado otro diferente. También se puede configurar a través de código pero requiere algo más de trabajo. Por este motivo, en esta demostración se va a utilizar el primer método, ya que se pretende mostrar un ejemplo lo más simple posible.
+
+La figura \ref{ejemploYARP_appsettings} muestra las rutas creadas para esta demostración. Se ha creado un par ruta-\emph{cluster} con dos destinaciones. Para no entrar en mucho detalle, lo que es importante es que la ruta tiene un patrón \emph{\{**catch-all\}}, para capturar todas las peticiones, y el \emph{cluster} contiene dos destinaciones, una por cada servicio de localización, comentados al principio de este apartado. Lo que se pretende conseguir con esta configuración es que el \emph{proxy} inverso capture todas las peticiones y las envíe de manera aleatoria a cualquiera de los dos servicios de localización.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.50\textwidth]{imagenes/ejemploYARP/appsettings}
-\caption{Fichero \emph{appsettings}.}
+\caption{Fichero \emph{appsettings} con la configuración de las rutas.}
 	\label{ejemploYARP_appsettings}
 \end{figure}
+
+Lo siguiente es preparar los servicios para una prueba rápida. En la figura \ref{ejemploYARP_servicios_preparacion} se observa el escenario inicial. En la parte superior se encuentra el \emph{proxy} inverso creado y, en la inferior, los dos servicios de localización . Importante destacar que los puertos de estos últimos coinciden con lo que se han indicado en el \emph{appsettings}.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/ejemploYARP/servicios_preparacion}
-\caption{Servicios preparados.}
+\caption{Escenario inicial con los servicios preparados.}
 	\label{ejemploYARP_servicios_preparacion}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=1\textwidth]{imagenes/ejemploYARP/consultaPostman}
-\caption{Consulta Postman.}
-	\label{ejemploYARP_consultaPostman}
-\end{figure}
+Para simular una petición de un cliente se va a realizar una consulta con Postman. Esta estará dirigida al \emph{proxy} inverso y deberá ser redirigida a alguno de los dos servicios de localización, como se ha indicado en el \emph{appsettings}. En la figura \ref{ejemploYARP_servicios_funcionando}, se muestra el escenario anterior tras ejecutar la petición Postman repetidas veces. Se observa que el \emph{proxy} inverso la ha redirigido de manera aleatoria entre los dos otros servicios. En la consola del \emph{proxy} inverso es interesante ver el mensaje por defecto que muestra YARP indicando hacia qué dirección redirige cada petición.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/ejemploYARP/servicios_funcionando}
-\caption{Servicios con consultas hechas.}
+\caption{Escenario con los servicios después de realizar algunas consultas.}
 	\label{ejemploYARP_servicios_funcionando}
 \end{figure}
 
