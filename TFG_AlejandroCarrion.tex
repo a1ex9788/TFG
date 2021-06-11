@@ -121,7 +121,7 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la tecnología utilizada. También se mostrará un ejemplo básico de uso de esta.
 
-Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a ofrecer un \emph{proxy} inverso. Estos suelen ofrecer otras productos como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se utiliza. En relación con esto, las librerías elegidas son para el lenguaje de programación C\#, utilizado en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
+Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a ofrecer un \emph{proxy} inverso. Estos suelen ofrecer otros productos como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se utiliza. En relación con esto, las librerías elegidas son para el lenguaje de programación C\#, utilizado en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -139,9 +139,14 @@ A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} i
 
 El patrón recién comentado fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, era más coherente decantarse por un \emph{proxy} inverso.
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NGINX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTOS HECHOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{NGINX}
+\section{Productos hechos}
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NGINX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{NGINX}
+
 Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
 
 \begin{itemize}
@@ -152,15 +157,19 @@ Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero 
 
 \end{itemize}
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APACHE HTTPD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APACHE HTTPD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Apache HTTPD}
+\subsection{Apache HTTPD}
 
-Apache HTTPD \cite{Apache}.
+Apache HTTPD \cite{Apache}. Además de ser un servidor web "básico", y proveer contenido estático y dinámico a los usuarios finales, Apache HTTPD (al igual que la mayoría de servidores http) puede también actuar como proxy inverso
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRERÍAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{YARP}
+\section{Librerías}
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{YARP}
 
 YARP \cite{YARP} es una librería hecha por el propio Microsoft y su objetivo es facilitar la creación de \emph{proxies} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún \emph{proxy} inverso disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo para construir esta librería y así estandarizar su uso. Además, se decidió hacer público tanto su uso como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
@@ -179,9 +188,9 @@ Permite construir \emph{proxies} inversos de nivel 7. Esto hace referencia a la 
 
 Por último, la documentación propia no es corta pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones.
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Ocelot}
+\subsection{Ocelot}
 Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
 
 \begin{itemize}
@@ -205,8 +214,8 @@ Precio, API Gateway, Reverse proxy, documentación, previa configuración, confi
 
 Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de programación C\# y el entorno de desarrollo habitual para él, Visual Studio, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente.
 
-Por otro lado, se ha utilizado YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
-particular por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración.
+Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
+particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
 
 Por último, se ha utilizado Postman \cite{Postman} para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
