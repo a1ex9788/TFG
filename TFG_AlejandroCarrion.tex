@@ -80,7 +80,7 @@ Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} 
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MOTIVACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Motivación}
+	\section{Motivación}
 
 La temática del trabajo es el desarrollo y despliegue de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de la nueva aplicación en desarrollo y sus microservicios. Se pretende construir este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
 
@@ -90,7 +90,7 @@ La temática comentada fue elegida debido a la estrecha relación que guarda con
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OBJETIVOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Objetivos}
+	\section{Objetivos}
 
 El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La construcción de este tiene las siguientes aspiraciones sobre la aplicación en construcción:
 
@@ -111,7 +111,7 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTRUCTURA DEL DOCUMENTO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Estructura del documento}
+	\section{Estructura del documento}
 
 ?????
 
@@ -125,7 +125,7 @@ Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a ofrec
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{API \emph{Gateway}}
+	\section{API \emph{Gateway}}
 
 A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el API \emph{Gateway}. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un API \emph{Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
@@ -141,11 +141,11 @@ El patrón recién comentado fue descartado desde el primer momento porque no se
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTOS HECHOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Productos hechos}
+	\section{Productos hechos}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NGINX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{NGINX}
+		\subsection{NGINX}
 
 Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
 
@@ -159,17 +159,17 @@ Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero 
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APACHE HTTPD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Apache HTTPD}
+		\subsection{Apache HTTPD}
 
-Apache HTTPD \cite{Apache}. Además de ser un servidor web "básico", y proveer contenido estático y dinámico a los usuarios finales, Apache HTTPD (al igual que la mayoría de servidores http) puede también actuar como proxy inverso
+Apache HTTPD \cite{Apache}. Además de ser un servidor web "básico", y proveer contenido estático y dinámico a los usuarios finales, Apache HTTPD puede también actuar como proxy inverso
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRERÍAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Librerías}
+	\section{Librerías}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{YARP}
+		\subsection{YARP}
 
 YARP \cite{YARP} es una librería hecha por el propio Microsoft y su objetivo es facilitar la creación de \emph{proxies} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún \emph{proxy} inverso disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo para construir esta librería y así estandarizar su uso. Además, se decidió hacer público tanto su uso como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
@@ -190,7 +190,8 @@ Por último, la documentación propia no es corta pero tampoco excesiva. Asimism
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Ocelot}
+		\subsection{Ocelot}
+		
 Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
 
 \begin{itemize}
@@ -204,13 +205,13 @@ Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicaci�
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPARATIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Comparativa}
+	\section{Comparativa}
 
-Precio, API Gateway, Reverse proxy, documentación, previa configuración, configuración, posibilidad de extensión, recarga de configuración dinámica.
+Precio, API Gateway, Reverse proxy, documentación, previa configuración, cantidad de configuración, extensibilidad, recarga de configuración dinámica.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Tecnología utilizada}
+	\section{Tecnología utilizada}
 
 Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de programación C\# y el entorno de desarrollo habitual para él, Visual Studio, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente.
 
@@ -221,7 +222,7 @@ Por último, se ha utilizado Postman \cite{Postman} para realizar consultas de p
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EJEMPLO DE USO BÁSICO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Ejemplo de uso básico}
+		\subsection{Ejemplo de uso básico}
 
 Una vez comentado la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
 
@@ -284,7 +285,7 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIÓN DE REQUISITOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Especificación de requisitos}
+	\section{Especificación de requisitos}
 
 \begin{itemize}
 
@@ -296,35 +297,51 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 \end{itemize}
 
-\subsection{Diagrama de casos de uso}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CASOS DE USO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Casos de uso}
 
 ?????
 
-\subsection{Pruebas de aceptación}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Pruebas de aceptación}
 
 ?????
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Diseño}
+	\section{Diseño}
 
 ?????
 
-\subsection{Diagrama de componentes}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DIAGRAMA DE COMPONENTES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Diagrama de componentes}
 
 ?????
 
-\subsection{Diagrama de clases}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DIAGRAMA DE CLASES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Diagrama de clases}
+
+?????
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METODOLOGÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\section{Metodología}
 
 ?????
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Programación}
+	\section{Programación}
 
-Para la construcción del \emph{proxy} inverso que protagoniza este trabajo se ha seguido una serie de pasos que se van a comentar a continuación.
+La construcción del \emph{proxy} inverso que protagoniza este trabajo ha pasado por una serie de etapas que se van a comentar a continuación.
 
-\subsection{Construcción de prototipos}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSTRUCCIÓN DE PROTOTIPOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Construcción de prototipos}
 
 El desarrollo comenzó con la elaboración de dos prototipos de microservicio con la funcionalidad mínima para redirigir peticiones. Estos prototipos tenían la misión de demostrar si era posible seguir la estructura general de todos los microservicios de la aplicación, con gran parte del código generado a partir de modelos. Precisamente este código autogenerado es lo que generaba ciertas dudas con lo referente al rendimiento final, el cual se podía ver perjudicado debido a un código menos específico y más genérico, así como a un exceso de características innecesarias para el caso en cuestión pero que sí debían poseer el resto de microservicios.
 
@@ -334,11 +351,15 @@ Una vez construidos los prototipos, se procedió a medir el impacto de seguir la
 
 Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico. De esta forma, se decidió continuar con la versión autogenerada.
 
-\subsection{Consolidación del microservicio autogenerado}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSOLIDACIÓN DEL MICROSERVICIO AUTOGENERADO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Consolidación del microservicio autogenerado}
 
 Una vez elegida la opción de seguir el estándar, hubo que resolver los aspectos de la generación de código que no quedaron resueltos. Así pues, se tuvo que modificar algunas plantillas de código a partir de las cuales se generan los microservicios. Por otro lado, también fue necesario abordar otros problemas derivados de seguir el patrón de microservicio estándar.
 
-\subsection{Primeros despliegues}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRIMEROS DESPLIEGUES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Primeros despliegues}
 
 A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy} inverso perfectamente funcional pero antes de llevar a cabo los primeros despliegues había que adaptarlo al proceso de despliegue que se seguía hasta el momento. La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}.
 
@@ -352,15 +373,19 @@ Un problema que surgió fue el de los timeouts. Dos microservicios tenían un ti
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Pruebas}
+	\section{Pruebas}
 
 Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han realizado dos tipos de pruebas: unas más sencillas, hechas cada vez que se producía un incremento considerable de funcionalidad, y otras más formales, al final del proyecto.
 
-\subsection{Pruebas de regresión}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE REGRESIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Pruebas de regresión}
 
 Se trata de una serie de comprobaciones definidas formalmente que han servido para verificar que las funcionalidades anteriormente implementadas no dejaban de funcionar al añadir nuevas.
 
-\subsection{Pruebas finales}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS FINALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Pruebas finales}
 
 Con el propósito de garantizar la corrección del comportamiento del producto \emph{software} desarrollado se llevaron a cabo pruebas finales. A las pruebas de regresión anteriormente comentadas se les añade...
 
@@ -368,7 +393,7 @@ Con el propósito de garantizar la corrección del comportamiento del producto \
 
 \chapter{Conclusiones}
 
-Decir que los objetivos se han cumplido.
+Decir si los objetivos se han cumplido.
 
 En un futuro se puede querer extender la funcionalidad y convertirlo en un API \emph{Gateway}.
 
