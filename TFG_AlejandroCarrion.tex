@@ -213,7 +213,7 @@ Precio, API Gateway, Reverse proxy, documentación, previa configuración, canti
 
 	\section{Tecnología utilizada}
 
-Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de programación C\# y el entorno de desarrollo habitual para él, Visual Studio, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente.
+Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de programación C\# y el entorno de desarrollo habitual para él, Visual Studio, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Este aspecto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
 Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
 particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
@@ -281,50 +281,40 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 \chapter{Desarrollo de la solución}
 
-?????
+????? Este capítulo alberga el grueso del trabajo. En él..
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIÓN DE REQUISITOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	\section{Especificación de requisitos}
 
-La especificación de requisitos del \emph{proxy} inverso se va a detallar mediante los casos de uso a cubrir y las pruebas de aceptación que debe satisfacer. Los primeros permitirán entender qué funcionalidades debe tener el producto \emph{software} y con las segundas se establecerán, de manera informal, los límites de lo que se considerará como funcionamiento correcto e incorrecto.
-
-\begin{itemize}
-
-\item Redirección de peticiones
-\item Carga dinámica de rutas
-\item Eliminación de rutas
-\item Instancia múltiple de microservicios
-\item Versionado de microservicios
-
-\end{itemize}
+La especificación de requisitos del \emph{proxy} inverso se va a detallar mediante los casos de uso que debe cubrir. Adicionalmente, se expondrán una serie de requisitos no funcionales que el producto debería satisfacer.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CASOS DE USO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Casos de uso}
 
-Los casos de uso van a ser expuestos a continuación en formato de tabla, indicando su identificador, su nombre, el actor que lo lleva a cabo y una breve descripción.
+Los casos de uso van a ser expuestos a continuación en formato de tabla, indicando su identificador, su nombre, el actor que lo lleva a cabo y una breve descripción:
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
 \hline
 \textbf{Identificador} & CU01
 \\ \hline
-\textbf{Nombre} & ????
+\textbf{Nombre} & Añadir rutas
 \\ \hline
-\textbf{Actor} & ?????
+\textbf{Actor} & Microservicio encargado de orquestar el despliegue
 \\ \hline
-\textbf{Descripción} & ???
+\textbf{Descripción} & El microservicio que organiza los despliegues de la aplicación le indica al \emph{proxy} inverso unas rutas para que las tenga en cuenta a la hora de redirigir peticiones, CU03. Las rutas son descritas mediante la ruta base de las peticiones que tiene que capturar y la dirección a la que redirigir la petición.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
 \hline
 \textbf{Identificador} & CU02
 \\ \hline
-\textbf{Nombre} & ????
+\textbf{Nombre} & Eliminar rutas
 \\ \hline
-\textbf{Actor} & ?????
+\textbf{Actor} & Microservicio encargado de orquestar el despliegue
 \\ \hline
-\textbf{Descripción} & ???
+\textbf{Descripción} & El microservicio que organiza los despliegues de la aplicación le indica al \emph{proxy} inverso unas rutas para que las deje de tener en cuenta a la hora de redirigir peticiones, CU03. Las rutas son descritas mediante la ruta base de las peticiones que tiene que dejar de capturar y la dirección a la que no redirigir más peticiones.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
@@ -335,7 +325,7 @@ Los casos de uso van a ser expuestos a continuación en formato de tabla, indica
 \\ \hline
 \textbf{Actor} & Interfaz de usuario / Microservicio X
 \\ \hline
-\textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por las rutas. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
+\textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por una determinada ruta. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
@@ -360,11 +350,72 @@ Los casos de uso van a ser expuestos a continuación en formato de tabla, indica
 \textbf{Descripción} & ???
 \\ \hline \end{tabular} \end{center}
 
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUISITOS NO FUNCIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Pruebas de aceptación}
+		\subsection{Requisitos no funcionales} \label{requisitosNoFuncionales}
+		
+Un requisito no funcional se entiende como una restricción impuesta sobre un producto \emph{software} que no corresponde a una funcionalidad del mismo. Están directamente relacionados con la calidad que tendrá el producto en cuestión y pueden referirse a características de diferentes tipos tales como fiabilidad o usabilidad. En concreto, la ISO/IEC 25010 \cite{ISO25010}, comúnmente llamada SQuaRE (\emph{System and software Quality Requirements and Evaluation}), define ocho características principales y algunas subcaracterísticas específicas para cada una. La imagen \ref{iso25010} las muestra todas.
 
-Para exponer las pruebas de aceptación, se va a utilizar una tabla para cada una y estas contendrán ...
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/iso25010}
+\caption{ISO/IEC 25010. Imagen de \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}.}
+	\label{iso25010}
+\end{figure}
+
+Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguientes requisitos no funcionales. Se detallan mediante un identificador, un nombre, la característica de la ISO a la que hacen referencia, una breve descripción y el motivo por el cual es necesario satisfacerlos:
+
+\begin{center} \begin{tabular}{| l | p{11.3cm} |}
+\hline
+\textbf{Identificador} & RNF01
+\\ \hline
+\textbf{Nombre} & Autenticación de peticiones
+\\ \hline
+\textbf{Característica} & Seguridad
+\\ \hline
+\textbf{Descripción} & Se debe tener un sistema de autenticación que no permita redirigir peticiones sin autenticar.
+\\ \hline
+\textbf{Motivación} & Impedir que peticiones ajenas puedan ser redirigidas para evitar posibles ataques.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{11.3cm} |}
+\hline
+\textbf{Identificador} & RNF02
+\\ \hline
+\textbf{Nombre} & Enrutamiento eficaz
+\\ \hline
+\textbf{Característica} & Eficiencia de desempeño
+\\ \hline
+\textbf{Descripción} & El enrutamiento no debe ralentizar las peticiones en exceso de forma que las peticiones enrutadas no tomen un tiempo superior al 115\% del tiempo que tardaría la petición si no pasara por el \emph{proxy} inverso.
+\\ \hline
+\textbf{Motivación} & Evitar que el \emph{proxy} inverso suponga un retardo elevado en el tiempo de respuesta de las peticiones.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{11.3cm} |}
+\hline
+\textbf{Identificador} & RNF03
+\\ \hline
+\textbf{Nombre} & Tecnología impuesta
+\\ \hline
+\textbf{Característica} & Mantenibilidad
+\\ \hline
+\textbf{Descripción} & La tecnología a utilizar para llevar a cabo el proyecto tiene que ser .NET, con C\# como lenguaje de programación.
+\\ \hline
+\textbf{Motivación} & Guardar coherencia con el resto de los microservicios para poder ser mantenido por personas que hayan trabajado con otros de ellos anteriormente.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{11.3cm} |}
+\hline
+\textbf{Identificador} & RNF04
+\\ \hline
+\textbf{Nombre} & Estructura del proyecto
+\\ \hline
+\textbf{Característica} & Mantenibilidad
+\\ \hline
+\textbf{Descripción} & La estructura de carpetas y clases del proyecto debe ser similar a la de los demás microservicios, entendiéndose similar como aquella que pueda ser comprendida por una persona familiarizada con la estructura de referencia en un periodo de tiempo de 10 minutos como máximo.
+\\ \hline
+\textbf{Motivación} & Ídem RNF03: guardar coherencia con el resto de los microservicios para poder ser mantenido por personas que hayan trabajado con otros de ellos anteriormente.
+\\ \hline \end{tabular} \end{center}
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -456,7 +507,7 @@ Con el propósito de garantizar la corrección del comportamiento del producto \
 
 \chapter{Conclusiones}
 
-Decir si los objetivos se han cumplido.
+Decir si los objetivos se han cumplido. Valorar el cumplimiento de los casos de uso y de los requisitos no funcionales.
 
 En un futuro se puede querer extender la funcionalidad y convertirlo en un API \emph{Gateway}.
 
@@ -498,6 +549,10 @@ Sitio oficial de Postman:\\
 \bibitem{NuGet}
 Documentación de Microsoft acerca de los paquetes NuGet:\\
 \url{https://docs.microsoft.com/es-es/nuget/quickstart/install-and-use-a-package-in-visual-studio}
+
+\bibitem{ISO25010}
+ISO/IEC 25010 (SQuaRE):\\
+\url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}
 
 \end{thebibliography}
 
