@@ -287,7 +287,7 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 	\section{Especificación de requisitos}
 
-La especificación de requisitos del \emph{proxy} inverso se va a detallar mediante los casos de uso que debe cubrir. Adicionalmente, se expondrán una serie de requisitos no funcionales que el producto debería satisfacer.
+La especificación de requisitos del \emph{proxy} inverso se va a detallar mediante los casos de uso que debe cubrir. Adicionalmente, se expondrán una serie de características concretas y requisitos no funcionales que el producto deberá satisfacer.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CASOS DE USO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -325,30 +325,25 @@ Los casos de uso van a ser expuestos a continuación en formato de tabla, indica
 \\ \hline
 \textbf{Actor} & Interfaz de usuario / Microservicio X
 \\ \hline
-\textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por una determinada ruta. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
+\textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por una determinada ruta. Las rutas determinan qué peticiones tienen que ser encaminadas a qué direcciones. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
 \\ \hline \end{tabular} \end{center}
 
-\begin{center} \begin{tabular}{| l | p{11.3cm} |}
-\hline
-\textbf{Identificador} & CU04
-\\ \hline
-\textbf{Nombre} & ????
-\\ \hline
-\textbf{Actor} & ?????
-\\ \hline
-\textbf{Descripción} & ???
-\\ \hline \end{tabular} \end{center}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CARACTERÍSTICAS CONCRETAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{center} \begin{tabular}{| l | p{11.3cm} |}
-\hline
-\textbf{Identificador} & CU05
-\\ \hline
-\textbf{Nombre} & ????
-\\ \hline
-\textbf{Actor} & ?????
-\\ \hline
-\textbf{Descripción} & ???
-\\ \hline \end{tabular} \end{center}
+		\subsection{Características concretas}
+
+El \emph{proxy} inverso ha de cumplir una serie de características concretas que no son propiamente casos de uso pero que se considera de interés mencionarlas, pues son relevantes para su funcionalidad. Complementan así los casos de uso y ayudarán también a comprender qué debe hacer el producto y cómo. 
+
+Estos aspectos van a ser representados...
+
+- Carga de configuración dinámica
+- Comunicación entre UI y microservicios (interconecta microservicios)
+- Instancia exclusiva para la comunicación entre microservicios
+- Multiinstancia de microservicios
+- Multiinstancia de \emph{proxies} inversos
+- Segundo nivel de enrutamiento
+- Versionado de microservicios
+- Balanceo de carga
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUISITOS NO FUNCIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -363,7 +358,7 @@ Un requisito no funcional se entiende como una restricción impuesta sobre un pr
 	\label{iso25010}
 \end{figure}
 
-Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguientes requisitos no funcionales. Se detallan mediante un identificador, un nombre, la característica de la ISO a la que hacen referencia, una breve descripción y el motivo por el cual es necesario satisfacerlos:
+Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguientes requisitos no funcionales. Se detallan mediante un identificador, un nombre, la característica de la ISO a la que hacen referencia, una breve descripción y el motivo por el cual se considera necesario satisfacerlos:
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
 \hline
