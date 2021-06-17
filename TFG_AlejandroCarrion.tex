@@ -40,17 +40,13 @@ Por otro lado, el uso de arquitecturas de microservicios ya está consolidado ho
 
 \begin{itemize}
 
-\item \textbf{Uso de diferentes tecnologías}.
-Cada microservicio puede estar construido con una tecnología diferente y puede utilizar distintos mecanismos de persistencia.
+	\item \textbf{Uso de diferentes tecnologías}. Cada microservicio puede estar construido con una tecnología diferente y puede utilizar distintos mecanismos de persistencia.
 
-\item \textbf{Maniobrabilidad en los despliegues}.
-Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados.
+	\item \textbf{Maniobrabilidad en los despliegues}. Ante cualquier cambio no es necesario desplegar la aplicación entera, solamente los microservicios implicados.
 
-\item \textbf{Tolerancia a fallos}.
-La posibilidad de desplegar la aplicación de forma que quede repartida en diferentes máquinas, incluso duplicando microservicios, otorga cierta capacidad para tolerar fallos.
+	\item \textbf{Tolerancia a fallos}. La posibilidad de desplegar la aplicación de forma que quede repartida en diferentes máquinas, incluso duplicando microservicios, otorga cierta capacidad para tolerar fallos.
 
-\item \textbf{Escalabilidad y mantenibilidad}.
-Los microservicios, y la separación funcional que otorgan, facilitan el escalado de las diferentes partes de la aplicación de manera independiente. Lo mismo sucede con el mantenimiento, pudiendo crear equipos especializados.
+	\item \textbf{Escalabilidad y mantenibilidad}. Los microservicios, y la separación funcional que otorgan, facilitan el escalado de las diferentes partes de la aplicación de manera independiente. Lo mismo sucede con el mantenimiento, pudiendo crear equipos especializados.
 
 \end{itemize}
 
@@ -96,16 +92,17 @@ El objetivo principal de este trabajo es construir un \emph{proxy} inverso. La c
 
 \begin{itemize}
 
-\item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a ellos por motivos de seguridad.
+	\item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a ellos por motivos de seguridad.
 
-\item Permitir \textbf{múltiples instancias} en ejecución de los microservicios que, a su vez, tiene por finalidad:
-\begin{itemize}
+	\item Permitir \textbf{múltiples instancias} en ejecución de los microservicios que, a su vez, tiene por finalidad:
 
-\item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
+	\begin{itemize}
 
-\item \textbf{Aumentar la eficiencia}, al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
+		\item Conseguir que la aplicación sea \textbf{tolerante a fallos}, gracias a la posibilidad de tener un mismo microservicio desplegado en máquinas diferentes.
 
-\end{itemize}
+		\item \textbf{Aumentar la eficiencia}, al poder crear o parar instancias dinámicamente según el tráfico que reciba la aplicación.
+
+	\end{itemize}
 
 \end{itemize}
 
@@ -131,9 +128,11 @@ A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} i
 
 \begin{itemize}
 
-\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos; los \emph{proxy} inversos solo los redirigen donde corresponda.
-\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
-\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
+	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos; los \emph{proxy} inversos solo los redirigen donde corresponda.
+	
+	\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
+	
+	\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
 
 \end{itemize}
 
@@ -151,9 +150,11 @@ Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero 
 
 \begin{itemize}
 
-\item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento.
-\item Ofrece una versión gratuita y otra de pago, NGINX Plus, la cual ofrece funcionalidades extra.
-\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente.
+	\item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento.
+
+	\item Ofrece una versión gratuita y otra de pago, NGINX Plus, la cual ofrece funcionalidades extra.
+
+	\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente.
 
 \end{itemize}
 
@@ -196,10 +197,13 @@ Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicaci�
 
 \begin{itemize}
 
-\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
-\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete NuGet más.
-\item Su configuración es muy básica, teniendo que especificarla en un fichero Json.
-\item No permite cambiar su configuración de manera dinámica.
+	\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
+	
+	\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete NuGet más.
+	
+	\item Su configuración es muy básica, teniendo que especificarla en un fichero Json.
+	
+	\item No permite cambiar su configuración de manera dinámica.
 
 \end{itemize}
 
@@ -287,7 +291,7 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 	\section{Especificación de requisitos}
 
-La especificación de requisitos del \emph{proxy} inverso se va a llevar a cabo a través de los casos de uso que debe cubrir. Adicionalmente, se expondrán una serie de requisitos funcionales y no funcionales que el producto deberá satisfacer.
+La especificación de requisitos del \emph{proxy} inverso se ha llevado a cabo elaborando los casos de uso que debe cubrir. Adicionalmente a estos, también se expondrán una serie de requisitos funcionales y no funcionales que el producto debe satisfacer.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CASOS DE USO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -491,13 +495,31 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 
 	\section{Diseño}
 
-?????
+En lo que se refiere al diseño de la solución, se va presentar su estructura final. Por otro lado, también se cree conveniente comentar los \emph{middlewares} que forman la \emph{pipeline} de YARP para ver qué componentes personalizados han sido desarrollados y añadidos.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTRUCTURA DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Estructura de la solución}
 
-Como define el requisito no funcional RNF04 en el apartado \ref{requisitosNoFuncionales},
+En el apartado \ref{requisitosNoFuncionales}, el requisito no funcional RNF04 impone que la estructura del \emph{proxy} inverso debe ser similar a la del resto de microservicios. Por este motivo, la estructura del producto final sigue esa referencia, que pasa a detallarse a continuación.
+
+Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en particular, tiene una arquitectura de ? capas:
+
+\begin{itemize}
+
+	\item \textbf{Contratos}.
+	
+	\item \textbf{Dominio}.
+	
+	\item \textbf{Persistencia}.
+	
+	\item \textbf{Aplicación}.
+	
+	\item \textbf{Servicios}.
+	
+	\item \textbf{\emph{Proxy}}.
+
+\end{itemize}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PIPELINE DE YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -594,9 +616,9 @@ Con el propósito de garantizar la corrección del comportamiento del producto \
 
 \chapter{Conclusiones}
 
-Decir si los objetivos se han cumplido. Valorar el cumplimiento de los casos de uso y de los requisitos no funcionales.
+Decir si los objetivos se han cumplido. Valorar el cumplimiento de los casos de uso y de los requisitos.
 
-En un futuro se puede querer extender la funcionalidad y convertirlo en un API \emph{Gateway}.
+En un futuro se puede querer extender la funcionalidad y construir encima un API \emph{Gateway} que ofrezca agregaciones de peticiones o tareas transversales tales como monitorización de tiempos de las peticiones.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
