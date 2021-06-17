@@ -177,7 +177,7 @@ Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{rele
 
 A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de la compañía, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que permite cambiar la configuración del \emph{proxy} inverso de forma dinámica, lo que no obliga a tener que volver a lanzarlo a ejecución cuando se añada una nueva ruta, por ejemplo.
 
-Permite construir \emph{proxies} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de .NET, haciendo que su eficiencia sea muy alta.
+Permite construir \emph{proxies} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de .NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
 \begin{figure}[ht]
 \centering
@@ -293,7 +293,7 @@ La especificación de requisitos del \emph{proxy} inverso se va a llevar a cabo 
 
 		\subsection{Casos de uso}
 
-Los casos de uso van a ser expuestos a continuación con un diagrama de casos de uso, figura \ref{diagramaCasosDeUso}, y en formato de tabla, indicando un identificador, un nombre, el actor que lo lleva a cabo y una breve descripción:
+Los casos de uso van a ser expuestos a continuación con un diagrama de casos de uso, figura \ref{diagramaCasosDeUso}, y en formato de tabla, indicando para cada uno de ellos un identificador, un nombre, el actor que lo lleva a cabo y una breve descripción:
 
 \begin{figure}[ht]
 \centering
@@ -493,11 +493,34 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 
 ?????
 
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DIAGRAMA DE CLASES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTRUCTURA DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Diagrama de clases}
+		\subsection{Estructura de la solución}
 
-?????
+Como define el requisito no funcional RNF04 en el apartado \ref{requisitosNoFuncionales},
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PIPELINE DE YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{\emph{Pipeline} de YARP}
+
+Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Para gestionar las peticiones, .NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
+
+Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \emph{middlewares} se encargan de realizar sesión de afinidad para las peticiones, balanceo de carga, \emph{health checks} pasivos y el enrutamiento final. Sin embargo, se puede personalizar añadiendo nuevos \emph{middlewares} hechos desde cero según la necesidad del desarrollador. La figura (TODO:Añadir figura) muestra como ha quedado configurada esta última en el \emph{proxy} inverso. En ella, se observa que se han utilizado los siguientes \emph{middlewares}:
+
+%TODO: Añadir foto de la configuración de la pipeline de YARP.
+%TODO: Añadir middlewares utilizados.
+
+\begin{itemize}
+
+	\item \textbf{\emph{CustomLogs}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición.
+
+	\item \textbf{\emph{SameMachineFilter}}. Su finalidad es filtrar las posibles destinaciones del enrutamiento de una petición de forma que si una de las direcciones corresponde a la misma máquina en la que se encuentra el \emph{proxy} inverso, sea redirigida hacía ella. Esto puede suceder cuando el microservicio destino se encuentra desplegado en la misma máquina. De esta manera se ahorra tiempo evitando hacer una petición a otra dirección.
+
+\end{itemize}
+
+Por último, la figura (TODO:Añadir figura) muestra un esquema de los \emph{middlewares} utilizados para ilustrar mejor el flujo de una petición al pasar por ellos.
+
+%TODO: Añadir esquema del orden de los middleware de la pipeline de YARP.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METODOLOGÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -601,6 +624,10 @@ Libro de referencia sobre microservicios:\\
 \bibitem{YARP}
 Sitio oficial de YARP:\\
 \url{https://microsoft.github.io/reverse-proxy}
+
+\bibitem{MiddlewaresPipeline}
+Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pipeline} de \emph{middlewares}:\\
+\url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
 
 \bibitem{Ocelot}
 Sitio oficial de Ocelot:\\
