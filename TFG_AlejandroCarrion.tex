@@ -287,13 +287,13 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 	\section{Especificación de requisitos}
 
-La especificación de requisitos del \emph{proxy} inverso se va a detallar mediante los casos de uso que debe cubrir. Adicionalmente, se expondrán una serie de características concretas y requisitos no funcionales que el producto deberá satisfacer.
+La especificación de requisitos del \emph{proxy} inverso se va a llevar a cabo a través de los casos de uso que debe cubrir. Adicionalmente, se expondrán una serie de requisitos funcionales y no funcionales que el producto deberá satisfacer.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CASOS DE USO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Casos de uso}
 
-Los casos de uso van a ser expuestos a continuación en formato de tabla, indicando su identificador, su nombre, el actor que lo lleva a cabo y una breve descripción:
+Los casos de uso van a ser expuestos a continuación en formato de tabla, indicando un identificador, un nombre, el actor que lo lleva a cabo y una breve descripción:
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
 \hline
@@ -328,22 +328,90 @@ Los casos de uso van a ser expuestos a continuación en formato de tabla, indica
 \textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por una determinada ruta. Las rutas determinan qué peticiones tienen que ser encaminadas a qué direcciones. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
 \\ \hline \end{tabular} \end{center}
 
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CARACTERÍSTICAS CONCRETAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUISITOS FUNCIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Características concretas}
+		\subsection{Requisitos funcionales}
 
-El \emph{proxy} inverso ha de cumplir una serie de características concretas que no son propiamente casos de uso pero que se considera de interés mencionarlas, pues son relevantes para su funcionalidad. Complementan así los casos de uso y ayudarán también a comprender qué debe hacer el producto y cómo. 
+El \emph{proxy} inverso ha de cumplir una serie de requisitos funcionales, o características concretas, que no son propiamente casos de uso pero que se considera de interés mencionarlos, pues son relevantes para su funcionalidad. Los requisitos funcionales se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudarán también a comprender qué debe hacer exactamente el producto. Cabe destacar que estos aspectos se podrían haber presentado de forma conjunta a los casos de uso pero se cree que de esta manera quedan más claras, por un lado, las tres funcionalidades básicas y, por otro lado, algunos detalles más concretos.
 
-Estos aspectos van a ser representados...
+Estos requisitos van a ser representados mediante un identificador, un nombre, el caso de uso con el que guardan relación, y una breve descripción:
 
-- Carga de configuración dinámica
-- Comunicación entre UI y microservicios (interconecta microservicios)
-- Instancia exclusiva para la comunicación entre microservicios
-- Multiinstancia de microservicios
-- Multiinstancia de \emph{proxies} inversos
-- Segundo nivel de enrutamiento
-- Versionado de microservicios
-- Balanceo de carga
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF01
+\\ \hline
+\textbf{Nombre} & Carga de rutas dinámica
+\\ \hline
+\textbf{Caso de uso relacionado} & CU01
+\\ \hline
+\textbf{Descripción} & La acción de añadir rutas a las que redirigir peticiones se debe poder hacer de manera dinámica, es decir, durante la propia ejecución. Esto permite no tener que parar y volver a lanzar el \emph{proxy} inverso cada vez que se añaden o eliminan rutas. Esta es una característica bastante importante ya que el tiempo en el que se reinicia no estaría atendiendo peticiones y estas fallarían, quedando el sistema inaccesible durante ese tiempo.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF02
+\\ \hline
+\textbf{Nombre} & Doble comunicación
+\\ \hline
+\textbf{Caso de uso relacionado} & CU03
+\\ \hline
+\textbf{Descripción} & El \emph{proxy} inverso tiene que estar preparado para servir de puerta de entrada al \emph{backend} desde la interfaz de usuario pero también debe interconectar los microservicios que forman dicho \emph{backend}. De esta forma, todas las peticiones que se lleven a cabo desde fuera o dentro del propio sistema deben pasar por él.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF03
+\\ \hline
+\textbf{Nombre} & Multiinstancia de microservicios
+\\ \hline
+\textbf{Caso de uso relacionado} & CU01, CU02 y CU03
+\\ \hline
+\textbf{Descripción} & Se debe soportar la ejecución simultánea de más de una instancia de un mismo microservicio, es decir, el \emph{proxy} inverso debe ser capaz de permitir la existencia de más de una dirección que atienda un mismo grupo de peticiones.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF04
+\\ \hline
+\textbf{Nombre} & Balanceo de carga
+\\ \hline
+\textbf{Caso de uso relacionado} & CU03
+\\ \hline
+\textbf{Descripción} & En relación con el RF03, las peticiones deben ser redirigidas de manera inteligente hacía las distintas direcciones posibles, si las hay para una determinada ruta. En concreto, se busca no inundar de peticiones unas y dejar en el olvido otras.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF05
+\\ \hline
+\textbf{Nombre} & Versionado de microservicios
+\\ \hline
+\textbf{Caso de uso relacionado} & CU01, CU02 y CU03
+\\ \hline
+\textbf{Descripción} & Relacionado con el RF03, las diferentes instancias de un mismo microservicio pueden corresponder a versiones diferentes del mismo. De esta forma, las peticiones deberán ser redirigidas a una dirección u otra en función de la versión del microservicio que se quiera utilizar.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF06
+\\ \hline
+\textbf{Nombre} & Multiinstancia de \emph{proxies} inversos
+\\ \hline
+\textbf{Caso de uso relacionado} & CU03
+\\ \hline
+\textbf{Descripción} & Se debe poder trabajar con más de un \emph{proxy} inverso a la vez de manera que uno enrute una petición hacía otro \emph{proxy} inverso y este segundo la enrute hacía el microservicio final. Este paso por más de un enrutador debe ser transparente para ellos, siendo su única función la de redirigir las peticiones.
+\\ \hline \end{tabular} \end{center}
+
+\begin{center} \begin{tabular}{| l | p{9.5cm} |}
+\hline
+\textbf{Identificador} & RF07
+\\ \hline
+\textbf{Nombre} & Instancias exclusivas
+\\ \hline
+\textbf{Caso de uso relacionado} & CU03
+\\ \hline
+\textbf{Descripción} & Derivado del RF06, debe ser posible desplegar un \emph{proxy} inverso que solo se encargue de las peticiones que vienen de la interfaz de usuario y otro para las que van de un microservicio a otro, pudiéndose aumentar el número de estos.
+\\ \hline \end{tabular} \end{center}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUISITOS NO FUNCIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -368,9 +436,9 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 \\ \hline
 \textbf{Característica} & Seguridad
 \\ \hline
-\textbf{Descripción} & Se debe tener un sistema de autenticación que no permita redirigir peticiones sin autenticar.
+\textbf{Descripción} & Se debe tener un sistema de autenticación que no permita escuchar ni redirigir peticiones sin autenticar. No se puede llevar a cabo ninguno de los tres casos de uso, (CU01, CU02 y CU03) sin una previa autenticación.
 \\ \hline
-\textbf{Motivación} & Impedir que peticiones ajenas puedan ser redirigidas para evitar posibles ataques.
+\textbf{Motivación} & Impedir que peticiones ajenas puedan ser atendidas o redirigidas para evitar posibles ataques.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
@@ -381,7 +449,7 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 \\ \hline
 \textbf{Característica} & Eficiencia de desempeño
 \\ \hline
-\textbf{Descripción} & El enrutamiento no debe ralentizar las peticiones en exceso de forma que las peticiones enrutadas no tomen un tiempo superior al 115\% del tiempo que tardaría la petición si no pasara por el \emph{proxy} inverso.
+\textbf{Descripción} & El enrutamiento, CU03, no debe ralentizar las peticiones en exceso de forma que las peticiones enrutadas no tomen un tiempo superior al 115\% del tiempo que tardaría la petición si no pasara por el \emph{proxy} inverso.
 \\ \hline
 \textbf{Motivación} & Evitar que el \emph{proxy} inverso suponga un retardo elevado en el tiempo de respuesta de las peticiones.
 \\ \hline \end{tabular} \end{center}
