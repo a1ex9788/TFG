@@ -36,7 +36,7 @@
 
 La automatización de los despliegues de programas, combinada o no con el uso de arquitecturas de microservicios, es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps tales como la entrega continua son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
 
-Por otro lado, el uso de arquitecturas de microservicios ya está consolidado hoy en día en el mundo del desarrollo de \emph{software}. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
+Por otro lado, el uso de arquitecturas de microservicios ya está consolidado. Esta consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
@@ -558,7 +558,9 @@ Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concret
 
 	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{Kanban}, las unidades de trabajo han estado ordenadas de mayor a menor prioridad en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
 
-	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar cada una de las unidades de trabajo. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución.
+	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar cada una de las unidades de trabajo. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entrará más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
+
+	\item \textbf{Búsqueda de la sencillez y el minimalismo}. Se trata de no realizar esfuerzos innecesarios a la hora de implementar una determinada funcionalidad, esto es, buscar la solución más simple que cumpla los requisitos establecidos. De esta forma, se evita invertir tiempo en aspectos no definitivos o que se modificarán con posterioridad y que no afectan al funcionamiento inmediato del producto.
 
 	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
 
@@ -568,7 +570,7 @@ Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concret
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PLAN DE TRABAJO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Plan de trabajo}
+		\subsection{Plan de trabajo} \label{planDeTrabajo}
 
 Tras la exposición de la metodología seguida para este proyecto, se va a detallar el plan de trabajo trazado. La elaboración del tablero \emph{Kanban} se ha tomado como punto de partida y se muestran sus unidades de trabajo iniciales en la figura \ref{kanbanInicial}, las cuales fueron obtenidas a partir de la especificación de requisitos del apartado \ref{especificacionRequisitos}. Cabe destacar que estas no han sido las definitivas y posteriormente se han creado nuevas, como es habitual en las metodologías ágiles.
 
@@ -581,7 +583,7 @@ Tras la exposición de la metodología seguida para este proyecto, se va a detal
 
 Una vez elaborado y priorizado el \emph{backlog}, el plan de trabajo ha sido hacer uso del tablero \emph{Kanban} e ir desarrollando incrementos de funcionalidad poniendo en práctica las características ágiles comentadas en el punto anterior.
 
-Por último, es interesante comentar el inicio particular de este desarrollo, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado, como en el resto de microservicios, penalizaba en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
+Por último, es interesante comentar el inicio particular de este desarrollo, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
 
 Así pues, la construcción de los prototipos culminaría en una medición de tiempos para evaluar la eficiencia de las dos soluciones y la consiguiente elección para continuar con el desarrollo de uno u otro prototipo. Se comentarán más detalles de todo este proceso en el siguiente apartado.
 
@@ -589,17 +591,30 @@ Así pues, la construcción de los prototipos culminaría en una medición de ti
 
 	\section{Programación}
 
-La parte de programación del \emph{proxy} inverso que protagoniza este trabajo ha pasado por distintas etapas que se van a comentar a continuación.
+La parte de programación del \emph{proxy} inverso que protagoniza este trabajo ha pasado por distintas etapas o fases que se van a comentar a continuación. Estas etapas han sido creadas para facilitar la comprensión del desarrollo y las funcionalidades añadidas al producto. De esta forma, las agrupan para comentarlas poco a poco junto con los problemas o dificultades encontradas a la hora de implementarlas.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSTRUCCIÓN DE PROTOTIPOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Construcción de prototipos}
 
-El primero de los prototipos se hizo lo más simple posible, es decir, con la lógica justa y necesaria para desempeñar su trabajo y sin seguir ninguna estructura concreta. El segundo, fue construido utilizando las mismas herramientas con las que fueron construidos el resto de microservicios de la aplicación, esto es, generación de código a partir de modelos. Cabe destacar que, para no realizar esfuerzos en vano sin saber qué prototipo iba a ser la opción elegida, se dejaron algunos detalles correspondientes a la generación de código pendientes. Esto se debe a que el proceso de generación de código no se adaptaba al cien por cien a las necesidades del nuevo microservicio.
+Como el plan de trabajo del punto \ref{planDeTrabajo} establece, el desarrollo comienza con la elaboración de dos prototipos de microservicio para evaluar la viabilidad de utilizar la estructura autogenerada de los demás microservicios sobre el \emph{proxy} inverso. De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola. Por otro lado, cabe destacar que a los \emph{proxies} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
+
+El primero de los prototipos se hizo lo más simple posible, es decir, con la lógica justa y necesaria para desempeñar su trabajo y sin seguir ninguna estructura concreta. El segundo, fue construido utilizando las mismas herramientas de generación automática de código con las que fueron construidos el resto de microservicios de la aplicación. Cabe destacar que, para no realizar esfuerzos en vano sin saber qué prototipo iba a ser la opción elegida, se dejaron algunos detalles correspondientes a la generación de código pendientes. Esto se debe a que el proceso de generación de código no se adaptaba al cien por cien a las necesidades del nuevo microservicio.
 
 Una vez construidos los prototipos, se procedió a medir el impacto de seguir la norma para decidir qué prototipo desechar y con cuál seguir adelante.
 
+Es importante destacar que las acciones de añadir y eliminar rutas dinámicamente, todavía por implementar, no son relevantes en esta comparativa ya que se llevan a cabo muy pocas veces en relación con el enrutamiento. Por este motivo, han sido implementadas con posterioridad.
+
 Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico. De esta forma, se decidió continuar con la versión autogenerada.
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPARATIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Comparativa}
+			
+Misma forma de despliegue.
+Estructura no igual, pero que se puede.
+
+????
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSOLIDACIÓN DEL MICROSERVICIO AUTOGENERADO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -621,11 +636,23 @@ Como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue prim
 
 Un problema que surgió fue el de los timeouts. Dos microservicios tenían un timeout muy grande debido al elevado coste de sus peticiones. El \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Al final esto resultó culpa de \emph{YARP}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
 
+Creación de identificadores inequívocos
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTO FINAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Producto final}
+
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	\section{Pruebas}
 
 Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han realizado dos tipos de pruebas: unas más sencillas, hechas cada vez que se producía un incremento considerable de funcionalidad, y otras más formales, al final del proyecto.
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Pruebas de aceptación} \label{pruebasDeAceptacion}
+		
+Algunas de las pruebas de aceptación más importantes se comentan a continuación.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE REGRESIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
