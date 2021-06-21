@@ -548,7 +548,23 @@ Por último, la figura (TODO:Añadir figura) muestra un esquema de los \emph{mid
 
 	\section{Metodología}
 
-?????
+Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concreta, ni tradicional ni ágil. No obstante, se ha optado por la vía ágil en el sentido de que se han seguido algunas de las prácticas propuestas por varias de estas metodologías, tales como Scrum o Kanban, con el fin de seguir un enfoque metodológico personalizado y adaptado a las características del proyecto. Las prácticas utilizadas se detallan a continuación:
+
+\begin{itemize}
+
+	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas más pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más pequeñas y concretas que los casos de uso y son más abstractas que las historias de usuario, ya que manifiestan de forma más clara la posibilidad de tratarse de tareas no solo relacionadas con cambiar el producto sino otras como crear la base de datos o renovar una suscripción de un servicio web.
+
+	\item \textbf{Uso de un tablero \emph{kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas, por ejemplo.
+
+	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar cada una de las unidades de trabajo. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución.
+
+	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
+
+	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo terminadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nuevo despliegue.
+
+\end{itemize}
+
+Mención aparte merecen los \emph{sprints} que habitualmente se utilizan en las metodologías ágiles. Estos dividen el trabajo... No se ha visto oportuno utilizarlos debido a la .
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PLAN DE TRABAJO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -560,7 +576,7 @@ Por último, la figura (TODO:Añadir figura) muestra un esquema de los \emph{mid
 
 	\section{Programación}
 
-La construcción del \emph{proxy} inverso que protagoniza este trabajo ha pasado por una serie de etapas que se van a comentar a continuación.
+La construcción del \emph{proxy} inverso que protagoniza este trabajo ha pasado por distintas etapas que se van a comentar a continuación.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSTRUCCIÓN DE PROTOTIPOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
