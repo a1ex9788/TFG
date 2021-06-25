@@ -295,7 +295,7 @@ La especificación de requisitos del \emph{proxy} inverso se ha llevado a cabo e
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CASOS DE USO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Casos de uso}
+		\subsection{Casos de uso} \label{casosDeUso}
 
 Los casos de uso van a ser expuestos a continuación con un diagrama de casos de uso, figura \ref{diagramaCasosDeUso}, y en formato de tabla, indicando para cada uno de ellos un identificador, un nombre, el actor que lo lleva a cabo y una breve descripción:
 
@@ -341,9 +341,9 @@ Los casos de uso van a ser expuestos a continuación con un diagrama de casos de
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUISITOS FUNCIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Requisitos funcionales}
+		\subsection{Requisitos funcionales} \label{requisitosFuncionales}
 
-El \emph{proxy} inverso ha de cumplir una serie de requisitos funcionales, o características concretas, que no son propiamente casos de uso pero que se considera de interés mencionarlos, pues son relevantes para su funcionalidad. Los requisitos funcionales se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudarán también a comprender qué debe hacer exactamente el producto. Cabe destacar que estos aspectos se podrían haber presentado de forma conjunta a los casos de uso pero se cree que de esta manera quedan más claras, por un lado, las tres funcionalidades básicas y, por otro lado, algunos detalles más concretos.
+El \emph{proxy} inverso ha de cumplir una serie de requisitos funcionales, o características concretas, que no son propiamente casos de uso pero que se considera de interés mencionarlos, pues son relevantes para su funcionalidad. Los requisitos funcionales se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudan también a comprender qué debe hacer exactamente el producto. Cabe destacar que estos aspectos se podrían haber presentado de forma conjunta a los casos de uso pero se cree que de esta manera quedan más claras, por un lado, las tres funcionalidades básicas y, por otro lado, algunos detalles más concretos.
 
 Estos requisitos van a ser representados mediante un identificador, un nombre, el caso de uso con el que guardan relación, y una breve descripción:
 
@@ -449,7 +449,7 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 \\ \hline
 \textbf{Descripción} & Se debe tener un sistema de autenticación que no permita escuchar ni redirigir peticiones sin autenticar. No se puede llevar a cabo ninguno de los tres casos de uso, (CU01, CU02 y CU03) sin una previa autenticación.
 \\ \hline
-\textbf{Motivación} & Impedir que peticiones ajenas puedan ser atendidas o redirigidas para evitar posibles ataques.
+\textbf{Motivación} & Impedir que peticiones ajenas puedan ser atendidas y/o redirigidas para evitar posibles ataques.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
@@ -612,7 +612,7 @@ Como el plan de trabajo del punto \ref{planDeTrabajo} establece, el desarrollo c
 
 El primero de los prototipos se hizo lo más simple posible, es decir, con la lógica justa y necesaria para desempeñar su trabajo y sin seguir ninguna arquitectura concreta. Esto último choca con el requisito no funcional comentado en el párrafo anterior pero se hizo para que las diferencias de rendimiento se evidenciaran más todavía, pues así se compararía un prototipo únicamente con el funcionamiento de \emph{proxy} inverso y otro con también una estructura con multitud de clases que pudiera penalizar el rendimiento.
 
-Para la creación de este prototipo, primero fue necesario crear un proyecto desde cero y ubicarlo en el lugar correspondiente del directorio de carpetas de la aplicación, junto a los demás microservicios. Acto seguido, se añadió el funcionamiento de \emph{proxy} inverso dado por YARP y se le crearon rutas de manera predefinida para hacer las primeras pruebas con peticiones Postman. Las rutas predefinidas se configuran en el archivo \emph{appsettings.json}. Estos dos últimos aspectos se comentan con más detalle en el apartado \ref{ejemploUsoYARP} y un ejemplo de configuración de rutas estáticas se puede ver en la figura \ref{ejemploYARP_appsettings}.
+Para la creación de este prototipo, primero fue necesario crear un proyecto desde cero y ubicarlo en el lugar correspondiente del directorio de carpetas de la aplicación, junto a los demás microservicios. Acto seguido, se añadió el funcionamiento de \emph{proxy} inverso dado por YARP (CU03 del apartado \ref{casosDeUso}) y se le crearon rutas de manera predefinida para hacer las primeras pruebas con peticiones Postman. Las rutas predefinidas se configuran en el archivo \emph{appsettings.json}. Estos dos últimos aspectos se comentan con más detalle en el apartado \ref{ejemploUsoYARP} y un ejemplo de configuración de rutas estáticas se puede ver en la figura \ref{ejemploYARP_appsettings}.
 
 Después de realizar las tareas comentadas queda un proyecto muy simple pero totalmente funcional. Se muestra la solución de Visual Studio correspondiente en la figura (TODO:Añadir figura).
 
@@ -624,7 +624,7 @@ Después de realizar las tareas comentadas queda un proyecto muy simple pero tot
 
 Respecto al segundo prototipo, fue construido utilizando las mismas herramientas de generación automática de código con las que fueron construidos el resto de microservicios de la aplicación. Cabe destacar que, para no realizar esfuerzos en vano (práctica ágil comentada en el apartado \ref{metodologia}) sin saber qué prototipo iba a ser la opción elegida, se dejaron algunos detalles correspondientes a la generación de código pendientes. Esto se debe a que el proceso de generación de código no se adaptaba al cien por cien a las necesidades del nuevo microservicio, lo que suele ser habitual al crear microservicios con características diferentes.
 
-Así pues, se creó de cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello fue necesario modelar una entidad ruta con los campos necesarios para identificarlas, esto es, la ruta base de las peticiones que se tiene que capturar y la dirección a la que redirigirlas. También se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estas tres últimas acciones son las mismas que para el caso del microservicio manual.
+Así pues, se creó de cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello fue necesario modelar una entidad \emph{Route} con los campos necesarios para identificar las rutas, esto es, la ruta base de las peticiones que se tiene que capturar y la dirección a la que redirigirlas. También se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estas tres últimas acciones son las mismas que para el caso del microservicio manual, con algunas diferencias para adaptarse a la solución concreta.
 
 El microservicio autogenerado resultante se muestra en la figura (TODO:Añadir figura). Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la cantidad de clases y proyectos de Visual Studio es muchísimo mayor en este caso.
 
@@ -642,7 +642,7 @@ Es importante destacar que las acciones de añadir y eliminar rutas dinámicamen
 
 Por otro lado, es interesante comentar por qué desde un primer momento se enfocaba la comparativa como una prueba para ver si el microservicio autogenerado era viable y, por tanto, preferible sobre el otro. Uno de los motivos era que, si se utilizaba la generación de código, el \emph{proxy} inverso se podría desplegar con el mismo procedimiento que estaba pensado para el resto de microservicios, lo que evitaría tener que crear un mecanismo especial para él y permitiría conservar esa homogeneidad para simplificar los despliegues. Otro motivo se trataba de la trivialidad para hacer cualquier cambio de estructura, pues la generación de código lo haría de forma automática. Por el contrario, habría que hacerlo manualmente en el microservicio a mano para continuar con el cumplimiento del requisito no funcional RNF04, del apartado \ref{requisitosNoFuncionales}.
 
-Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico. El tiempo medio de respuesta de una petición en el caso del prototipo autogenerado solo era un 3\% más lenta que en el microservicio hecho a mano. De esta forma, se decidió eliminar este último y continuar con la versión autogenerada.
+Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico. El tiempo medio de respuesta de una petición en el caso del prototipo autogenerado solo era un 3\% más lenta que en el microservicio hecho a mano, lo que se consideró despreciable e insuficiente para contrarrestar las ventajas comentadas. De esta forma, se decidió eliminar el primer prototipo y continuar con la versión autogenerada.
 
 % TODO: Comprobar porcentaje y mostrar alguna gráfica o algo
 
@@ -650,22 +650,31 @@ Los resultados de las mediciones fueron claros: ambos prototipos tenían un rend
 
 		\subsection{Consolidación del microservicio autogenerado}
 
-Acciones para crear y eliminar rutas de manera dinámica
-Peticiones Postman
-Añadir autorización
-Microservicio Core
-Normalizad el requests base path
-Crear tests: proxy y añadir/eliminar/getNormalizedPath
+Una vez elegida la opción de seguir el estándar de microservicio de la aplicación, hubo que resolver los aspectos de la generación de código que no quedaron resueltos. Así pues, se tuvieron que modificar algunas plantillas de código a partir de las cuales se generan las clases y proyectos que forman los microservicios.
 
-Una vez elegida la opción de seguir el estándar, hubo que resolver los aspectos de la generación de código que no quedaron resueltos. Así pues, se tuvo que modificar algunas plantillas de código a partir de las cuales se generan los microservicios. Por otro lado, también fue necesario abordar otros problemas derivados de seguir el patrón de microservicio estándar.
+Un ejemplo de problemas con la generación de código fue el método \emph{Configure} de la clase \emph{Startup}. Este tenía que ser modificado para añadir la llamada \emph{endpoint.MapReverseProxy()} pero la generación de código no lo permitía, no pudiéndose personalizar este método en función del microservicio en cuestión. De esta forma, la modificación de las plantillas consistió en generar una llamada a un método estático dentro de ese \emph{Configure}, que se implementaría en una clase parcial. La figura (TODO: Añadir figura) muestra cómo queda la clase \emph{Startup}.
+
+% TODO: Añadir foto Startup
+
+Después de terminar los flecos de generación de código, era momento de seguir añadiendo funcionalidad. De este modo, se modelaron e implementaron las acciones de añadir y eliminar rutas dinámicamente, correspondientes a los casos de uso CU01 y CU02 del apartado \ref{casosDeUso}. Fueron probadas con las correspondientes peticiones Postman.
+
+Por otro lado, se añadió un mecanismo de autenticación de peticiones, tal y como demanda el requisito no funcional RNF01 de la sección \ref{requisitosNoFuncionales}. Este consistió simplemente en utilizar el mismo mecanismo de seguridad que se utiliza en el resto de microservicios, el cual utiliza el sistema de autenticación que ofrece .NET y se genera de manera automática para las acciones modeladas, como es el caso de las dos acciones comentadas en el párrafo anterior. Solo sería necesario indicar a YARP que utilizase dicho mecanismo también a la hora de enrutar peticiones.
+
+También se creyó conveniente estandarizar el tratamiento de las rutas base de las peticiones que representan una ruta. Esto se hizo para hacer el \emph{proxy} inverso más robusto y evitar posibles malentendidos con YARP, pues espera recibir las rutas de una manera concreta y no otra, por ejemplo, utilizando barras como separadores de ruta en lugar de barras invertidas. Para ello se creó un método \emph{GetNormalizedPath} que normaliza una ruta dada según el esquema que YARP acepta. El método en cuestión se muestra en la figura (TODO: Añadir figura).
+
+% TODO: Añadir figura
+
+Además, se consideró oportuno crear una serie de pruebas unitarias para las acciones de añadir y eliminar rutas y para el método \emph{GetNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas \ref{pruebas}.
+
+Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados Core. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios. Se ahondará en este aspecto de los despliegues en el siguiente apartado.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRIMEROS DESPLIEGUES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Primeros despliegues}
 
-Hacer que la UI apunte al Reverse proxy
+Hacer que la U apunte al Reverse proxy
 Crear rutas por defecto, a parte de añadirlas dinámicamente. Transición entre un sistema de despliegue y otro.
-Cuadrar despliegue en docker: orden de despliegue
+Cuadrar despliegue en doctor: orden de despliegue
 Cuadrar nuestro despliegue: cargar el Reverse Proxy de rutas desde Deployment
 
 Hacer que los microservicios apunten al Reverse proxy
@@ -712,9 +721,13 @@ Para finalizar, se quiere mostrar un esquema (figura (TODO:Añadir figura)) del 
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\section{Pruebas}
+	\section{Pruebas} \label{pruebas}
 
 Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han realizado dos tipos de pruebas: unas más sencillas, hechas cada vez que se producía un incremento considerable de funcionalidad, y otras más formales, al final del proyecto.
+
+Peticiones Postman a saco.
+
+(Pruebas unitarias) tests proxy y añadir/eliminar/getNormalizedPath
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
