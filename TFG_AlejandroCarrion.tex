@@ -666,36 +666,65 @@ También se creyó conveniente estandarizar el tratamiento de las rutas base de 
 
 Además, se consideró oportuno crear una serie de pruebas unitarias para las acciones de añadir y eliminar rutas y para el método \emph{GetNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas \ref{pruebas}.
 
-Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados Core. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios. Se ahondará en este aspecto de los despliegues en el siguiente apartado.
+Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados Core. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRIMEROS DESPLIEGUES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Primeros despliegues}
 
-Hacer que la U apunte al Reverse proxy
-Crear rutas por defecto, a parte de añadirlas dinámicamente. Transición entre un sistema de despliegue y otro.
-Cuadrar despliegue en doctor: orden de despliegue
-Cuadrar nuestro despliegue: cargar el Reverse Proxy de rutas desde Deployment
+A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy} inverso perfectamente funcional pero antes de llevar a cabo los primeros despliegues había que hacer algunas modificaciones para que la interfaz de usuario y los microservicios lo utilizaran. Derivado de estos despliegues se presentaron algunos problemas que también serán comentados.
 
-Hacer que los microservicios apunten al Reverse proxy
-crear rutas por defecto: orden y rellenado de rutas desde deployment
-cuadrar ambos despliegues
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SISTEMAS DE DESPLIEGUE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy} inverso perfectamente funcional pero antes de llevar a cabo los primeros despliegues había que adaptarlo al proceso de despliegue que se seguía hasta el momento. La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}.
+			\subsubsection{Sistema de despliegue}
 
-Más tarde, se hizo que los propios microservicios utilizaran el \emph{proxy} inverso para comunicarse entre ellos.
+Primero de todo, se va a explicar como se realizan los despliegues de la aplicación. Como se ha comentado de pasada en varios puntos de esta memoria, la aplicación sobre la cual se trabaja tiene un microservicio especial encargado de orquestar los despliegues. La cuestión es que no está del todo operativo todavía, pues la aplicación se encuentra en desarrollo, y por este motivo se realizan dos tipos de despliegue:
 
-El único microservicio que no se pudo reemplazar fue el de autorización porque tenía una dirección específica, configurada a través del DNS.
+\begin{itemize}
 
-Como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue primero se hicieron pruebas de manera local. Se desplegó el \emph{proxy} inverso en una máquina a parte y se le cargó con rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se comprobó que todo funcionaba correctamente.
+	\item El primero de ellos consiste en desplegar los microservicios en contenedores Docker \cite{Docker}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
 
-Un problema que surgió fue el de los timeouts. Dos microservicios tenían un timeout muy grande debido al elevado coste de sus peticiones. El \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Al final esto resultó culpa de \emph{YARP}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
+	\item El segundo es el que lleva a cabo el microservicio pensado para ello. A grandes rasgos, este ordena y organiza los servidores preparados para correr la aplicación y les dice a cada uno qué microservicio o microservicios tiene que ejecutar. Por el momento, los microservicios que despliega no se utilizan porque se encuentra en fase de pruebas.
 
-Creación de identificadores inequívocos
+\end{itemize}
+
+Una vez expuestos los modos de despliegue y el por qué de su existencia, cabe resaltar que el \emph{proxy} inverso se ve obligado a ser capaz de trabajar con ambos. No obstante, en un futuro desaparecerá el primero de ellos y el segundo será el que se emplee de manera definitiva.
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INTERFAZ DE USUARIO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Interfaz de usuario}
+
+Para empezar con los despliegues, se decidió hacer que solo la interfaz de usuario utilizara el \emph{proxy} inverso para no romper toda la aplicación en caso de fallar. Cabe destacar que, como la aplicación se encontraba todavía en fase de desarrollo, no hubiera sido un gran problema si la interfaz de usuario quedara inutilizable por un breve periodo de tiempo por culpa del nuevo microservicio. Sin embargo, la caída del \emph{backend} podría haber supuesto algún inconveniente para el resto del equipo de la aplicación puesto que no sería posible hacer pruebas sobre los microservicios desplegados. De esta manera, se pretendía minimizar riesgos.
+
+Además, como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue, también se hicieron pruebas de manera local para comprobar que todo funcionaba correctamente y que la interfaz de usuario no se iba a quedar caída. Se desplegó el \emph{proxy} inverso en una máquina a parte y se le cargó de rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se hicieron peticiones desde dicha interfaz de usuario y no hubo problemas.
+
+La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}. Para ello, fue necesario modificar las direcciones a las que apuntaba, en concreto, substituir las de cada microservicio por la del \emph{proxy} inverso. De esta forma, la interfaz de usuario dejaba de conocer todos los microservicios para solo conocer su dirección.
+
+No obstante, las direcciones de los microservicios ahora debían ser conocidas por el \emph{proxy} inverso, por lo que hubo que cargárselas. Aquí es donde entran en juego los diferentes modos de despliegue. Para los despliegues con el microservicio específico, esté es quien tiene que cargar de rutas el \emph{proxy} inverso cada vez que le ordene a un servidor ejecutar un determinado microservicio. Con respecto al despliegue en Docker, las rutas han de ser cargadas de una manera predefinida. Para especificar dichas rutas, se ha creado un fichero llamado \emph{defaultRoutes.json}, que es leído al iniciarse el \emph{proxy} inverso y las rutas que describe son añadidas.
+
+% TODO: Añadir foto defaultRoutes
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MICROSERVICIOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Microservicios}
+
+Una vez la interfaz de usuario funcionaba correctamente con el \emph{proxy} inverso desplegado, se hizo que los propios microservicios lo utilizaran para comunicarse entre ellos. Igual que en el caso anterior, también fue necesario cambiar las direcciones a las que apuntaban los microservicios, ahora pasarían a conocer solo al \emph{proxy} inverso.
+
+Por otro lado, una vez más hay que diferenciar los cambios para los dos modos de despliegue. Al respecto del de Docker, también se añadieron al \emph{defaultRoutes.json} las rutas que fueron necesarias, correspondientes a algunos microservicios que no son utilizados por la interfaz de usuario. En referencia al segundo, se mejoró la manera en la que el microservicio de despliegue añadía rutas al \emph{proxy} inverso.
+
+Como modificación común para los dos modos, se tuvo que repensar el orden de despliegue de los microservicios. Estos, cuando son levantados, intentan contactar con sus dependencias y fallan si no las encuentran vivas. Por este motivo, el \emph{proxy} inverso debe estar en marcha cuando esta especie de saludos se lleven a cabo. El problema es que él también depende de otros microservicios, creando así un círculo de dependencias. La solución a la que se llegó fue levantar a la vez los microservicios que se entrelazan en este círculo utilizando reintentos en todas sus llamadas.
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEMAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Problemas}
+
+El problema más grande que surgió a raíz de los primeros despliegues fue con unos \emph{timeouts}. Resulta que dos microservicios concretos realizaban determinadas peticiones con un \emph{timeout} muy grande debido al elevado coste de las mismas y por algún motivo dichas peticiones no se completaban satisfactoriamente al pasar por el \emph{proxy} inverso. El código de estado de error que tenían era el 504, correspondiente al mensaje en inglés '\emph{Gateway timeout}'. Parecía que el \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Para solucionarlo momentáneamente y no dejar caídos esos microservicios, se optó por hacer que ellos y solo ellos no lo utilizaran hasta que el problema fuera analizado en detalle. Finalmente, sería resuelto más adelante. Se comentará en la siguiente etapa del desarrollo.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTO FINAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Producto final}
+
+Creación de identificadores inequívocos
 
 Multiinstancia de microservicios
 probar ejemplo estático
@@ -709,6 +738,8 @@ problema con algunos microservicios. nombrar el apartado anterior, decir k se hi
 prueba a mano para todas las rutas
 hacerlos configurables, modificar acción de añadir rutas. modelar campo timeout
 problema, se aplica para todas las llamadas. se podría mejorar creando rutas exclusivas pero no vale la pena xk YARP corta...
+
+Al final esto resultó culpa de \emph{YARP}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
 
 segundo nivel de redirección
 varias opciones k se comentaron en la reunión
@@ -805,6 +836,10 @@ ISO/IEC 25010 (SQuaRE):\\
 \bibitem{Trello}
 Sitio oficial de Trello:\\
 \url{https://trello.com}
+
+\bibitem{Docker}
+Sitio oficial de Docker:\\
+\url{https://www.docker.com}
 
 \end{thebibliography}
 
