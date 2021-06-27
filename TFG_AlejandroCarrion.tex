@@ -525,7 +525,7 @@ Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en pa
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PIPELINE DE YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{\emph{Pipeline} de YARP}
+		\subsection{\emph{Pipeline} de YARP} \label{pipelineYARP}
 
 Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Para gestionar las peticiones, .NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
 
@@ -536,7 +536,7 @@ Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \
 
 \begin{itemize}
 
-	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición.
+	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
 
 	\item \textbf{\emph{SameMachineFilter}}. Su finalidad es filtrar las posibles destinaciones del enrutamiento de una petición de forma que si una de las direcciones corresponde a la misma máquina en la que se encuentra el \emph{proxy} inverso, sea redirigida hacía ella. Esto puede suceder cuando el microservicio destino se encuentra desplegado en la misma máquina. De esta manera se ahorra tiempo evitando hacer una petición a otra dirección.
 
@@ -660,7 +660,7 @@ Después de terminar los flecos de generación de código, era momento de seguir
 
 Por otro lado, se añadió un mecanismo de autenticación de peticiones, tal y como demanda el requisito no funcional RNF01 de la sección \ref{requisitosNoFuncionales}. Este consistió simplemente en utilizar el mismo mecanismo de seguridad que se utiliza en el resto de microservicios, el cual utiliza el sistema de autenticación que ofrece .NET y se genera de manera automática para las acciones modeladas, como es el caso de las dos acciones comentadas en el párrafo anterior. Solo sería necesario indicar a YARP que utilizase dicho mecanismo también a la hora de enrutar peticiones.
 
-También se creyó conveniente estandarizar el tratamiento de las rutas base de las peticiones que representan una ruta. Esto se hizo para hacer el \emph{proxy} inverso más robusto y evitar posibles malentendidos con YARP, pues espera recibir las rutas de una manera concreta y no otra, por ejemplo, utilizando barras como separadores de ruta en lugar de barras invertidas. Para ello se creó un método \emph{GetNormalizedPath} que normaliza una ruta dada según el esquema que YARP acepta. El método en cuestión se muestra en la figura (TODO: Añadir figura).
+También se creyó conveniente estandarizar el tratamiento de las rutas base de las peticiones que representan una ruta. Esto se hizo para hacer el \emph{proxy} inverso más robusto y evitar posibles malentendidos con YARP, pues espera recibir las rutas de una manera concreta y no otra, por ejemplo, utilizando barras como separadores de ruta en lugar de barras invertidas. Para ello se creó un método \emph{GetNormalizedPath}, en la clase \emph{RouteUtils}, que normaliza una ruta dada según el esquema que YARP acepta. El método en cuestión se muestra en la figura (TODO: Añadir figura).
 
 % TODO: Añadir figura
 
@@ -724,29 +724,45 @@ El problema más grande que surgió a raíz de los primeros despliegues fue con 
 
 		\subsection{Producto final}
 
-Creación de identificadores inequívocos
+En esta etapa final se hicieron algunos retoques y se implementaron algunas funcionalidades más que se pasan a detallar.
 
-Multiinstancia de microservicios
-probar ejemplo estático
-adaptar carga dinámica
-crear tests
-crear peticiones Postman
-CustomProxyLog
+Primero de todo, se estudió a fondo el problema relacionado con los \emph{timeouts} de las peticiones, comentado en el apartado anterior. Al final resultó culpa de YARP, que utiliza un timeout por defecto de 100 segundos para redirigir peticiones. La solución fue aumentarlo para las rutas correspondientes a las peticiones que se redirigen hacia los microservicios en cuestión. Para ello, fue necesario modelar y añadir un parámetro opcional para el \emph{timeout} en la creación de las rutas. De esta forma se permite su personalización en función de la ruta que se utilice.
 
-Timeouts configurables
-problema con algunos microservicios. nombrar el apartado anterior, decir k se hizo provisionalmente k no se utilizara el reveerse proxy
-prueba a mano para todas las rutas
-hacerlos configurables, modificar acción de añadir rutas. modelar campo timeout
-problema, se aplica para todas las llamadas. se podría mejorar creando rutas exclusivas pero no vale la pena xk YARP corta...
+La solución dada al problema de los \emph{timeouts} puede parecer que no es la óptima ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se relacionan con esa ruta, siendo no del todo correcto. Una posible solución sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones con timeouts grandes. No obstante, no se cree necesario complicar el funcionamiento de esa manera ya que, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado.
 
-Al final esto resultó culpa de \emph{YARP}, que tiene un timeout por defecto de 100 segundos. La solución fue aumentar el timeout para las peticiones que se dirigen a los microservicios en cuestión. Para ello, fue necesario añadir un parámetro opcional para el timeout en la creación de rutas. De esta forma se permite la personalización del timeout en función de la ruta que se utilice.
+Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{log} para mostrar más información acerca de las peticiones enrutadas. YARP ya muestra mensajes pero se consideraba interesante añadir la fecha y hora en la que se produjo y el código de estado resultante de la petición. De esta manera, se facilitaría la labor de encontrar posibles errores derivados del enrutamiento de peticiones tales como el de los \emph{timeouts}. Para ello, fue necesario crear y añadir un \emph{middleware} nuevo a la \emph{pipeline} de YARP, explicada en el apartado \ref{pipelineYARP}. El \emph{middleware} creado ha sido llamado \emph{CustomProxyLog} y la figura (TODO:Añadir figura) muestra los mensajes por defecto de YARP y los personalizados a través de este \emph{middleware} para ver las diferencias y el resultado final.
 
-segundo nivel de redirección
-varias opciones k se comentaron en la reunión
-cargar todos los Reverse Proxies de rutas
-SameMachineFilter
+% TODO: Añadir figura CustomProxyLog
 
-Para finalizar, se quiere mostrar un esquema (figura (TODO:Añadir figura)) del recorrido completo de una petición que viene de la interfaz de usuario y pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él.
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MULTIINSTANCIA DE MICROSERVICIOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Multiinstancia de microservicios}
+
+Una de las funcionalidades más importantes añadidas en esta etapa ha sido permitir la multiinstancia de microservicios. Esta consiste en soportar la coexistencia de varias instancias de un mismo microservicio de forma que las mismas peticiones puedan ser enrutadas a diferentes direcciones. De esta forma se permite tener más de un recurso atendiendo determinadas peticiones, si se necesita. Relacionado con esto, se permite también realizar balanceo de carga entre las diferentes instancias de un mismo microservicio.
+
+Para llevar a cabo esta modificación fue necesario primero mejorar el sistema de creación de identificadores. YARP utiliza tres entidades para configurar rutas: \emph{Route}, \emph{Cluster} y \emph{Destination}. No es relevante entrar en mucho más detalle del funcionamiento interno pero sí comentar que las entidades de estos tipos necesitan un identificador único. Este se construía cuando se añadían rutas y de manera un poco rudimentaria por lo que hubo que hacer algo al respecto. La solución fue sistematizar su creación utilizando los parámetros de entrada y asegurando que no se pudieran repetir. Los métodos encargados de esto se encuentran en la clase \emph{RouteUtils} y se muestran en la figura (TODO:Añadir figura).
+
+% TODO: Añadir figura identificadores
+
+De una manera similar, las acciones de añadir y eliminar rutas fueron modificadas para jugar con los tres tipos de entidades de YARP. Un ejemplo del tratamiento que requieren puede ser el hecho de que un \emph{Cluster} tiene una o más \emph{Destinations}, por lo que no tendrá que ser creado si ya existe cuando se añade una nueva destinación. Todo esto sería trivial si se utilizara el mecanismo de carga estático pero, como se ha comentado en varias ocasiones a lo largo de este memoria, no encaja con el contexto de este \emph{proxy} inverso.
+
+Por otro lado, YARP ofrece diferentes algoritmos de balanceo de carga: \emph{First}, \emph{Random}, \emph{RoundRobin}, \emph{LeastRequests} y \emph{PowerOfTwoChoices}. Se ha utilizado el último de ellos, el cual selecciona dos destinaciones aleatorias y elige la que menos peticiones esté atendiendo. Esta política intenta evitar la sobrecarga de buscar la dirección que está atendiendo menos peticiones y el caso peor de elegir de manera aleatoria una que esté muy ocupada.
+
+Por último, las peticiones Postman se modificaron para hacer pruebas, así como las pruebas unitarias tuvieron que ser adaptadas e incluso se crearon algunas nuevas.
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SEGUNDO NIVEL DE REDIRECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Segundo nivel de redirección}
+
+Otra funcionalidad de peso es el segundo nivel de redirección. Se trata de tener un \emph{proxy} inverso en cada servidor que ejecuta alguna parte de la aplicación con la motivación de no exponer un puerto por cada microservicio. De esta forma, todas las peticiones se mandan al \emph{proxy} inverso del servidor en cuestión y este las redirige a los microservicios que corre. Esto desemboca en un esquema de dos niveles como el que se muestra en la figura (TODO: Añadir figura), en el que entran en juego un \emph{proxy} inverso general y los concretos de cada servidor.
+
+% TODO: Esquema dos niveles de proxy inverso
+
+Para implementar esta característica se plantearon varias opciones. Primero se decidió utilizar YARP también en el código de los servidores que ejecutan los microservicios pero, al poco tiempo de empezar, se encontraron problemas y aspectos que no terminaban de cuadrar con lo que se buscaba. El más importante de ellos era el hecho de tener que mantener el código que envuelve la infraestructura de YARP en dos lugares diferentes. Para evitarlo, finalmente se optó por hacer que cada servidor ejecutara un \emph{proxy} inverso como si se tratara de un microservicio más. Es momento entonces de darse cuenta de que la elección del prototipo autogenerado fue correcta, pues ahora permite realizar esto de una manera sencilla. También fue necesario modificar el código que carga el \emph{proxy} inverso de rutas para hacer lo propio con todos los \emph{proxy} inversos.
+
+Otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
+
+Para finalizar, se quiere mostrar un esquema (figura (TODO:Añadir figura)) del recorrido completo de una petición que proviene de la interfaz de usuario y pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él.
 
 % TODO: Esquema del recorrido completo de una petición que viene de la UI y pasa por varios microservicios.
 
