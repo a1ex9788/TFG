@@ -507,7 +507,7 @@ Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en pa
 
 \begin{itemize}
 
-	\item \textbf{Dominio}.
+	\item \textbf{Dominio}. (no hay dominio)
 
 	\item \textbf{Contratos}.
 
@@ -529,16 +529,24 @@ Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en pa
 
 Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Para gestionar las peticiones, .NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
 
-Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \emph{middlewares} se encargan de realizar sesión de afinidad para las peticiones, balanceo de carga, \emph{health checks} pasivos y el enrutamiento final. Sin embargo, se puede personalizar añadiendo nuevos \emph{middlewares} hechos desde cero según la necesidad del desarrollador. La figura (TODO:Añadir figura) muestra como ha quedado configurada esta última en el \emph{proxy} inverso. En ella, se observa que se han utilizado los siguientes \emph{middlewares}:
+Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \emph{middlewares} se encargan de realizar sesión de afinidad para las peticiones, balanceo de carga, \emph{health checks} pasivos y el enrutamiento final. Sin embargo, se puede personalizar añadiendo nuevos \emph{middlewares} hechos desde cero según la necesidad del desarrollador. La figura \ref{pipelineYARP_imagen} muestra como ha quedado configurada esta última en el \emph{proxy} inverso. En ella, se observa que se han utilizado los siguientes \emph{middlewares}:
 
-%TODO: Añadir foto de la configuración de la pipeline de YARP.
-%TODO: Añadir middlewares utilizados.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{imagenes/pipelineYARP}
+\caption{\emph{Pipeline} de YARP configurada para el \emph{proxy} inverso.}
+	\label{pipelineYARP_imagen}
+\end{figure}
 
 \begin{itemize}
+
+%TODO: Añadir más middlewares utilizados (filtro de versión de peticiones).
 
 	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
 
 	\item \textbf{\emph{SameMachineFilter}}. Su finalidad es filtrar las posibles destinaciones del enrutamiento de una petición de forma que si una de las direcciones corresponde a la misma máquina en la que se encuentra el \emph{proxy} inverso, sea redirigida hacía ella. Esto puede suceder cuando el microservicio destino se encuentra desplegado en la misma máquina. De esta manera se ahorra tiempo evitando hacer una petición a otra dirección.
+
+	\item \textbf{\emph{ProxyLoadBalancing}}. No es un \emph{middleware} creado para este proyecto, se trata de uno predefinido por YARP que se encarga de realizar las tareas de balanceo de carga cuando una misma ruta tiene diferentes posibles destinaciones. En concreto, elige una entre las disponibles en base a un algoritmo que se puede configurar.
 
 \end{itemize}
 
@@ -614,9 +622,14 @@ El primero de los prototipos se hizo lo más simple posible, es decir, con la l�
 
 Para la creación de este prototipo, primero fue necesario crear un proyecto desde cero y ubicarlo en el lugar correspondiente del directorio de carpetas de la aplicación, junto a los demás microservicios. Acto seguido, se añadió el funcionamiento de \emph{proxy} inverso dado por YARP (CU03 del apartado \ref{casosDeUso}) y se le crearon rutas de manera predefinida para hacer las primeras pruebas con peticiones Postman. Las rutas predefinidas se configuran en el archivo \emph{appsettings.json}. Estos dos últimos aspectos se comentan con más detalle en el apartado \ref{ejemploUsoYARP} y un ejemplo de configuración de rutas estáticas se puede ver en la figura \ref{ejemploYARP_appsettings}.
 
-Después de realizar las tareas comentadas queda un proyecto muy simple pero totalmente funcional. Se muestra la solución de Visual Studio correspondiente en la figura (TODO:Añadir figura).
+Después de realizar las tareas comentadas queda un proyecto muy simple pero totalmente funcional. Se muestra la solución de Visual Studio correspondiente en la figura \ref{prototipoMano}.
 
-% TODO: Añadir figura solución prototipo a mano.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/prototipoMano}
+\caption{Solución de Visual Studio del prototipo de \emph{proxy} inverso hecho a mano.}
+	\label{prototipoMano}
+\end{figure}
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MICROSERVICIO AUTOGENERADO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -626,9 +639,14 @@ Respecto al segundo prototipo, fue construido utilizando las mismas herramientas
 
 Así pues, se creó de cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello fue necesario modelar una entidad \emph{Route} con los campos necesarios para identificar las rutas, esto es, la ruta base de las peticiones que se tiene que capturar y la dirección a la que redirigirlas. También se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estas tres últimas acciones son las mismas que para el caso del microservicio manual, con algunas diferencias para adaptarse a la solución concreta.
 
-El microservicio autogenerado resultante se muestra en la figura (TODO:Añadir figura). Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la cantidad de clases y proyectos de Visual Studio es muchísimo mayor en este caso.
+El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltaría el proyecto correspondiente a la capa de contratos, el cual se encuentra en una solución aparte y no es necesario mostrarlo para realizar esta comparativa puesto que las evidencias comentadas son suficientes.
 
-% TODO: Añadir figura solución prototipo autogenerado.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{imagenes/prototipoAutogenerado}
+\caption{Solución de Visual Studio del prototipo de \emph{proxy} inverso hecho con generación de código.}
+	\label{prototipoAutogenerado}
+\end{figure}
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPARATIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -652,19 +670,33 @@ Los resultados de las mediciones fueron claros: ambos prototipos tenían un rend
 
 Una vez elegida la opción de seguir el estándar de microservicio de la aplicación, hubo que resolver los aspectos de la generación de código que no quedaron resueltos. Así pues, se tuvieron que modificar algunas plantillas de código a partir de las cuales se generan las clases y proyectos que forman los microservicios.
 
-Un ejemplo de problemas con la generación de código fue el método \emph{Configure} de la clase \emph{Startup}. Este tenía que ser modificado para añadir la llamada \emph{endpoint.MapReverseProxy()} pero la generación de código no lo permitía, no pudiéndose personalizar este método en función del microservicio en cuestión. De esta forma, la modificación de las plantillas consistió en generar una llamada a un método estático dentro de ese \emph{Configure}, que se implementaría en una clase parcial. La figura (TODO: Añadir figura) muestra cómo queda la clase \emph{Startup}.
+Un ejemplo de problemas con la generación de código fue el método \emph{Configure} de la clase \emph{Startup}. Este tenía que ser modificado para añadir la llamada \emph{endpoint.MapReverseProxy()} pero la generación de código no lo permitía, no pudiéndose personalizar este método en función del microservicio en cuestión. De esta forma, la modificación de las plantillas consistió en generar una llamada a un método estático dentro de ese \emph{Configure}, que se implementaría en una clase parcial. La figura \ref{startup} muestra cómo queda la clase \emph{Startup}.
 
-% TODO: Añadir foto Startup
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{imagenes/startup}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{imagenes/startupParcial}
+\caption{Clase parcial \emph{Startup} del \emph{proxy} inverso.}
+	\label{startup}
+\end{figure}
 
 Después de terminar los flecos de generación de código, era momento de seguir añadiendo funcionalidad. De este modo, se modelaron e implementaron las acciones de añadir y eliminar rutas dinámicamente, correspondientes a los casos de uso CU01 y CU02 del apartado \ref{casosDeUso}. Fueron probadas con las correspondientes peticiones Postman.
 
 Por otro lado, se añadió un mecanismo de autenticación de peticiones, tal y como demanda el requisito no funcional RNF01 de la sección \ref{requisitosNoFuncionales}. Este consistió simplemente en utilizar el mismo mecanismo de seguridad que se utiliza en el resto de microservicios, el cual utiliza el sistema de autenticación que ofrece .NET y se genera de manera automática para las acciones modeladas, como es el caso de las dos acciones comentadas en el párrafo anterior. Solo sería necesario indicar a YARP que utilizase dicho mecanismo también a la hora de enrutar peticiones.
 
-También se creyó conveniente estandarizar el tratamiento de las rutas base de las peticiones que representan una ruta. Esto se hizo para hacer el \emph{proxy} inverso más robusto y evitar posibles malentendidos con YARP, pues espera recibir las rutas de una manera concreta y no otra, por ejemplo, utilizando barras como separadores de ruta en lugar de barras invertidas. Para ello se creó un método \emph{GetNormalizedPath}, en la clase \emph{RouteUtils}, que normaliza una ruta dada según el esquema que YARP acepta. El método en cuestión se muestra en la figura (TODO: Añadir figura).
+También se creyó conveniente estandarizar el tratamiento de las rutas base de las peticiones que representan una ruta. Esto se hizo para hacer el \emph{proxy} inverso más robusto y evitar posibles malentendidos con YARP, pues espera recibir las rutas de una manera concreta y no otra, por ejemplo, utilizando barras como separadores de ruta en lugar de barras invertidas. Para ello se creó un método \emph{GetYarpNormalizedPath}, en la clase \emph{RoutesUtils}, que normaliza una ruta dada según el esquema que YARP acepta. El método en cuestión se muestra en la figura \ref{getYarpNormalizedPath} y hace cosas como forzar el uso de las barras como separadores o añadir el patrón '\emph{\{*remainder\}}' para capturar todas las peticiones con rutas que empiecen con el prefijo indicado independientemente de como sigan.
 
-% TODO: Añadir figura
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{imagenes/getYarpNormalizedPath}
+\caption{Método \emph{GetYarpNormalizedPath}.}
+	\label{getYarpNormalizedPath}
+\end{figure}
 
-Además, se consideró oportuno crear una serie de pruebas unitarias para las acciones de añadir y eliminar rutas y para el método \emph{GetNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas \ref{pruebas}.
+Además, se consideró oportuno crear una serie de pruebas unitarias para las acciones de añadir y eliminar rutas y para el método \emph{GetYarpNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas \ref{pruebas}.
 
 Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados Core. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
 
@@ -700,9 +732,14 @@ Además, como paso previo a incluir el \emph{proxy} inverso al proceso de despli
 
 La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}. Para ello, fue necesario modificar las direcciones a las que apuntaba, en concreto, substituir las de cada microservicio por la del \emph{proxy} inverso. De esta forma, la interfaz de usuario dejaba de conocer todos los microservicios para solo conocer su dirección.
 
-No obstante, las direcciones de los microservicios ahora debían ser conocidas por el \emph{proxy} inverso, por lo que hubo que cargárselas. Aquí es donde entran en juego los diferentes modos de despliegue. Para los despliegues con el microservicio específico, esté es quien tiene que cargar de rutas el \emph{proxy} inverso cada vez que le ordene a un servidor ejecutar un determinado microservicio. Con respecto al despliegue en Docker, las rutas han de ser cargadas de una manera predefinida. Para especificar dichas rutas, se ha creado un fichero llamado \emph{defaultRoutes.json}, que es leído al iniciarse el \emph{proxy} inverso y las rutas que describe son añadidas.
+No obstante, las direcciones de los microservicios ahora debían ser conocidas por el \emph{proxy} inverso, por lo que hubo que cargárselas. Aquí es donde entran en juego los diferentes modos de despliegue. Para los despliegues con el microservicio específico, esté es quien tiene que cargar de rutas el \emph{proxy} inverso cada vez que le ordene a un servidor ejecutar un determinado microservicio. Con respecto al despliegue en Docker, las rutas han de ser cargadas de una manera predefinida. Para especificar dichas rutas, se ha creado un fichero llamado \emph{defaultRoutes.json} (figura \ref{defaultRoutes}), que es leído al iniciarse el \emph{proxy} inverso y las rutas que describe son añadidas.
 
-% TODO: Añadir foto defaultRoutes
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{imagenes/defaultRoutes}
+\caption{Fichero \emph{defaultRoutes.json}.}
+	\label{defaultRoutes}
+\end{figure}
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MICROSERVICIOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -730,9 +767,18 @@ Primero de todo, se estudió a fondo el problema relacionado con los \emph{timeo
 
 La solución dada al problema de los \emph{timeouts} puede parecer que no es la óptima ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se relacionan con esa ruta, siendo no del todo correcto. Una posible solución sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones con timeouts grandes. No obstante, no se cree necesario complicar el funcionamiento de esa manera ya que, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado.
 
-Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{log} para mostrar más información acerca de las peticiones enrutadas. YARP ya muestra mensajes pero se consideraba interesante añadir la fecha y hora en la que se produjo y el código de estado resultante de la petición. De esta manera, se facilitaría la labor de encontrar posibles errores derivados del enrutamiento de peticiones tales como el de los \emph{timeouts}. Para ello, fue necesario crear y añadir un \emph{middleware} nuevo a la \emph{pipeline} de YARP, explicada en el apartado \ref{pipelineYARP}. El \emph{middleware} creado ha sido llamado \emph{CustomProxyLog} y la figura (TODO:Añadir figura) muestra los mensajes por defecto de YARP y los personalizados a través de este \emph{middleware} para ver las diferencias y el resultado final.
+Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{log} para mostrar más información acerca de las peticiones enrutadas. YARP ya muestra mensajes pero se consideraba interesante añadir la fecha y hora en la que se produjo y el código de estado resultante de la petición. De esta manera, se facilitaría la labor de encontrar posibles errores derivados del enrutamiento de peticiones tales como el de los \emph{timeouts}. Para ello, fue necesario crear y añadir un \emph{middleware} nuevo a la \emph{pipeline} de YARP, explicada en el apartado \ref{pipelineYARP}. El \emph{middleware} creado ha sido llamado \emph{CustomProxyLog} y la figura \ref{logs} muestra los mensajes por defecto de YARP y los personalizados a través de este \emph{middleware} para ver las diferencias y el resultado final.
 
-% TODO: Añadir figura CustomProxyLog
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{imagenes/logsYARP}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/logs}
+\caption{Mensajes de \emph{log} por defecto de YARP y personalizados.}
+	\label{logs}
+\end{figure}
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MULTIINSTANCIA DE MICROSERVICIOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -740,9 +786,16 @@ Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{l
 
 Una de las funcionalidades más importantes añadidas en esta etapa ha sido permitir la multiinstancia de microservicios. Esta consiste en soportar la coexistencia de varias instancias de un mismo microservicio de forma que las mismas peticiones puedan ser enrutadas a diferentes direcciones. De esta forma se permite tener más de un recurso atendiendo determinadas peticiones, si se necesita. Relacionado con esto, se permite también realizar balanceo de carga entre las diferentes instancias de un mismo microservicio.
 
-Para llevar a cabo esta modificación fue necesario primero mejorar el sistema de creación de identificadores. YARP utiliza tres entidades para configurar rutas: \emph{Route}, \emph{Cluster} y \emph{Destination}. No es relevante entrar en mucho más detalle del funcionamiento interno pero sí comentar que las entidades de estos tipos necesitan un identificador único. Este se construía cuando se añadían rutas y de manera un poco rudimentaria por lo que hubo que hacer algo al respecto. La solución fue sistematizar su creación utilizando los parámetros de entrada y asegurando que no se pudieran repetir. Los métodos encargados de esto se encuentran en la clase \emph{RouteUtils} y se muestran en la figura (TODO:Añadir figura).
+Para llevar a cabo esta modificación fue necesario primero mejorar el sistema de creación de identificadores. YARP utiliza tres entidades para configurar rutas: \emph{Route}, \emph{Cluster} y \emph{Destination}. No es relevante entrar en mucho más detalle del funcionamiento interno pero sí comentar que las entidades de estos tipos necesitan un identificador único. Este se construía cuando se añadían rutas y de manera un poco rudimentaria por lo que hubo que hacer algo al respecto. La solución fue sistematizar su creación utilizando los parámetros de entrada y asegurando que no se pudieran repetir. Además, era importante que la forma de crearlos fuera idempotente, es decir, que siempre se obtuviera el mismo resultado para los mismos parámetros de entrada. Los métodos encargados de esto se encuentran en la clase \emph{RoutesUtils} y se muestran en la figura \ref{creacionIdentificadores}.
 
-% TODO: Añadir figura identificadores
+% TODO: Añadir 'de forma determinista'
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/creacionIdentificadores}
+\caption{Métodos encargados de crear los identificadores de las entidades de YARP.}
+	\label{creacionIdentificadores}
+\end{figure}
 
 De una manera similar, las acciones de añadir y eliminar rutas fueron modificadas para jugar con los tres tipos de entidades de YARP. Un ejemplo del tratamiento que requieren puede ser el hecho de que un \emph{Cluster} tiene una o más \emph{Destinations}, por lo que no tendrá que ser creado si ya existe cuando se añade una nueva destinación. Todo esto sería trivial si se utilizara el mecanismo de carga estático pero, como se ha comentado en varias ocasiones a lo largo de este memoria, no encaja con el contexto de este \emph{proxy} inverso.
 
@@ -758,7 +811,7 @@ Otra funcionalidad de peso es el segundo nivel de redirección. Se trata de tene
 
 % TODO: Esquema dos niveles de proxy inverso
 
-Para implementar esta característica se plantearon varias opciones. Primero se decidió utilizar YARP también en el código de los servidores que ejecutan los microservicios pero, al poco tiempo de empezar, se encontraron problemas y aspectos que no terminaban de cuadrar con lo que se buscaba. El más importante de ellos era el hecho de tener que mantener el código que envuelve la infraestructura de YARP en dos lugares diferentes. Para evitarlo, finalmente se optó por hacer que cada servidor ejecutara un \emph{proxy} inverso como si se tratara de un microservicio más. Es momento entonces de darse cuenta de que la elección del prototipo autogenerado fue correcta, pues ahora permite realizar esto de una manera sencilla. También fue necesario modificar el código que carga el \emph{proxy} inverso de rutas para hacer lo propio con todos los \emph{proxy} inversos.
+Para implementar esta característica se plantearon varias opciones. Primero se decidió utilizar YARP también en el código de los servidores que ejecutan los microservicios pero, al poco tiempo de empezar, se encontraron problemas y aspectos que no terminaban de cuadrar con lo que se buscaba. El más importante de ellos era el hecho de tener que mantener el código que envuelve la infraestructura de YARP en dos lugares diferentes. Para evitarlo, finalmente se optó por hacer que cada servidor ejecutara un \emph{proxy} inverso como si se tratara de un microservicio más. Es momento entonces de darse cuenta de que la elección del prototipo autogenerado fue correcta, pues ahora permite realizar esto de una manera sencilla. También fue necesario modificar el código que carga el \emph{proxy} inverso de rutas para hacer lo propio con todos los \emph{proxy} inversos.\\\\
 
 Otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
 
@@ -774,7 +827,7 @@ Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han realiz
 
 Peticiones Postman a saco.
 
-(Pruebas unitarias) tests proxy y añadir/eliminar/getNormalizedPath
+(Pruebas unitarias) proxy y añadir/eliminar/getYarpNormalizedPath
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
