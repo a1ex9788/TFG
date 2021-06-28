@@ -58,8 +58,8 @@ Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.45\textwidth]{imagenes/proxy}
-\includegraphics[width=0.45\textwidth]{imagenes/proxyInverso}
+\includegraphics[width=0.49\textwidth]{imagenes/proxy}
+\includegraphics[width=0.49\textwidth]{imagenes/proxyInverso}
 \caption[Esquema de un \emph{proxy} frente a un \emph{proxy} inverso.]{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
 	\label{proxyContraProxyInverso}
 \end{figure}
@@ -68,8 +68,8 @@ Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.45\textwidth]{imagenes/arquitecturaMicroserviciosBasica}
-\includegraphics[width=0.45\textwidth]{imagenes/arquitecturaMicroserviciosConProxyInverso}
+\includegraphics[width=0.49\textwidth]{imagenes/arquitecturaMicroserviciosBasica}
+\includegraphics[width=0.49\textwidth]{imagenes/arquitecturaMicroserviciosConProxyInverso}
 \caption[Arquitectura de microservicios básica frente a una con \emph{proxy} inverso.]{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
 	\label{proxyInversoContraNoProxyInverso}
 \end{figure}
@@ -247,7 +247,7 @@ Acto seguido, es necesario añadir un poco de código para poner en marcha un \e
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\textwidth]{imagenes/ejemploYARP/startup}
+\includegraphics[width=0.8\textwidth]{imagenes/ejemploYARP/startup}
 \caption{Clase \emph{Startup} después de añadir el código del \emph{proxy} inverso.}
 	\label{ejemploYARP_startup}
 \end{figure}
@@ -258,7 +258,7 @@ La figura \ref{ejemploYARP_appsettings} muestra las rutas creadas para esta demo
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.50\textwidth]{imagenes/ejemploYARP/appsettings}
+\includegraphics[width=0.5\textwidth]{imagenes/ejemploYARP/appsettings}
 \caption{Fichero \emph{appsettings.json} con la configuración de las rutas para el \emph{proxy} inverso.}
 	\label{ejemploYARP_appsettings}
 \end{figure}
@@ -301,7 +301,7 @@ Los casos de uso van a ser expuestos a continuación con un diagrama de casos de
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.5\textwidth]{imagenes/diagramaCasosDeUso}
+\includegraphics[width=0.52\textwidth]{imagenes/diagramaCasosDeUso}
 \caption{Diagrama de casos de uso del \emph{proxy} inverso.}
 	\label{diagramaCasosDeUso}
 \end{figure}
@@ -529,7 +529,7 @@ Tras comentar las capas que forman la arquitectura del \emph{proxy} inverso, se 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{imagenes/arquitectura}
+\includegraphics[width=1\textwidth]{imagenes/arquitectura}
 \caption{Esquema de las capas de la arquitectura del \emph{proxy} inverso.}
 	\label{arquitectura}
 \end{figure}
@@ -701,7 +701,7 @@ Una vez construidos los prototipos, se procedió a medir el impacto de seguir la
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.9]{imagenes/medidorTiempos}
+\includegraphics[scale=1]{imagenes/medidorTiempos}
 \caption{Código principal de la aplicación de consola para medir los tiempos del enrutamiento de los dos prototipos.}
 	\label{medidorTiempos}
 \end{figure}
@@ -723,11 +723,11 @@ Un ejemplo de problemas con la generación de código fue el método \emph{Confi
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{imagenes/startup}
+\includegraphics[width=1\textwidth]{imagenes/startup}
 \end{figure}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{imagenes/startupParcial}
+\includegraphics[width=0.96\textwidth]{imagenes/startupParcial}
 \caption{Clase parcial \emph{Startup} del \emph{proxy} inverso.}
 	\label{startup}
 \end{figure}
@@ -740,7 +740,7 @@ También se creyó conveniente estandarizar el tratamiento de las rutas base de 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.9\textwidth]{imagenes/getYarpNormalizedPath}
+\includegraphics[width=1\textwidth]{imagenes/getYarpNormalizedPath}
 \caption{Método \emph{GetYarpNormalizedPath}.}
 	\label{getYarpNormalizedPath}
 \end{figure}
