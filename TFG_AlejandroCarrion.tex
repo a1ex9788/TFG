@@ -172,13 +172,13 @@ Apache HTTPD \cite{Apache}. Además de ser un servidor web "básico", y proveer 
 
 		\subsection{YARP}
 
-YARP \cite{YARP} es una librería hecha por el propio Microsoft y su objetivo es facilitar la creación de \emph{proxies} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún \emph{proxy} inverso disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo para construir esta librería y así estandarizar su uso. Además, se decidió hacer público tanto su uso como su código, siendo así una opción \emph{open source} a tener en cuenta.
+YARP \cite{YARP} es una librería hecha por el propio Microsoft y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún \emph{proxy} inverso disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo para construir esta librería y así estandarizar su uso. Además, se decidió hacer público tanto su uso como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
 Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación siguiente al primero.
 
 A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de la compañía, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que permite cambiar la configuración del \emph{proxy} inverso de forma dinámica, lo que no obliga a tener que volver a lanzarlo a ejecución cuando se añada una nueva ruta, por ejemplo.
 
-Permite construir \emph{proxies} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de .NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
+Permite construir \emph{proxy} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de .NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
 \begin{figure}[ht]
 \centering
@@ -406,7 +406,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF06
 \\ \hline
-\textbf{Nombre} & Multiinstancia de \emph{proxies} inversos
+\textbf{Nombre} & Multiinstancia de \emph{proxy} inversos
 \\ \hline
 \textbf{Caso de uso relacionado} & CU03
 \\ \hline
@@ -610,7 +610,7 @@ La parte de programación del \emph{proxy} inverso que protagoniza este trabajo 
 
 		\subsection{Construcción de prototipos}
 
-Como el plan de trabajo del punto \ref{planDeTrabajo} establece, el desarrollo comienza con la elaboración de dos prototipos de microservicio para evaluar la viabilidad de utilizar la estructura autogenerada de los demás microservicios sobre el \emph{proxy} inverso. De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola para medir posteriormente las diferencias de rendimiento entre uno y otro. Por otro lado, cabe destacar que a los \emph{proxies} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
+Como el plan de trabajo del punto \ref{planDeTrabajo} establece, el desarrollo comienza con la elaboración de dos prototipos de microservicio para evaluar la viabilidad de utilizar la estructura autogenerada de los demás microservicios sobre el \emph{proxy} inverso. De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola para medir posteriormente las diferencias de rendimiento entre uno y otro. Por otro lado, cabe destacar que a los \emph{proxy} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MICROSERVICIO A MANO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
