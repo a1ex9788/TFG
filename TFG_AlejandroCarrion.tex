@@ -818,7 +818,16 @@ Otra funcionalidad de peso es el segundo nivel de redirección. Se trata de tene
 
 Para implementar esta característica se plantearon varias opciones. Primero se decidió utilizar YARP también en el código de los servidores que ejecutan los microservicios pero, al poco tiempo de empezar, se encontraron problemas y aspectos que no terminaban de cuadrar con lo que se buscaba. El más importante de ellos era el hecho de tener que mantener el código que envuelve la infraestructura de YARP en dos lugares diferentes. Para evitarlo, finalmente se optó por hacer que cada servidor ejecutara un \emph{proxy} inverso como si se tratara de un microservicio más. Es momento entonces de darse cuenta de que la elección del prototipo autogenerado fue correcta, pues ahora permite realizar esto de una manera sencilla. También fue necesario modificar el código que carga el \emph{proxy} inverso de rutas para hacer lo propio con todos los \emph{proxy} inversos.\\\\
 
-Por último, otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
+Otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
+
+Una vez comentadas todas la funcionalidades del producto desarrollado se quiere mostrar un esquema (figura \ref{esquemaInteraccionProxyInverso}) del recorrido completo de una petición que proviene de la interfaz de usuario y pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él. Entrando en detalle, la interfaz de usuario realiza una petición al microservicio 1 y para ello primero pasa por el \emph{proxy} inverso general y después por el concreto del servidor que contiene el microservicio en cuestión. Para poder responder, el microservicio 1 necesita hacer una petición al 3 y este, a su vez, al 4. Una vez terminadas estas peticiones anidadas la respuesta le llega al microservicio 1 y este devuelve a la interfaz la respuesta a la petición primera. Para finalizar, es interesante resaltar el uso del \emph{proxy} inverso tanto para las peticiones de la interfaz de usuario como para las que se realizan entre microservicios.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/esquemaInteraccionProxyInverso}
+\caption{Esquema de interacción entre el \emph{proxy} inverso y el resto de componentes de la aplicación al procesar una petición de la interfaz de usuario.}
+	\label{esquemaInteraccionProxyInverso}
+\end{figure}
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
