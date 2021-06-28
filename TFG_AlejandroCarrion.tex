@@ -807,17 +807,18 @@ Por último, las peticiones Postman se modificaron para hacer pruebas, así como
 
 			\subsubsection{Segundo nivel de redirección}
 
-Otra funcionalidad de peso es el segundo nivel de redirección. Se trata de tener un \emph{proxy} inverso en cada servidor que ejecuta alguna parte de la aplicación con la motivación de no exponer un puerto por cada microservicio. De esta forma, todas las peticiones se mandan al \emph{proxy} inverso del servidor en cuestión y este las redirige a los microservicios que corre. Esto desemboca en un esquema de dos niveles como el que se muestra en la figura (TODO: Añadir figura), en el que entran en juego un \emph{proxy} inverso general y los concretos de cada servidor.
+Otra funcionalidad de peso es el segundo nivel de redirección. Se trata de tener un \emph{proxy} inverso en cada servidor que ejecuta alguna parte de la aplicación con la motivación de no exponer un puerto por cada microservicio. De esta forma, todas las peticiones se mandan al \emph{proxy} inverso del servidor en cuestión y este las redirige a los microservicios que corre. Esto desemboca en un esquema de dos niveles como el que se muestra en la figura \ref{esquemaProxyInversoDoble}, en el que entran en juego un \emph{proxy} inverso general y los concretos de cada servidor.
 
-% TODO: Esquema dos niveles de proxy inverso
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/esquemaProxyInversoDoble}
+\caption{Esquema de dos niveles de \emph{proxy} inverso.}
+	\label{esquemaProxyInversoDoble}
+\end{figure}
 
 Para implementar esta característica se plantearon varias opciones. Primero se decidió utilizar YARP también en el código de los servidores que ejecutan los microservicios pero, al poco tiempo de empezar, se encontraron problemas y aspectos que no terminaban de cuadrar con lo que se buscaba. El más importante de ellos era el hecho de tener que mantener el código que envuelve la infraestructura de YARP en dos lugares diferentes. Para evitarlo, finalmente se optó por hacer que cada servidor ejecutara un \emph{proxy} inverso como si se tratara de un microservicio más. Es momento entonces de darse cuenta de que la elección del prototipo autogenerado fue correcta, pues ahora permite realizar esto de una manera sencilla. También fue necesario modificar el código que carga el \emph{proxy} inverso de rutas para hacer lo propio con todos los \emph{proxy} inversos.\\\\
 
-Otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
-
-Para finalizar, se quiere mostrar un esquema (figura (TODO:Añadir figura)) del recorrido completo de una petición que proviene de la interfaz de usuario y pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él.
-
-% TODO: Esquema del recorrido completo de una petición que viene de la UI y pasa por varios microservicios.
+Por último, otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
