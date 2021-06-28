@@ -540,8 +540,6 @@ Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \
 
 \begin{itemize}
 
-%TODO: Añadir más middlewares utilizados (filtro de versión de peticiones).
-
 	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
 
 	\item \textbf{\emph{SameMachineFilter}}. Su finalidad es filtrar las posibles destinaciones del enrutamiento de una petición de forma que si una de las direcciones corresponde a la misma máquina en la que se encuentra el \emph{proxy} inverso, sea redirigida hacía ella. Esto puede suceder cuando el microservicio destino se encuentra desplegado en la misma máquina. De esta manera se ahorra tiempo evitando hacer una petición a otra dirección.
@@ -652,17 +650,21 @@ El microservicio autogenerado resultante se muestra en la figura \ref{prototipoA
 
 			\subsubsection{Comparativa}
 
-Una vez construidos los prototipos, se procedió a medir el impacto de seguir la norma para decidir qué prototipo desechar y con cuál seguir adelante. Para ello, se creó una aplicación de consola muy simple que se encargara de probar los dos microservicios de \emph{proxy} inverso creados. Esta lanzaba peticiones sobre el \emph{proxy} inverso que se le indicara para que este las redirigiera y calculaba el tiempo medio de estas.
+Una vez construidos los prototipos, se procedió a medir el impacto de seguir la norma para decidir qué prototipo desechar y con cuál seguir adelante. Para ello, se creó una aplicación de consola muy simple que se encargara de probar los dos microservicios de \emph{proxy} inverso creados. Esta lanzaba un número determinado de veces la misma petición sobre el \emph{proxy} inverso que se le indicara para que este la redirigiera y calcular así el tiempo medio de respuesta. La figura \ref{medidorTiempos} muestra su código principal, el cual era ejecutado una vez por cada prototipo.
 
-% TODO: Sacar foto del código y comentarlo mejor
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.9]{imagenes/medidorTiempos}
+\caption{Código principal de la aplicación de consola para medir los tiempos del enrutamiento de los dos prototipos.}
+	\label{medidorTiempos}
+\end{figure}
 
 Es importante destacar que las acciones de añadir y eliminar rutas dinámicamente, todavía por implementar, no son relevantes en esta comparativa ya que se llevan a cabo muy pocas veces en relación con el enrutamiento, es decir, no son las más comunes. Por este motivo, no se ha creído conveniente medirlas y han sido implementadas con posterioridad.
 
 Por otro lado, es interesante comentar por qué desde un primer momento se enfocaba la comparativa como una prueba para ver si el microservicio autogenerado era viable y, por tanto, preferible sobre el otro. Uno de los motivos era que, si se utilizaba la generación de código, el \emph{proxy} inverso se podría desplegar con el mismo procedimiento que estaba pensado para el resto de microservicios, lo que evitaría tener que crear un mecanismo especial para él y permitiría conservar esa homogeneidad para simplificar los despliegues. Otro motivo se trataba de la trivialidad para hacer cualquier cambio de estructura, pues la generación de código lo haría de forma automática. Por el contrario, habría que hacerlo manualmente en el microservicio a mano para continuar con el cumplimiento del requisito no funcional RNF04, del apartado \ref{requisitosNoFuncionales}.
 
-Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico. El tiempo medio de respuesta de una petición en el caso del prototipo autogenerado solo era un 3\% más lenta que en el microservicio hecho a mano, lo que se consideró despreciable e insuficiente para contrarrestar las ventajas comentadas. De esta forma, se decidió eliminar el primer prototipo y continuar con la versión autogenerada.
-
-% TODO: Comprobar porcentaje y mostrar alguna gráfica o algo
+Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico.
+En concreto, para 10000 iteraciones se obtuvieron tiempos medios de respuesta de 3,6 milisegundos para el prototipo a mano y de 3,7 para el autogenerado. Se realizaron pruebas con diferente número de iteraciones pero los resultados no variaron en demasía. Con esto se concluye que utilizar el segundo prototipo supone una penalización de tiempo de no llega al 3\%. Esto se consideró despreciable e insuficiente para contrarrestar las ventajas comentadas por lo que se decidió eliminar el primer prototipo y continuar así con la versión autogenerada.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSOLIDACIÓN DEL MICROSERVICIO AUTOGENERADO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -787,8 +789,6 @@ Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{l
 Una de las funcionalidades más importantes añadidas en esta etapa ha sido permitir la multiinstancia de microservicios. Esta consiste en soportar la coexistencia de varias instancias de un mismo microservicio de forma que las mismas peticiones puedan ser enrutadas a diferentes direcciones. De esta forma se permite tener más de un recurso atendiendo determinadas peticiones, si se necesita. Relacionado con esto, se permite también realizar balanceo de carga entre las diferentes instancias de un mismo microservicio.
 
 Para llevar a cabo esta modificación fue necesario primero mejorar el sistema de creación de identificadores. YARP utiliza tres entidades para configurar rutas: \emph{Route}, \emph{Cluster} y \emph{Destination}. No es relevante entrar en mucho más detalle del funcionamiento interno pero sí comentar que las entidades de estos tipos necesitan un identificador único. Este se construía cuando se añadían rutas y de manera un poco rudimentaria por lo que hubo que hacer algo al respecto. La solución fue sistematizar su creación utilizando los parámetros de entrada y asegurando que no se pudieran repetir. Además, era importante que la forma de crearlos fuera idempotente, es decir, que siempre se obtuviera el mismo resultado para los mismos parámetros de entrada. Los métodos encargados de esto se encuentran en la clase \emph{RoutesUtils} y se muestran en la figura \ref{creacionIdentificadores}.
-
-% TODO: Añadir 'de forma determinista'
 
 \begin{figure}[ht]
 \centering
