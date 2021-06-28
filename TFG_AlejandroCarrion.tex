@@ -503,25 +503,74 @@ En lo que se refiere al diseño de la solución, se va presentar su estructura f
 
 En el apartado \ref{requisitosNoFuncionales}, el requisito no funcional RNF04 impone que la estructura del \emph{proxy} inverso debe ser similar a la del resto de microservicios. Por este motivo, la estructura del producto final sigue esa referencia, que pasa a detallarse a continuación.
 
-Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en particular, tiene una arquitectura de 7 capas:
+Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en particular, tiene una arquitectura autogenerada de 8 capas:
 
 \begin{itemize}
 
-	\item \textbf{Dominio}. (no hay dominio)
+	\item \textbf{Dominio}. En ella se encuentran las entidades que representan el dominio de la aplicación. Estas son creadas en base a su previo modelado.
 
-	\item \textbf{Contratos}.
+	\item \textbf{Contratos}. Principalmente contiene los DTOs, u objetos para la transferencia de datos. Son objetos que representan las entidades de dominio que utiliza el sistema internamente con la intención de no darlas a conocer directamente. De esta forma, se ofrece la información que se quiere y se puede ocultar o modificar parte de ella. Además, esta capa también contiene las interfaces de las acciones del backend que se invocan a través de la capa de proxy.
 
-	\item \textbf{Persistencia}.
+	\item \textbf{Persistencia}. Es la capa que se encarga de acceder y realizar las operaciones relacionadas con la base datos. El \emph{proxy} inverso no necesita persistir nada por lo que esta capa no existe en este caso.
 
-	\item \textbf{Lógica}.
+	\item \textbf{Lógica}. Esta capa contiene la lógica de negocio. Al igual que la entidades de dominio, las acciones que representan la lógica han de ser modeladas. No solo incluye código autogenerado sino que las acciones son programadas aquí también.
 
-	\item \textbf{Aplicación}.
+	\item \textbf{Aplicación}. Se encarga de dar soporte a las operaciones CRUD (\emph{create}, \emph{read}, \emph{update} y \emph{delete}). También comprueba los permisos del usuario sobre la acción que se quiere realizar.
 
-	\item \textbf{Servicios}.
+	\item \textbf{Servicios}. Representa el punto de entrada al microservicio. Define las acciones HTTP que expone el servicio a través de controladores.
 
-	\item \textbf{\emph{Proxy}}.
+	\item \textbf{\emph{Proxy}}. Contiene el código necesario para invocar las acciones del backend, expuestas en la capa de servicios. Esta capa es utilizada desde la interfaz de usuario para realizar peticiones al microservicio o incluso cuando un microservicio se comunica con otro.
+
+	\item \textbf{Referencias externas}. Se encarga de registrar los \emph{proxies} que se van a consumir para abstraer estas dependencias y así poder solucionar problemas de dependencias cíclicas.
 
 \end{itemize}
+
+Tras comentar las capas que forman la arquitectura del \emph{proxy} inverso, se muestra en la figura \ref{arquitectura} un esquema de cómo interactúan entre ellas.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{imagenes/arquitectura}
+\caption{Esquema de las capas de la arquitectura del \emph{proxy} inverso.}
+	\label{arquitectura}
+\end{figure}
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CAPA DE LÓGICA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Capa de lógica}
+
+Por otro lado, cabe destacar que la capa que más ha sido necesario modificar ha sido la de lógica, pues las acciones del \emph{proxy} inverso se implementan en ella. Es por esto que se va a entrar en más detalla acerca de esta capa. Las figuras \ref{proyectoLogica} y \ref{proyectoTestsLogica} muestran la estructura de carpetas y clases que forman los proyectos de la capa de lógica y sus pruebas respectivamente. No todas las clases pero sí las más importantes serán comentadas a continuación.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{imagenes/proyectoLogica}
+\caption{Proyecto de Visual Studio de la capa de lógica.}
+	\label{proyectoLogica}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/proyectoTestsLogica}
+\caption{Proyecto de Visual Studio de pruebas para la capa de lógica.}
+	\label{proyectoTestsLogica}
+\end{figure}
+
+En el proyecto de lógica de la figura \ref{proyectoLogica} son reseñables los siguientes aspectos:
+
+\begin{itemize}
+
+	\item La carpeta \emph{Configuration} contiene clases que se encargan de procesar y llevar a cabo los cambios de configuración de rutas de manera dinámica. Se comunican así con las interfaces definidas por YARP para ello.
+
+	\item La clase \emph{RoutesLoaderHostedService} se encarga de realizar una carga inicial de rutas predefinidas, esto es, cuando se inicia el microservicio.
+
+	\item El \emph{RoutesLogicManager} implementa las acciones propias del \emph{reverse} proxy, es decir, las acciones de añadir y eliminar rutas.
+
+	\item La carpeta llamada \emph{Middlewares} contiene los \emph{middlewares} creados que se añaden a la \emph{pipeline} de YARP. Se profundiza en esto en el siguiente apartado, \ref{pipelineYARP}.
+
+	\item La clase \emph{RoutesUtils} extrae métodos de ayuda que se utilizan de forma repetida tales como la creación de identificadores de manera idempotente.
+
+\end{itemize}
+
+En el proyecto de pruebas simplemente destacar la existencia de tres clases de prueba principales, \emph{AddNewRoutesTests}, \emph{RemoveRoutesTests} y \emph{RoutesUtilsTests}. La primera para la acción de añadir rutas, la segunda para la de eliminarlas y la tercera para la clase \emph{RoutesUtils}. Por último, la clase \emph{LogicTestUtilities} incluye métodos auxiliares para realizar comprobaciones que se repiten en más de una prueba, como por ejemplo la comprobación de si una ruta determinada existe.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PIPELINE DE YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -637,7 +686,7 @@ Respecto al segundo prototipo, fue construido utilizando las mismas herramientas
 
 Así pues, se creó de cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello fue necesario modelar una entidad \emph{Route} con los campos necesarios para identificar las rutas, esto es, la ruta base de las peticiones que se tiene que capturar y la dirección a la que redirigirlas. También se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estas tres últimas acciones son las mismas que para el caso del microservicio manual, con algunas diferencias para adaptarse a la solución concreta.
 
-El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltaría el proyecto correspondiente a la capa de contratos, el cual se encuentra en una solución aparte y no es necesario mostrarlo para realizar esta comparativa puesto que las evidencias comentadas son suficientes.
+El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltarían los proyectos correspondientes a la capa de dominio y contratos, los cuales se encuentran en una solución aparte y no es necesario mostrarlos para realizar esta comparativa puesto que las evidencias comentadas son suficientes.
 
 \begin{figure}[ht]
 \centering
