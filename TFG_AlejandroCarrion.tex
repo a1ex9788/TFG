@@ -60,7 +60,7 @@ Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver 
 \centering
 \includegraphics[width=0.49\textwidth]{imagenes/proxy}
 \includegraphics[width=0.49\textwidth]{imagenes/proxyInverso}
-\caption[Esquema de un \emph{proxy} frente a un \emph{proxy} inverso.]{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso. Imágenes de \url{https://www.ionos.es/digitalguide/servidores/know-how/que-es-un-servidor-proxy-inverso}.}
+\caption{Esquema de un \emph{proxy} frente a un \emph{proxy} inverso.}
 	\label{proxyContraProxyInverso}
 \end{figure}
 
@@ -70,7 +70,7 @@ Como se puede inferir de las definiciones anteriores, el uso de un \emph{proxy} 
 \centering
 \includegraphics[width=0.49\textwidth]{imagenes/arquitecturaMicroserviciosBasica}
 \includegraphics[width=0.49\textwidth]{imagenes/arquitecturaMicroserviciosConProxyInverso}
-\caption[Arquitectura de microservicios básica frente a una con \emph{proxy} inverso.]{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso. Imágenes de \url{https://www.adictosaltrabajo.com/2020/05/27/introduccion-al-api-gateway-pattern}.}
+\caption{Arquitectura de microservicios básica frente a una con \emph{proxy} inverso.}
 	\label{proxyInversoContraNoProxyInverso}
 \end{figure}
 
@@ -621,7 +621,7 @@ Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concret
 
 	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
 
-	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo terminadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nuevo despliegue.
+	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nuevo despliegue.
 
 \end{itemize}
 
@@ -877,29 +877,40 @@ Una vez comentadas todas la funcionalidades del producto desarrollado se quiere 
 
 	\section{Pruebas} \label{pruebas}
 
-Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han realizado dos tipos de pruebas: unas más sencillas, hechas cada vez que se producía un incremento considerable de funcionalidad, y otras más formales, al final del proyecto.
+Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han definido y ejecutado dos tipos de pruebas: pruebas de aceptación y pruebas de regresión. Serán comentadas a continuación.
 
-Peticiones Postman a saco.
+Puesto que se trata de un componente clave en la arquitectura de la aplicación de la que forma parte, se ha considerado imprescindible incorporar las pruebas de su funcionamiento en el proceso de desarrollo, es decir, ejecutarlas durante la implementación de funcionalidades en lugar de dejarlas para el final. Con esto, se ha pretendido evitar todo tipo de problemas para no entorpecer el desarrollo a los demás miembros del equipo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también.
 
-(Pruebas unitarias) proxy y añadir/eliminar/getYarpNormalizedPath
+También resaltar que algunas de las pruebas definidas se han ejecutado utilizando consultas Postman, es por lo que estas han sido actualizadas y se ha ido creando nuevas a medida que se ha añadido funcionalidad.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Pruebas de aceptación} \label{pruebasDeAceptacion}
-		
-Algunas de las pruebas de aceptación más importantes se comentan a continuación.
+
+Se han definido pruebas de aceptación para especificar las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si se ha implementado correctamente. De esta manera, una unidad de trabajo no se puede considerar terminada hasta que no pase satisfactoriamente las pruebas de aceptación que tenga asignadas.
+
+A continuación, se va a mostrar una parte de las pruebas de aceptación elaboradas partiendo del nombre de la unidad de trabajo que prueban. Cabe destacar que, además, se han automatizado algunas de las más importantes para facilitar así su ejecución.
+
+% Pruebas unitarias y pruebas de integración
+% Añadir rutas, eliminar rutas, GetNormalizedPath, Enrutamiento
+
+\begin{itemize}
+
+	\item \textbf{Añadir rutas}
+
+	\item \textbf{Eliminar rutas}
+
+	\item \textbf{GetYarpNormalizedPath}
+
+\end{itemize}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE REGRESIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Pruebas de regresión}
 
-Se trata de una serie de comprobaciones definidas formalmente que han servido para verificar que las funcionalidades anteriormente implementadas no dejaban de funcionar al añadir nuevas.
+Se trata de la ejecución de todas las pruebas de aceptación de las unidades de trabajo finalizadas con anterioridad cuando se termina un incremento grande de funcionalidad. Se han ejecutado antes de cada despliegue y con ellas se ha verificado el correcto funcionamiento de todas las características del producto de cara a que los despliegues no dejaran caído el \emph{proxy} inverso ni cualquier otro componente de la aplicación.
 
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS FINALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-		\subsection{Pruebas finales}
-
-Con el propósito de garantizar la corrección del comportamiento del producto \emph{software} desarrollado se llevaron a cabo pruebas finales. A las pruebas de regresión anteriormente comentadas se les añade... Pruebas de regresión más exhaustivas, examinando todos los detalles.
+En concreto, se puede decir que han sido ejecutadas X veces...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
