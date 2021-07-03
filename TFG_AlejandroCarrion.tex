@@ -615,7 +615,7 @@ Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concret
 
 	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{Kanban}, las unidades de trabajo han estado ordenadas de mayor a menor prioridad en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
 
-	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar las unidades de trabajo que lo requerían. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entrará más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
+	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar las unidades de trabajo correspondientes a la funcionalidad básica del \emph{proxy} inverso. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entrará más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
 
 	\item \textbf{Búsqueda de la sencillez y el minimalismo}. Se trata de no realizar esfuerzos innecesarios a la hora de implementar una determinada funcionalidad, esto es, buscar la solución más simple que cumpla los requisitos establecidos. De esta forma, se evita invertir tiempo en aspectos no definitivos o que se modificarán con posterioridad y que no afectan al funcionamiento inmediato del producto.
 
@@ -646,7 +646,7 @@ Así pues, la construcción de los prototipos culminaría en una medición de ti
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\section{Programación}
+	\section{Programación} \label{programacion}
 
 La parte de programación del \emph{proxy} inverso que protagoniza este trabajo ha pasado por distintas etapas o fases que se van a comentar a continuación. Estas etapas han sido creadas para facilitar la comprensión del desarrollo y las funcionalidades añadidas al producto. De esta forma, las agrupan para comentarlas poco a poco junto con los problemas o dificultades encontradas a la hora de implementarlas.
 
@@ -877,19 +877,21 @@ Una vez comentadas todas la funcionalidades del producto desarrollado se quiere 
 
 	\section{Pruebas} \label{pruebas}
 
-Para comprobar el correcto funcionamiento del \emph{proxy} inverso se han definido y ejecutado dos tipos de pruebas: pruebas de aceptación y pruebas de regresión. Serán comentadas a continuación.
+Primero de todo, es interesante destacar que los despliegues comentados en el apartado de programación anterior (\ref{programacion}) se pueden considerar pruebas. En ellos se introduce el \emph{proxy} inverso en el entorno en el que finalmente va a trabajar para ver cómo responde a medida que se le añaden funcionalidades. Se trata, sin duda, de pruebas que pretenden observar el comportamiento del producto \emph{software} y ver si ocurre algún fallo. Como han sido detallados en dicho apartado no cabe mencionar gran cosa más acerca de ellos, simplemente enfatizar que sirvieron para descubrir pequeños errores tales como el de los \emph{timeouts} grandes o el de las peticiones pesadas. Ambos hacían que las peticiones enrutadas no terminaran correctamente.
 
-Puesto que se trata de un componente clave en la arquitectura de la aplicación de la que forma parte, se ha considerado imprescindible incorporar las pruebas de su funcionamiento en el proceso de desarrollo, es decir, ejecutarlas durante la implementación de funcionalidades en lugar de dejarlas para el final. Con esto, se ha pretendido evitar todo tipo de problemas para no entorpecer el desarrollo a los demás miembros del equipo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también.
+Estas pruebas realizadas durante el desarrollo tienen un porqué. Este es el hecho de querer seguir la práctica ágil de entregas continuas, comentada en la sección \ref{metodologia}, con el fin de obtener \emph{feedback} continuo acerca del grado de corrección del \emph{proxy} inverso sobre lo que se espera de él. De esta forma, se ha considerado imprescindible no dejar las pruebas para el final, puesto que se trata de un componente clave en la arquitectura de la aplicación de la que forma parte.
 
-También resaltar que algunas de las pruebas definidas se han ejecutado utilizando consultas Postman, es por lo que estas han sido actualizadas y se ha ido creando nuevas a medida que se ha añadido funcionalidad.
+Desde una perspectiva diferente a las pruebas de puesta en funcionamiento real recién descritas, se han llevado a cabo otro tipo de ellas para comprobar el correcto funcionamiento del \emph{proxy} inverso: pruebas de aceptación y pruebas de regresión. Serán comentadas con más detalle a continuación. También es conveniente resaltar que algunas de las pruebas se han ejecutado utilizando consultas Postman, es por lo que estas han sido actualizadas y se ha ido creando nuevas a medida que se han añadido nuevas características.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Pruebas de aceptación} \label{pruebasDeAceptacion}
 
-Se han definido pruebas de aceptación para especificar las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si se ha implementado correctamente. De esta manera, una unidad de trabajo no se puede considerar terminada hasta que no pase satisfactoriamente las pruebas de aceptación que tenga asignadas.
+Recordando lo comentado en el apartado \ref{metodologia}, se han definido pruebas de aceptación para especificar muchas de las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si esta Sse ha implementado correctamente.
 
-A continuación, se va a mostrar una parte de las pruebas de aceptación elaboradas partiendo del nombre de la unidad de trabajo que prueban. Cabe destacar que, además, se han automatizado algunas de las más importantes para facilitar así su ejecución.
+Una unidad de trabajo no considera terminada hasta que no pasa satisfactoriamente las pruebas de aceptación que tiene asignadas. Así pues, las pruebas de aceptación han sido ejecutadas cuando se ha creído que la unidad de trabajo a la cual hacen referencia estaba correctamente implementada y antes de incluirla en el grupo de las terminadas. En caso de no obtener un resultado positivo, estas se pasaban de nuevo una vez corregido el problema, pudiéndose repetir este proceso infinitas veces.
+
+A continuación, se va a mostrar una parte de las pruebas de aceptación elaboradas partiendo del nombre de la unidad de trabajo o característica que prueban. Cabe destacar que, además, se han automatizado algunas de las más importantes para facilitar así su ejecución. Se enseñará también el código de alguna de ellas.
 
 % Pruebas unitarias y pruebas de integración
 % Añadir rutas, eliminar rutas, GetNormalizedPath, Enrutamiento
@@ -898,9 +900,39 @@ A continuación, se va a mostrar una parte de las pruebas de aceptación elabora
 
 	\item \textbf{Añadir rutas}
 
+		\begin{itemize}
+
+			\item Cuando las rutas no existe, las rutas son creadas
+
+			\item Cuando algunas rutas existen, las rutas existentes no son creadas
+
+			\item Cuando tienen la misma ruta base de peticiones, diferentes destinaciones son creadas
+
+		\end{itemize}
+
 	\item \textbf{Eliminar rutas}
 
-	\item \textbf{GetYarpNormalizedPath}
+		\begin{itemize}
+
+			\item Cuando las rutas existen, las rutas son eliminadas
+
+			\item Cuando las rutas no existen, las rutas no son eliminadas
+
+			\item Cuando existen más rutas con la misma ruta base de peticiones, solo las rutas especificadas son eliminadas
+
+		\end{itemize}
+
+	\item \textbf{Normalización de las ruta base de las peticiones}
+	
+	\item \textbf{Enrutamiento}
+	
+		\begin{itemize}
+
+			\item Cuando la ruta existe, el enrutamiento se lleva a cabo correctamente
+
+			\item Cuando la ruta no existe, se recibe un mensaje de error indicando que no se ha encontrado el \emph{endpoint}
+
+		\end{itemize}
 
 \end{itemize}
 
@@ -911,6 +943,8 @@ A continuación, se va a mostrar una parte de las pruebas de aceptación elabora
 Se trata de la ejecución de todas las pruebas de aceptación de las unidades de trabajo finalizadas con anterioridad cuando se termina un incremento grande de funcionalidad. Se han ejecutado antes de cada despliegue y con ellas se ha verificado el correcto funcionamiento de todas las características del producto de cara a que los despliegues no dejaran caído el \emph{proxy} inverso ni cualquier otro componente de la aplicación.
 
 En concreto, se puede decir que han sido ejecutadas X veces...
+
+Cabe resaltar que, con esto, se ha pretendido evitar todo tipo de problemas que pudiera entorpecer el desarrollo a los demás miembros del equipo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
