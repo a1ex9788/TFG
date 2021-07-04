@@ -621,7 +621,7 @@ Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concret
 
 	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
 
-	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nuevo despliegue.
+	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nueva entrega o despliegue. Las pruebas de regresión llevadas a cabo en este proyecto se comentarán en el apartado \ref{pruebasDeRegresion}.
 
 \end{itemize}
 
@@ -877,74 +877,97 @@ Una vez comentadas todas la funcionalidades del producto desarrollado se quiere 
 
 	\section{Pruebas} \label{pruebas}
 
-Primero de todo, es interesante destacar que los despliegues comentados en el apartado de programación anterior (\ref{programacion}) se pueden considerar pruebas. En ellos se introduce el \emph{proxy} inverso en el entorno en el que finalmente va a trabajar para ver cómo responde a medida que se le añaden funcionalidades. Se trata, sin duda, de pruebas que pretenden observar el comportamiento del producto \emph{software} y ver si ocurre algún fallo. Como han sido detallados en dicho apartado no cabe mencionar gran cosa más acerca de ellos, simplemente enfatizar que sirvieron para descubrir pequeños errores tales como el de los \emph{timeouts} grandes o el de las peticiones pesadas. Ambos hacían que las peticiones enrutadas no terminaran correctamente.
+Primero de todo, es interesante destacar que los despliegues comentados en el apartado de programación anterior (\ref{programacion}) se pueden considerar pruebas. En ellos se introduce el \emph{proxy} inverso en el entorno en el que finalmente va a trabajar para ver cómo responde a medida que se le añaden funcionalidades. Se trata, sin duda, de pruebas que pretenden observar el comportamiento del producto \emph{software} y ver si ocurre algún fallo o problema. Como han sido detallados en dicho apartado no cabe mencionar gran cosa más acerca de ellos, simplemente enfatizar que sirvieron para descubrir pequeños errores tales como el de los \emph{timeouts} grandes o el de las peticiones pesadas. Ambos hacían que las peticiones enrutadas no terminaran correctamente y gracias estas pruebas se pudieron solucionar antes de dar por finalizado el proyecto.
 
 Estas pruebas realizadas durante el desarrollo tienen un porqué. Este es el hecho de querer seguir la práctica ágil de entregas continuas, comentada en la sección \ref{metodologia}, con el fin de obtener \emph{feedback} continuo acerca del grado de corrección del \emph{proxy} inverso sobre lo que se espera de él. De esta forma, se ha considerado imprescindible no dejar las pruebas para el final, puesto que se trata de un componente clave en la arquitectura de la aplicación de la que forma parte.
 
-Desde una perspectiva diferente a las pruebas de puesta en funcionamiento real recién descritas, se han llevado a cabo otro tipo de ellas para comprobar el correcto funcionamiento del \emph{proxy} inverso: pruebas de aceptación y pruebas de regresión. Serán comentadas con más detalle a continuación. También es conveniente resaltar que algunas de las pruebas se han ejecutado utilizando consultas Postman, es por lo que estas han sido actualizadas y se ha ido creando nuevas a medida que se han añadido nuevas características.
+Desde una perspectiva diferente a las pruebas de puesta en funcionamiento real recién descritas, se han llevado a cabo otro tipo de ellas para comprobar el correcto funcionamiento del \emph{proxy} inverso: pruebas de aceptación y pruebas de regresión. De la misma manera, han sido ejecutadas durante el desarrollo en lugar de al final de este y serán comentadas con más detalle a continuación. También es conveniente resaltar se ha utilizado consultas Postman para realizar algunas de las pruebas, por lo que estas han sido actualizadas y se ha ido creando otras a medida que se han añadido nuevas características.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE ACEPTACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Pruebas de aceptación} \label{pruebasDeAceptacion}
 
-Recordando lo comentado en el apartado \ref{metodologia}, se han definido pruebas de aceptación para especificar muchas de las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si esta Sse ha implementado correctamente.
+Recordando lo comentado en el apartado \ref{metodologia}, se han definido pruebas de aceptación (PAs) para especificar muchas de las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si esta se ha implementado correctamente.
 
-Una unidad de trabajo no considera terminada hasta que no pasa satisfactoriamente las pruebas de aceptación que tiene asignadas. Así pues, las pruebas de aceptación han sido ejecutadas cuando se ha creído que la unidad de trabajo a la cual hacen referencia estaba correctamente implementada y antes de incluirla en el grupo de las terminadas. En caso de no obtener un resultado positivo, estas se pasaban de nuevo una vez corregido el problema, pudiéndose repetir este proceso infinitas veces.
+Una unidad de trabajo no se considera terminada hasta que no pasa satisfactoriamente las pruebas de aceptación que tiene asignadas. Así pues, las pruebas de aceptación han sido ejecutadas cuando se ha creído que la unidad de trabajo a la cual hacen referencia ha estado correctamente implementada y como paso previo a incluirla en el grupo de las terminadas. En caso de no obtener un resultado positivo, estas se pasaban de nuevo una vez corregido el problema, pudiéndose repetir este proceso más de una vez.
 
-A continuación, se va a mostrar una parte de las pruebas de aceptación elaboradas partiendo del nombre de la unidad de trabajo o característica que prueban. Cabe destacar que, además, se han automatizado algunas de las más importantes para facilitar así su ejecución. Se enseñará también el código de alguna de ellas.
+A continuación, se va a mostrar una parte de las pruebas de aceptación elaboradas partiendo del nombre de la unidad de trabajo que prueban. Cabe destacar que, además, se han automatizado algunas de las más importantes para facilitar así su ejecución. Se enseñará también el código de alguna de ellas.
 
-% Pruebas unitarias y pruebas de integración
-% Añadir rutas, eliminar rutas, GetNormalizedPath, Enrutamiento
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEFINICIÓN DE ALGUNAS PAs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{itemize}
+			\subsubsection{Definición de algunas PAs}
 
-	\item \textbf{Añadir rutas}
+Las figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones}, \ref{PAsEnrutamiento}, \ref{PAsPersonalizacionTimeouts} y \ref{PAsMultiinstanciaDeMicroservicios} son capturas de pantalla de las pruebas de aceptación de cuatro unidades de trabajo. Para cada PA se indica un nombre que la identifica, un primer punto con la acción o acciones que hay que llevar a cabo para ejecutarla y otro punto con el resultado esperado.
 
-		\begin{itemize}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/PAsAñadirRutasDinamicamente}
+\caption{Pruebas de aceptación de la unidad de trabajo 'Añadir rutas dinámicamente'.}
+	\label{PAsAñadirRutasDinamicamente}
+\end{figure}
 
-			\item Cuando las rutas no existe, las rutas son creadas
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/PAsNormalizarRutaBasePeticiones}
+\caption{Pruebas de aceptación de la unidad de trabajo 'Normalizar rutas base peticiones'.}
+	\label{PAsNormalizarRutaBasePeticiones}
+\end{figure}
 
-			\item Cuando algunas rutas existen, las rutas existentes no son creadas
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/PAsEnrutamiento}
+\caption{Pruebas de aceptación de la unidad de trabajo 'Enrutamiento'.}
+	\label{PAsEnrutamiento}
+\end{figure}
 
-			\item Cuando tienen la misma ruta base de peticiones, diferentes destinaciones son creadas
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/PAsPersonalizacionTimeouts}
+\caption{Pruebas de aceptación de la unidad de trabajo 'Personalización timeouts'.}
+	\label{PAsPersonalizacionTimeouts}
+\end{figure}
 
-		\end{itemize}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/PAsMultiinstanciaDeMicroservicios}
+\caption{Pruebas de aceptación de la unidad de trabajo 'Multiinstancia de microservicios'.}
+	\label{PAsMultiinstanciaDeMicroservicios}
+\end{figure}
 
-	\item \textbf{Eliminar rutas}
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS AUTOMATIZADAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\begin{itemize}
+			\subsubsection{Pruebas automatizadas}
 
-			\item Cuando las rutas existen, las rutas son eliminadas
+Las figuras \ref{testAñadirRutas}, \ref{testGetYarpNormalizedRequestsBasePath} y \ref{testsEnrutamiento} muestran el código de algunas de las pruebas de aceptación automatizadas. Es interesante mencionar que corresponden a PAs cuyas descripciones se han enseñado en la sección anterior, figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones} y \ref{PAsEnrutamiento} en concreto.
 
-			\item Cuando las rutas no existen, las rutas no son eliminadas
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/testAñadirRutas}
+\caption{Prueba de aceptación automatizada de la unidad de trabajo 'Añadir rutas dinámicamente'.}
+	\label{testAñadirRutas}
+\end{figure}
 
-			\item Cuando existen más rutas con la misma ruta base de peticiones, solo las rutas especificadas son eliminadas
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/testGetYarpNormalizedRequestsBasePath}
+\caption{Pruebas de aceptación automatizadas de la unidad de trabajo 'Normalizar rutas base peticiones'.}
+	\label{testGetYarpNormalizedRequestsBasePath}
+\end{figure}
 
-		\end{itemize}
-
-	\item \textbf{Normalización de las ruta base de las peticiones}
-	
-	\item \textbf{Enrutamiento}
-	
-		\begin{itemize}
-
-			\item Cuando la ruta existe, el enrutamiento se lleva a cabo correctamente
-
-			\item Cuando la ruta no existe, se recibe un mensaje de error indicando que no se ha encontrado el \emph{endpoint}
-
-		\end{itemize}
-
-\end{itemize}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{imagenes/testsEnrutamiento}
+\caption{Pruebas de aceptación automatizadas de la unidad de trabajo 'Enrutamiento'.}
+	\label{testsEnrutamiento}
+\end{figure}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS DE REGRESIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Pruebas de regresión}
+		\subsection{Pruebas de regresión} \label{pruebasDeRegresion}
 
-Se trata de la ejecución de todas las pruebas de aceptación de las unidades de trabajo finalizadas con anterioridad cuando se termina un incremento grande de funcionalidad. Se han ejecutado antes de cada despliegue y con ellas se ha verificado el correcto funcionamiento de todas las características del producto de cara a que los despliegues no dejaran caído el \emph{proxy} inverso ni cualquier otro componente de la aplicación.
+Las pruebas de regresión son pruebas que se realizan sobre un producto \emph{software} anteriormente probado al que se le han hecho modificaciones. Con ellas se pretende asegurarse de que no se han introducido defectos que puedan producir errores sobre las funcionalidades implementadas previamente. 
 
-En concreto, se puede decir que han sido ejecutadas X veces...
-
-Cabe resaltar que, con esto, se ha pretendido evitar todo tipo de problemas que pudiera entorpecer el desarrollo a los demás miembros del equipo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también.
+En el caso del \emph{proxy} inverso, han consistido en ejecutar todas las pruebas de aceptación de las unidades de trabajo ya terminadas. Se han ejecutado antes de cada despliegue y con ellas se ha verificado el correcto funcionamiento de todas las características del producto de cara a que los despliegues no hicieran fallar el \emph{proxy} inverso ni cualquier otro componente de la aplicación. De esta forma, con estas pruebas se ha pretendido evitar todo tipo de problemas que pudieran entorpecer a los demás miembros del equipo de desarrollo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también. Es por esto que se han considerado un seguro de vida para garantizar, en cierta medida, que los despliegues serían un éxito.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
