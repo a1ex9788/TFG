@@ -876,6 +876,18 @@ Para implementar esta característica se plantearon varias opciones. Primero se 
 
 Otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
 
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEMA PETICIONES PESADAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Problema peticiones pesadas}
+
+De la misma manera que se encontró un fallo del \emph{proxy} inverso correspondiente a las peticiones con \emph{timeouts} grandes gracias a los despliegues progresivos que se han ido realizando, también se descubrió otra deficiencia relacionada con las peticiones que pesaban mucho, es decir, las que tenían un cuerpo muy grande. En este caso la petición problemática devolvía un código de estado 400, error general del lado del cliente.
+
+Es interesante resaltar que la petición que produjo el fallo no podía ser reproducida ya que era fruto de la interacción múltiple entre varios microservicios. Además, el código de estado de error era mucho menos descriptivo que en el otro problema, un 400 genérico que no aportaba casi información. Tras mucho tiempo de investigaciones se llegó a la conclusión de que la única posibilidad era que tratase de una petición demasiado pesada. De esta forma, se intentó reproducir el mensaje de error con una petición Postman con un cuerpo muy grande y, ¡tachán!, problema encontrado. Sin embargo, faltaba averiguar cómo indicar a YARP que dejara de tener ese comportamiento o, al menos, aumentar el peso máximo de las peticiones.
+
+La documentación oficial no decía nada al respecto por lo que se dedujo, después de unas cuantas pruebas, que YARP utilizaba la configuración de Kestrel \cite{Kestrel} para establecer el máximo peso que puede tener una petición. Kestrel no es más que el servidor web que utilizan por debajo las aplicaciones de .NET y, por consiguiente, YARP. De esta forma, se eliminó el límite máximo de peso para las peticiones de la manera que muestra la figura (TODO: Añadir figura). Con esta solución, los microservicios destino de los enrutamientos serían quienes establecerían el peso máximo.
+
+% TODO: Añadir figura Kestrel
+
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RECORRIDO PETICIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 			\subsubsection{Recorrido peticiones}
@@ -893,9 +905,7 @@ Una vez comentadas todas la funcionalidades del producto desarrollado se quiere 
 
 	\section{Pruebas} \label{pruebas}
 
-Primero de todo, es interesante destacar que los despliegues comentados en el apartado de programación anterior (\ref{programacion}) se pueden considerar pruebas. En ellos se introduce el \emph{proxy} inverso en el entorno en el que finalmente va a trabajar para ver cómo responde a medida que se le añaden funcionalidades. Se trata, sin duda, de pruebas que pretenden observar el comportamiento del producto \emph{software} y ver si ocurre algún fallo o problema. Como han sido detallados en dicho apartado no cabe mencionar gran cosa más acerca de ellos, simplemente enfatizar que sirvieron para descubrir pequeños errores tales como el de los \emph{timeouts} grandes o el de las peticiones pesadas (TODO: Hablar de este problema). Ambos hacían que las peticiones enrutadas no terminaran correctamente y gracias a estas pruebas se pudieron solucionar antes de dar por finalizado el proyecto.
-
-% TODO: Hablar del problema de las peticiones pesadas.
+Primero de todo, es interesante destacar que los despliegues comentados en el apartado de programación anterior (\ref{programacion}) se pueden considerar pruebas. En ellos se introduce el \emph{proxy} inverso en el entorno en el que finalmente va a trabajar para ver cómo responde a medida que se le añaden funcionalidades. Se trata, sin duda, de pruebas que pretenden observar el comportamiento del producto \emph{software} y ver si ocurre algún fallo o problema. Como han sido detallados en dicho apartado no cabe mencionar gran cosa más acerca de ellos, simplemente enfatizar que sirvieron para descubrir pequeños errores tales como el de los \emph{timeouts} grandes o el de las peticiones pesadas. Ambos hacían que las peticiones enrutadas no terminaran correctamente y gracias a estas pruebas se pudieron solucionar antes de dar por finalizado el proyecto.
 
 Estas pruebas realizadas durante el desarrollo tienen un porqué. Este es el hecho de querer seguir la práctica ágil de entregas continuas, comentada en la sección \ref{metodologia}, con el fin de obtener \emph{feedback} continuo acerca del grado de corrección del \emph{proxy} inverso sobre lo que se espera de él. De esta forma, se ha considerado imprescindible no dejar las pruebas para el final, puesto que se trata de un componente clave en la arquitectura de la aplicación de la que forma parte.
 
@@ -1053,6 +1063,10 @@ Sitio oficial de Trello:\\
 \bibitem{Docker}
 Sitio oficial de Docker:\\
 \url{https://www.docker.com}
+
+\bibitem{Kestrel}
+Documentación de Microsoft acerca de Kestrel:\\
+\url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-5.0}
 
 \end{thebibliography}
 
