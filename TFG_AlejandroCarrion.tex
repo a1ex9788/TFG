@@ -805,21 +805,17 @@ Como modificación común para los dos modos, se tuvo que repensar el orden de d
 
 			\subsubsection{Problemas}
 
-El problema más grande que surgió a raíz de los primeros despliegues fue con unos \emph{timeouts}. Resulta que dos microservicios concretos realizaban determinadas peticiones con un \emph{timeout} muy grande debido al elevado coste de las mismas y por algún motivo dichas peticiones no se completaban satisfactoriamente al pasar por el \emph{proxy} inverso. El código de estado de error que tenían era el 504, correspondiente al mensaje en inglés '\emph{Gateway timeout}'. Parecía que el \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Para solucionarlo momentáneamente y no dejar caídos esos microservicios, se optó por hacer que ellos y solo ellos no lo utilizaran hasta que el problema fuera analizado en detalle. Finalmente, sería resuelto más adelante. Se comentará en la siguiente etapa del desarrollo.
+El problema más grande que surgió a raíz de los primeros despliegues fue con unos \emph{timeouts}. Resulta que dos microservicios concretos realizaban determinadas peticiones con un \emph{timeout} muy grande debido al elevado coste de las mismas y por algún motivo dichas peticiones no se completaban satisfactoriamente al pasar por el \emph{proxy} inverso. El código de estado de error que tenían era el 504, correspondiente al mensaje en inglés '\emph{Gateway timeout}'. Parecía que el \emph{proxy} inverso cortaba las llamadas antes de que terminaran. Para solucionarlo momentáneamente y no dejar caídos esos microservicios, se optó por hacer que ellos y solo ellos no lo utilizaran hasta que el problema fuera analizado en detalle.
+
+El problema recién expuesto fue estudiado a fondo más tarde y al final resultó ser culpa de YARP, que utiliza un timeout por defecto de 100 segundos para redirigir peticiones. La solución fue aumentarlo para las rutas correspondientes a las peticiones que se redirigen hacia los microservicios en cuestión. Para ello, fue necesario modelar y añadir un parámetro opcional para el \emph{timeout} en la creación de las rutas. De esta forma se permite su personalización en función de la ruta que se utilice.
+
+La solución dada al problema puede parecer que no es la óptima ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se emparejan con esa ruta, siendo no del todo correcto. Una posible mejora sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones que lo necesiten. No obstante, no se cree necesario complicar el funcionamiento de esa manera ya que, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado. Además, si un cliente con un determinado \emph{timeout} realiza una petición a través del \emph{proxy} inverso y la ruta correspondiente tiene uno mayor, el que prevalecerá será el del cliente y el del \emph{proxy} inverso no tendrá efecto. De esta manera, solo sirve de límite en caso de que el del \emph{proxy} inverso sea menor.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTO FINAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Producto final}
 
 En esta etapa final se hicieron algunos retoques y se implementaron algunas funcionalidades más que se pasan a detallar.
-
-			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIMEOUTS GRANDES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-			\subsubsection{\emph{Timeouts} grandes}
-
-Primero de todo, se estudió a fondo el problema relacionado con los \emph{timeouts} de las peticiones, comentado en el apartado anterior. Al final resultó culpa de YARP, que utiliza un timeout por defecto de 100 segundos para redirigir peticiones. La solución fue aumentarlo para las rutas correspondientes a las peticiones que se redirigen hacia los microservicios en cuestión. Para ello, fue necesario modelar y añadir un parámetro opcional para el \emph{timeout} en la creación de las rutas. De esta forma se permite su personalización en función de la ruta que se utilice.
-
-La solución dada al problema de los \emph{timeouts} puede parecer que no es la óptima ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se relacionan con esa ruta, siendo no del todo correcto. Una posible solución sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones con timeouts grandes. No obstante, no se cree necesario complicar el funcionamiento de esa manera ya que, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado.
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PERSONALIZACIÓN DE LOS MENSAJES DE LOG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
