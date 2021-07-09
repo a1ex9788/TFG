@@ -255,6 +255,7 @@
 %%%%%%%%%%%%%
 
 \RequirePackage[colorlinks]{hyperref}
+\hypersetup{linkcolor=black}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
