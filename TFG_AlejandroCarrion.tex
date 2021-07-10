@@ -217,7 +217,7 @@ Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configurac
 
 	\section{Tecnología utilizada}
 
-Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de programación C\# y el entorno de desarrollo habitual para él, Visual Studio, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Este aspecto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
+Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Sitio oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Este aspecto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
 Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
 particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
@@ -1038,6 +1038,14 @@ Documentación de Microsoft acerca del patrón API \emph{Gateway}.\\
 \bibitem{MiddlewaresPipeline}
 Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pipeline} de \emph{middlewares}:\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
+
+\bibitem{DotNet}
+Documentación de Microsoft acerca de .NET:\\
+\url{https://docs.microsoft.com/es-es/dotnet}
+
+\bibitem{Csharp}
+Documentación de Microsoft acerca de C\#:\\
+\url{https://docs.microsoft.com/es-es/dotnet/csharp}
 
 \bibitem{NuGet}
 Documentación de Microsoft acerca de los paquetes NuGet:\\
