@@ -146,7 +146,7 @@ Este patrón fue descartado desde el primer momento porque no se quería tener l
 
 		\subsection{NGINX}
 
-Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
+Originariamente NGINX \footnote{¿Cómo utilizar NGINX como proxy inverso?: \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
 
 \begin{itemize}
 
@@ -162,7 +162,7 @@ Originariamente NGINX \cite{NGINX} fue construido para ser un servidor web pero 
 
 		\subsection{Apache HTTPD}
 
-Apache HTTPD \cite{Apache}. Además de ser un servidor web "básico", y proveer contenido estático y dinámico a los usuarios finales, Apache HTTPD puede también actuar como proxy inverso
+Apache HTTPD \footnote{¿Cómo utilizar Apache HTTPD como proxy inverso?: \url{https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html}}. Además de ser un servidor web "básico", y proveer contenido estático y dinámico a los usuarios finales, Apache HTTPD puede también actuar como proxy inverso
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRERÍAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -172,7 +172,7 @@ Apache HTTPD \cite{Apache}. Además de ser un servidor web "básico", y proveer 
 
 		\subsection{YARP}
 
-YARP \cite{YARP} es una librería hecha por el propio Microsoft \cite{Microsoft} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y así estandarizar su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
+YARP \footnote{Sitio oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería hecha por el propio Microsoft \cite{Microsoft} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y así estandarizar su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
 Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
 
@@ -193,7 +193,7 @@ Por último, la documentación propia no es corta pero tampoco excesiva. Asimism
 
 		\subsection{Ocelot}
 		
-Ocelot \cite{Ocelot} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
+Ocelot \footnote{Sitio oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
 
 \begin{itemize}
 
@@ -222,7 +222,7 @@ Primero de todo, la tecnología utilizada es .NET, más concreto, el lenguaje de
 Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
 particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
 
-Por último, se ha utilizado Postman \cite{Postman} para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
+Por último, se ha utilizado Postman para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman \footnote{Sitio oficial de Postman: \url{https://www.postman.com}} es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EJEMPLO DE USO BÁSICO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -613,7 +613,7 @@ Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido 
 
 	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas menudas denominadas unidades de trabajo. Estas definen funcionalidades más pequeñas y concretas que los casos de uso y son más abstractas que las historias de usuario, ya que manifiestan de forma más clara la posibilidad de tratarse de tareas no solo relacionadas con cambiar el producto sino otras como crear la base de datos o renovar una suscripción de un servicio web.
 
-	\item \textbf{Uso de un tablero \emph{Kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{Kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas, por ejemplo. La herramienta utilizada a modo de tablero \emph{Kanban} ha sido Trello \cite{Trello}.
+	\item \textbf{Uso de un tablero \emph{Kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{Kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas, por ejemplo. La herramienta utilizada a modo de tablero \emph{Kanban} ha sido Trello \footnote{Sitio oficial de Trello: \url{https://trello.com}}.
 
 	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{Kanban}, las unidades de trabajo han estado ordenadas de mayor a menor prioridad en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
 
@@ -764,7 +764,7 @@ Primero de todo, se va a explicar como se realizan los despliegues de la aplicac
 
 \begin{itemize}
 
-	\item El primero de ellos consiste en desplegar los microservicios en contenedores Docker \cite{Docker}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
+	\item El primero de ellos consiste en desplegar los microservicios en contenedores Docker \footnote{Sitio oficial de Docker: \url{https://www.docker.com}}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
 
 	\item El segundo es el que lleva a cabo el microservicio pensado para ello. A grandes rasgos, este ordena y organiza los servidores preparados para correr la aplicación y les dice a cada uno qué microservicio o microservicios tiene que ejecutar. Por el momento, los microservicios que despliega no se utilizan porque se encuentra en fase de pruebas.
 
@@ -1035,33 +1035,9 @@ Artículo breve de J. Lewis y M. Fowler acerca de los microservicios.
 Documentación de Microsoft acerca del patrón API \emph{Gateway}.\\
 \url{https://docs.microsoft.com/es-es/azure/architecture/microservices/design/gateway}
 
-\bibitem{NGINX}
-¿Cómo utilizar NGINX como proxy inverso?:\\
-\url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}
-
-\bibitem{Apache}
-¿Cómo utilizar Apache HTTPD como proxy inverso?:\\
-\url{https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html}
-
-\bibitem{YARP}
-Sitio oficial de YARP:\\
-\url{https://microsoft.github.io/reverse-proxy}
-
-\bibitem{Microsoft}
-Sitio oficial de Microsoft:\\
-\url{https://www.microsoft.com/es-es}
-
 \bibitem{MiddlewaresPipeline}
 Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pipeline} de \emph{middlewares}:\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
-
-\bibitem{Ocelot}
-Sitio oficial de Ocelot:\\
-\url{https://threemammals.com/ocelot}
-
-\bibitem{Postman}
-Sitio oficial de Postman:\\
-\url{https://www.postman.com}
 
 \bibitem{NuGet}
 Documentación de Microsoft acerca de los paquetes NuGet:\\
@@ -1070,14 +1046,6 @@ Documentación de Microsoft acerca de los paquetes NuGet:\\
 \bibitem{ISO25010}
 ISO/IEC 25010 (SQuaRE):\\
 \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}
-
-\bibitem{Trello}
-Sitio oficial de Trello:\\
-\url{https://trello.com}
-
-\bibitem{Docker}
-Sitio oficial de Docker:\\
-\url{https://www.docker.com}
 
 \bibitem{Kestrel}
 Documentación de Microsoft acerca de Kestrel:\\
