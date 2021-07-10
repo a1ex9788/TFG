@@ -54,7 +54,7 @@ Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios} y
 
 \end{itemize}
 
-Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que será su puerta de acceso y actuará de intermediario entre este y la interfaz de usuario y entre los propios microservicios. Por otro lado, también permitirá lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos, así como realizar balanceo de carga.
+Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que será su puerta de acceso y actuará de intermediario entre este y la interfaz de usuario, además de interconectar los propios microservicios. Por otro lado, también permitirá lanzar a ejecución múltiples instancias de estos con el fin de conseguir cierta tolerancia a fallos, así como realizar balanceo de carga.
 
 Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
@@ -84,13 +84,13 @@ La temática comentada fue elegida debido a la estrecha relación que guarda con
 
 	\section{Objetivos}
 
-El objetivo principal de este trabajo es construir un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. La construcción de este tiene las siguientes aspiraciones sobre este producto en construcción:
-
-% TODO: Revisar objetivos y añadir 'Hacer que los microservicios no se tengan que conocer entre ellos'.
+El objetivo principal de este trabajo es construir un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. Su elaboración tiene las siguientes aspiraciones sobre el producto en desarrollo:
 
 \begin{itemize}
 
 	\item \textbf{Ocultar los microservicios} que forman la aplicación para que la interfaz de usuario no acceda directamente a ellos por motivos de seguridad.
+
+	\item \textbf{Desacoplar los microservicios} entre ellos y evitar que cada uno tenga que conocer donde se encuentra el resto.
 
 	\item Permitir \textbf{múltiples instancias} en ejecución de los microservicios que, a su vez, tiene por finalidad:
 

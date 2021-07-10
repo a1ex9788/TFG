@@ -1,3 +1,4 @@
 - Los beneficios de las arquitecturas de microservicios son míos, recopilando información de varias fuentes pero escritos completamente por mí.
 - Todas las figuras las he hecho yo.
-- ¿Las referencias a marcas o productos debería ponerlas a pie de página en lugar de como referencias bibliográficas? ¿O también deben aparecer en la bibliografía?
+- ¿La metodología debería ir detrás de las pruebas?
+- CU vs RF
