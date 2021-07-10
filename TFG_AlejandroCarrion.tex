@@ -38,9 +38,9 @@
 
 	\section{Motivación}
 
-La automatización de los despliegues de programas, combinada o no con el uso de arquitecturas de microservicios, es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps tales como la entrega continua son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
+La automatización de los despliegues de programas, combinada o no con el uso de arquitecturas de microservicios, es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps \cite{DevOps} tales como la entrega continua \cite{DevOpsPracticas} son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
 
-Por otro lado, el uso de arquitecturas de microservicios ya está consolidado. Esto consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
+Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios} ya está consolidado. Esto consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
@@ -54,9 +54,7 @@ Por otro lado, el uso de arquitecturas de microservicios ya está consolidado. E
 
 \end{itemize}
 
-Se puede obtener más información acerca de los microservicios en el artículo de James Lewis y Martin Fowler titulado ''\emph{Microservices}'' \cite{LewisAndFowler}. Para una lectura con más profundidad, el libro ''\emph{Building Microservices}'' \cite{Newman} de Sam Newman.
-
-Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que sea su puerta de acceso.
+Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que será su puerta de acceso y actuará de intermediario entre este y la interfaz de usuario y entre los propios microservicios. Por otro lado, también permitirá lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos, así como realizar balanceo de carga.
 
 Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos clientes no tengan comunicación directa con los servidores a los que se conectan a través de Internet. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
@@ -78,8 +76,6 @@ El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, 
 	\label{proxyInversoContraNoProxyInverso}
 \end{figure}
 
-La temática del presente trabajo es la implementación de un \emph{proxy} inverso que actúe de intermediario entre la interfaz de usuario de una aplicación en desarrollo y sus microservicios. Se pretende construir este nuevo componente porque se cree necesario proteger el \emph{backend} de la aplicación y ocultar los microservicios que lo forman. Por otro lado, también se quiere tener la posibilidad de lanzar a ejecución múltiples instancias de los microservicios con el fin de conseguir cierta tolerancia a fallos y poder también realizar balanceo de carga.
-
 Este proyecto surge en el contexto de una práctica en empresa. El autor ha tenido la oportunidad de formar parte del equipo de I+D+i de una empresa de desarrollo de software enfocada al sector sociosanitario, durante un periodo de tiempo de más de un año. Esta empresa comercializa un software de gestión geriátrica y actualmente está desarrollando la nueva versión de su producto, utilizando enfoques y tecnologías de vanguardia. Entre ellos: arquitecturas de microservicios, desarrollo de software dirigido por modelos y generación automática de código.
 
 La temática comentada fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas, esto es, contribuciones a un microservicio específico destinado a orquestar el despliegue de la aplicación. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja, así como aumentar el nivel de conocimiento acerca de la misma, con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, .NET, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
@@ -88,7 +84,9 @@ La temática comentada fue elegida debido a la estrecha relación que guarda con
 
 	\section{Objetivos}
 
-El objetivo principal de este trabajo es construir un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. La construcción de este tiene las siguientes aspiraciones sobre el producto en construcción:
+El objetivo principal de este trabajo es construir un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. La construcción de este tiene las siguientes aspiraciones sobre este producto en construcción:
+
+% TODO: Revisar objetivos y añadir 'Hacer que los microservicios no se tengan que conocer entre ellos'.
 
 \begin{itemize}
 
@@ -124,21 +122,21 @@ Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a funci
 
 	\section{Patrón API \emph{Gateway}}
 
-A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el API \emph{Gateway}. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
+A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el API \emph{Gateway} \cite{ApiGateway}. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
 
 Generalmente, se entiende que un API \emph{Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
 \begin{itemize}
-
-	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos, mientras que los \emph{proxy} inversos solo los redirigen donde corresponda.
 	
 	\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
 	
 	\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
 
+	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos, mientras que los \emph{proxy} inversos solo los redirigen donde corresponda.
+
 \end{itemize}
 
-El patrón recién comentado fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, era más coherente decantarse por un \emph{proxy} inverso.
+Este patrón fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTOS HECHOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -609,7 +607,7 @@ Por último, la figura (TODO:Añadir figura) muestra un esquema de los \emph{mid
 
 	\section{Metodología} \label{metodologia}
 
-Para llevar a cabo este desarrollo no se ha seguido ninguna metodología concreta, ni tradicional ni ágil. No obstante, se ha optado por la vía ágil en el sentido de que se han seguido algunas de las prácticas propuestas por varias de estas metodologías, tales como Scrum o Kanban, con el fin de seguir un enfoque metodológico personalizado y adaptado a las características del proyecto. Las prácticas utilizadas se detallan a continuación:
+Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido de que se han seguido algunas de las prácticas propuestas por varias de las metodologías de este tipo, tales como Scrum o Kanban, con el fin de seguir un enfoque metodológico personalizado y adaptado a las características del proyecto. Las prácticas utilizadas se detallan a continuación:
 
 \begin{itemize}
 
@@ -1016,16 +1014,26 @@ En un futuro se puede querer extender la funcionalidad y construir encima un API
 
 \begin{thebibliography}{10}
 
-\bibitem{LewisAndFowler}
-Artículo de J. Lewis y M. Fowler acerca de los microservicios.
-\newblock Disponible en:\\
-\url{https://martinfowler.com/articles/microservices.html}
+\bibitem{DevOps}
+Documentación de Microsoft acerca de DevOps.\\
+\url{https://azure.microsoft.com/es-es/overview/what-is-devops}
 
-\bibitem{Newman}
-Libro de referencia sobre microservicios:\\
+\bibitem{DevOpsPracticas}
+Documentación de Microsoft acerca de las prácticas de DevOps.\\
+\url{https://azure.microsoft.com/es-es/overview/what-is-devops/#practices}
+
+\bibitem{Microservicios}
+Artículo breve de J. Lewis y M. Fowler acerca de los microservicios.
+\newblock Disponible en:\\
+\url{https://martinfowler.com/articles/microservices.html}\\\\
+\newblock Libro de referencia sobre microservicios:\\
 \newblock Sam Newman,
 \newblock \emph{Building Microservices.}
 \newblock ISBN: 9781491950357
+
+\bibitem{ApiGateway}
+Documentación de Microsoft acerca del patrón API \emph{Gateway}.\\
+\url{https://docs.microsoft.com/es-es/azure/architecture/microservices/design/gateway}
 
 \bibitem{NGINX}
 ¿Cómo utilizar NGINX como proxy inverso?:\\
