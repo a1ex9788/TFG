@@ -120,7 +120,7 @@ Este documento se divide en X grandes bloques...
 
 \chapter{Estado del arte}
 
-En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la tecnología utilizada. También se mostrará un ejemplo básico de uso de esta.
+En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la escogida para desarrollar el \emph{proxy} inverso. Se hablará de la tecnología utilizada en general y de su elección en el siguiente capítulo (\ref{tecnologiaUtilizada}), donde también se mostrará un ejemplo básico de su uso.
 
 Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a funcionar como \emph{proxy} inverso. Estos suelen ofrecer otros productos como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se utiliza. En relación con esto, las librerías elegidas son para el lenguaje de programación C\#, utilizado en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
 
@@ -221,7 +221,7 @@ Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configurac
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Tecnología utilizada}
+\chapter{Tecnología utilizada} \label{tecnologiaUtilizada}
 
 Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Sitio oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Este aspecto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
@@ -1005,6 +1005,12 @@ En el caso del \emph{proxy} inverso, han consistido en ejecutar todas las prueba
 Decir si los objetivos se han cumplido. Valorar el cumplimiento de los casos de uso y de los requisitos.
 
 En un futuro se puede querer extender la funcionalidad y construir encima un API \emph{Gateway} que ofrezca agregaciones de peticiones o tareas transversales tales como monitorización de tiempos de las peticiones.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REFLEXIÓN FINAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\section{Reflexión final}
+
+Nuevo punto único de fallo + cuello de botella
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
