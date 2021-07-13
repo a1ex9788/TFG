@@ -728,15 +728,9 @@ Una vez elegida la opción de seguir el estándar de microservicio de la aplicac
 
 Un ejemplo de problemas con la generación de código fue el método \emph{Configure} de la clase \emph{Startup}. Este tenía que ser modificado para añadir la llamada \emph{endpoint.MapReverseProxy()} pero la generación de código no lo permitía, no pudiéndose personalizar este método en función del microservicio en cuestión. De esta forma, la modificación de las plantillas consistió en generar una llamada a un método estático dentro de ese \emph{Configure}, que se implementaría en una clase parcial. La figura \ref{startup} muestra cómo queda la clase \emph{Startup}.
 
-% TODO: Solucionar problema visualización fotos
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/startup}
-\end{figure}
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.96\textwidth]{imagenes/startupParcial}
 \caption{Clase parcial \emph{Startup} del \emph{proxy} inverso.}
 	\label{startup}
 \end{figure}
@@ -831,10 +825,6 @@ En esta etapa final se hicieron algunos retoques y se implementaron algunas func
 
 Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{log} para mostrar más información acerca de las peticiones enrutadas. YARP ya muestra mensajes pero se consideraba interesante añadir la fecha y hora en la que se produjo y el código de estado resultante de la petición. De esta manera, se facilitaría la labor de encontrar posibles errores derivados del enrutamiento de peticiones tales como el de los \emph{timeouts}. Para ello, fue necesario crear y añadir un \emph{middleware} nuevo a la \emph{pipeline} de YARP, explicada en el apartado \ref{pipelineYARP}. El \emph{middleware} creado ha sido llamado \emph{CustomProxyLog} y la figura \ref{logs} muestra los mensajes por defecto de YARP y los personalizados a través de este \emph{middleware} para ver las diferencias y el resultado final.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{imagenes/logsYARP}
-\end{figure}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/logs}
