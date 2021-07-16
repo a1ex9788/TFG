@@ -598,7 +598,7 @@ En el proyecto de pruebas (\ref{proyectoTestsLogica}) simplemente destacar la ex
 
 		\subsection{\emph{Pipeline} de YARP} \label{pipelineYARP}
 
-Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Para gestionar las peticiones, .NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
+Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Importante destacar que, debido a esa sucesión, el orden en el que se ejecutan los diferentes procesos sí es relevante. Para gestionar las peticiones, .NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
 
 Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \emph{middlewares} se encargan de realizar sesión de afinidad para las peticiones, balanceo de carga, \emph{health checks} pasivos y el enrutamiento final. Sin embargo, se puede personalizar añadiendo nuevos \emph{middlewares} hechos desde cero según la necesidad del desarrollador. La figura \ref{pipelineYARP_imagen} muestra como ha quedado configurada esta última en el \emph{proxy} inverso. En ella, se observa que se han utilizado los siguientes \emph{middlewares}:
 
@@ -611,17 +611,15 @@ Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \
 
 \begin{itemize}
 
-	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
+	\item \textbf{\emph{ProductVersionFilter}}. Este \emph{middleware} surge de la posibilidad de coexistir más de una versión del mismo \emph{endpoint}. Así pues, es el encargado de averiguar qué versión de API quiere utilizar cada petición que se recibe para eliminar las posibles destinaciones que tengan una diferente. De esta manera, se asegura que las peticiones serán redirigidas a un \emph{endpoint} con la versión correcta. Dicha información se manda en cada petición dentro de un \emph{header} y, en caso de no encontrar ninguna destinación disponible con la versión correcta, se envía hacia el \emph{endpoint} con versión mayor. No obstante, se muestra un mensaje de \emph{log} indicando que la petición puede no ser respuesta satisfactoriamente debido a un desfase entre versiones.
 
 	\item \textbf{\emph{SameMachineFilter}}. Su finalidad es filtrar las posibles destinaciones del enrutamiento de una petición de forma que si una de las direcciones corresponde a la misma máquina en la que se encuentra el \emph{proxy} inverso, sea redirigida hacía ella. Esto puede suceder cuando el microservicio destino se encuentra desplegado en la misma máquina. De esta manera se ahorra tiempo evitando hacer una petición a otra dirección.
 
-	\item \textbf{\emph{ProxyLoadBalancing}}. No es un \emph{middleware} creado para este proyecto, se trata de uno predefinido por YARP que se encarga de realizar las tareas de balanceo de carga cuando una misma ruta tiene diferentes posibles destinaciones. En concreto, elige una entre las disponibles en base a un algoritmo que se puede configurar.
+	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
+
+	\item \textbf{\emph{ProxyLoadBalancing}}. No es un \emph{middleware} creado para este proyecto, se trata de uno predefinido por YARP que se encarga de realizar las tareas de balanceo de carga cuando una misma ruta tiene diferentes posibles destinaciones. En concreto, elige una entre las disponibles en base a un algoritmo que se puede configurar. Tiene que ser el último \emph{middleware} añadido porque es él el que se encarga de elegir finalmente dónde se redirigen las peticiones de entre las destinaciones disponibles y no filtradas por los anteriores.
 
 \end{itemize}
-
-Por último, la figura (TODO:Añadir figura) muestra un esquema de los \emph{middlewares} utilizados para ilustrar mejor el flujo de una petición al pasar por ellos.
-
-%TODO: Añadir esquema del orden de los middleware de la pipeline de YARP.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METODOLOGÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -885,6 +883,14 @@ Para implementar esta característica se plantearon varias opciones. Primero se 
 			\subsubsection{Filtro misma máquina}
 
 Otro \emph{middleware} creado es el llamado \emph{SameMachineFilter}. Surge de las dos nuevas funcionalidades anteriores y trata de mejorar el sistema de enrutamiento disminuyendo el tiempo de algunas peticiones. Se encarga de comprobar si existe una destinación a la que redirigir las peticiones en la misma máquina que se encuentra el \emph{proxy} inverso y, si es el caso, enrutarlas hacia ella en lugar de hacia otra para evitar que la petición salga de la máquina y tarde más tiempo en finalizar.
+
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FILTRO VERSIÓN DE API %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			\subsubsection{Filtro versión de API}
+
+El último \emph{middleware} desarrollado es el \emph{ProductVersionFilter}. Este nombre lo recibe por aspectos concretos del sistema de despliegue que no vienen al caso. Su función es filtrar las destinaciones posibles a las que se puede redirigir una petición en función de la versión de API que se quiere utilizar. Esta es obtenida de un \emph{header} de las peticiones y, si no existe dicho \emph{header} o no se encuentra un \emph{endpoint} con la versión correcta, la petición es redirigida a uno de los que tienen mayor versión. Este escenario no es del todo correcto y puede producir errores, por lo que se muestra un mensaje de \emph{log} explicando la situación.
+
+Cabe destacar que no fue sencillo implementar el hecho de pasar un \emph{header} en todas y cada una de las peticiones que se lanzan entre los microservicios o desde la interfaz de usuario. Como se ha comentado varias veces, la aplicación ha sido construida con generación automática de código, así que hubo que modificar algunas plantillas a partir de las cuales este es generado para crear y enviar el \emph{header} comentado con todas las peticiones.
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEMA PETICIONES PESADAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
