@@ -11,7 +11,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PALABRAS CLAVE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \keywords{????, ?????????} % Paraules clau
-         {?????, ???} % Palabras clave
+         {\emph{Proxy} inverso, Microservicios, Automatización de despliegues, Metodologías ágiles, YARP, .NET, C\#} % Palabras clave
          {?????, ?????} % Key words
 
 \begin{document}
@@ -19,13 +19,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESUMEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}[spanish]
-????
+
+El presente trabajo tiene por finalidad desarrollar un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. Dicha aplicación todavía se encuentra en fase de desarrollo y el \emph{proxy} inverso va a ser un punto clave en su construcción. Más concretamente, será el encargado de ocultar el \emph{backend} formado por los microservicios, siendo el intermediario entre la interfaz de usuario y los mencionados servicios, además de interconectar a estos también. De esta forma, se va a convertir en el mediador de todas las comunicaciones de la aplicación y va a desacoplar así la ubicación de los microservicios. Además, también permitirá la coexistencia de múltiples instancias de estos para lograr cierta tolerancia a fallos y mejorar la eficiencia. Por otro lado, el \emph{proxy} inverso adquiere una mayor importancia si se toma en consideración que es requerido por el mecanismo de despliegue automatizado con el que cuenta la aplicación de la que va a formar parte.
+
+Para llevar a cabo este proyecto se ha seguido una metodología ágil adaptada al contexto del desarrollo, llevando a cabo prácticas como el afrontamiento de trabajo incrementalmente. En la misma línea, se han realizado también despliegues del \emph{proxy} inverso de manera paulatina. Estos han servido como pruebas para verificar el correcto funcionamiento del producto \emph{software} en su entorno real de actuación y han permitido descubrir errores y mejoras a realizar.
+
+La tecnología utilizada para el desarrollo del producto ha sido ASP.NET Core, con la finalidad de seguir el estándar del resto de microservicios de la aplicación. Para la función de \emph{proxy} inverso se ha elegido una librería de Microsoft llamada YARP.
+
 \end{abstract}
+
 \begin{abstract}[catalan]
+
 ????
+
 \end{abstract}
+
 \begin{abstract}[english]
+
 ????
+
 \end{abstract}
 
 \mainmatter
@@ -38,7 +50,7 @@
 
 	\section{Motivación}
 
-La automatización de los despliegues de programas, combinada o no con el uso de arquitecturas de microservicios, es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps \cite{DevOps} tales como la entrega continua \cite{DevOpsPracticas} son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
+La automatización de los despliegues de programas es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps \cite{DevOps} tales como la entrega continua \cite{DevOpsPracticas} son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
 
 Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios} ya está consolidado. Esto consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
@@ -138,7 +150,7 @@ Como recurso adicional, se presenta un apéndice que explica el proceso de gener
 
 En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la escogida para desarrollar el \emph{proxy} inverso. Se hablará de la tecnología utilizada en general y de su elección en el siguiente capítulo (\ref{tecnologiaUtilizada}), donde también se mostrará un ejemplo básico de su uso.
 
-Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a funcionar como \emph{proxy} inverso. Estos suelen ofrecer otros productos como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se utiliza. En relación con esto, las librerías elegidas son para el lenguaje de programación C\#, utilizado en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
+Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a funcionar como \emph{proxy} inverso. Estos suelen ofrecer otros productos como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se utiliza. En relación con esto, las librerías elegidas son para ASP.NET Core, tecnología empleada en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -239,7 +251,7 @@ Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configurac
 
 \chapter{Tecnología utilizada} \label{tecnologiaUtilizada}
 
-Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Sitio oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción de este capítulo, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Este aspecto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
+Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Sitio oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
 Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
 particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
@@ -1031,6 +1043,7 @@ En un futuro se puede querer extender la funcionalidad y construir encima un API
 	\section{Reflexión final}
 
 Nuevo punto único de fallo + cuello de botella
+Tiempo comparativa mayor x los middlewares
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1065,6 +1078,10 @@ Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pi
 Documentación de Microsoft acerca de .NET:\\
 \url{https://docs.microsoft.com/es-es/dotnet}
 
+\bibitem{DotNetCore}
+Documentación de Microsoft acerca de ASP.NET Core:\\
+\url{https://docs.microsoft.com/es-es/aspnet/core/?view=aspnetcore-5.0}
+
 \bibitem{Csharp}
 Documentación de Microsoft acerca de C\#:\\
 \url{https://docs.microsoft.com/es-es/dotnet/csharp}
@@ -1096,5 +1113,7 @@ A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de
 	\section{Generación de código}
 
 	\section{Programación de particularidades}
+
+Clases parciales.
 
 \end{document}
