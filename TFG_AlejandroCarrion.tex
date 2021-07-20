@@ -788,7 +788,7 @@ Primero de todo, se va a explicar como se realizan los despliegues de la aplicac
 
 \begin{itemize}
 
-	\item El primero de ellos consiste en desplegar los microservicios en contenedores Docker \footnote{Sitio oficial de Docker: \url{https://www.docker.com}}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
+	\item El primero de ellos consiste en desplegar los microservicios mediante contenedores Docker \footnote{Sitio oficial de Docker: \url{https://www.docker.com}}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
 
 	\item El segundo es el que lleva a cabo el microservicio pensado para ello. A grandes rasgos, este ordena y organiza los servidores preparados para correr la aplicación y les dice a cada uno qué microservicio o microservicios tiene que ejecutar. Por el momento, los microservicios que despliega no se utilizan porque se encuentra en fase de pruebas.
 
@@ -834,6 +834,8 @@ El problema más grande que surgió a raíz de los primeros despliegues fue con 
 El problema recién expuesto fue estudiado a fondo más tarde y al final resultó ser culpa de YARP, que utiliza un timeout por defecto de 100 segundos para redirigir peticiones. La solución fue aumentarlo para las rutas correspondientes a las peticiones que se redirigen hacia los microservicios en cuestión. Para ello, fue necesario modelar y añadir un parámetro opcional para el \emph{timeout} en la creación de las rutas. De esta forma se permite su personalización en función de la ruta que se utilice.
 
 La solución dada al problema puede parecer que no es la óptima ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se emparejan con esa ruta, siendo no del todo correcto. Una posible mejora sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones que lo necesiten. No obstante, no se cree necesario complicar el funcionamiento de esa manera ya que, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado. Además, si un cliente con un determinado \emph{timeout} realiza una petición a través del \emph{proxy} inverso y la ruta correspondiente tiene uno mayor, el que prevalecerá será el del cliente y el del \emph{proxy} inverso no tendrá efecto. De esta manera, solo sirve de límite en caso de que el del \emph{proxy} inverso sea menor.
+
+Un problema menor que también surgió fue uno relacionado con los códigos de estado de las peticiones. El \emph{proxy} inverso devolvía uno con número 502. Este a menudo era confundido con el 504 recién explicado y provocaba malentendidos. Su mensaje en inglés era '\emph{Bad Gateway}', lo que parecía ser culpa del nuevo componente, generando confusión en el resto de desarrolladores de la aplicación. Finalmente resultó ser debido a enrutamientos cuyo destino no estaba disponible, es decir, el \emph{proxy} inverso no tenía ninguna culpa, simplemente mostraba un 502 en lugar del habitual 404, '\emph{Not Found}', que se hubiera mostrado en caso de que las peticiones no fueran respuestas por su destinatario.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTO FINAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
