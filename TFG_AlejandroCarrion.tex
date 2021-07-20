@@ -1034,16 +1034,18 @@ En el caso del \emph{proxy} inverso, han consistido en ejecutar todas las prueba
 
 \chapter{Conclusiones}
 
-Decir si los objetivos se han cumplido. Valorar el cumplimiento de los casos de uso y de los requisitos.
+El resultado de este proyecto es un \emph{proxy} inverso totalmente funcional, capaz de cubrir las
+necesidades planteadas y actuar correctamente en los casos de uso para los que fue concebido. De esta manera, todos los requisitos, tanto funcionales como no funcionales, han sido cubiertos satisfactoriamente. A pesar de ello, es necesario decir que algunas funcionalidades se podrían haber mejorado un poco más si no fuera por el hecho de que las partes de la aplicación con las que se integra el \emph{proxy} inverso no están acabadas al tratarse de una aplicación en desarrollo. Por ejemplo, el microservicio encargado de orquestar los despliegues no está cien por cien operativo todavía.
 
-En un futuro se puede querer extender la funcionalidad y construir encima un API \emph{Gateway} que ofrezca agregaciones de peticiones o tareas transversales tales como monitorización de tiempos de las peticiones.
+Desde otra perspectiva, el producto resultante también cumple los objetivos inicialmente definidos. El \emph{proxy} inverso logra ocultar los microservicios, haciendo que la interfaz de usuario no conozca donde se encuentran y no acceda directamente a ellos. Permite, además, la ejecución de más de una instancia de un mismo microservicio, otorgando así cierta tolerancia a fallos y aumentando la eficiencia de la aplicación.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REFLEXIÓN FINAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A pesar de haber cumplido los objetivos, es interesante hacer una pequeña reflexión para reconocer los aspectos negativos del producto desarrollado. Así pues, el \emph{proxy} inverso constituye un nuevo punto único de fallo, además de tener la posibilidad de actuar como cuello de botella, ralentizando las peticiones de toda la aplicación. Sin embargo, estos dos aspectos se han combatido multiplicando la existencia del \emph{proxy} inverso. Por otra parte, un asunto al cual no se le a dado solución es el hecho de que los \emph{middleware} construidos para la \emph{pipeline} de YARP aumentan el tiempo de respuesta de las peticiones. No obstante, no se supera el límite definido por el requisito no funcional RNF03, en el apartado \ref{requisitosNoFuncionales}.
 
-	\section{Reflexión final}
+En lo referente a los conocimientos necesarios para el desarrollo de este proyecto, es interesante comentar que el lenguaje de programación utilizado, C\#, es visto en los estudios en los que se enmarca este trabajo, si bien, no con la profundidad suficiente para poder abordar un problema de estas características. Además, no es lo mismo hacer programas de escritorio, con Windows Forms \cite{WinForms} como \emph{framework}, que aplicaciones de tipo servicio web. Por otra parte, las asignaturas de metodología \emph{software} y de sistemas en red también han resultado una muy buena base. Por último, YARP es una librería con un propósito muy específico, por lo que su aprendizaje ha requerido cierto esfuerzo, sobre todo para poder utilizar algunas de sus características más avanzadas.
 
-Nuevo punto único de fallo + cuello de botella
-Tiempo comparativa mayor x los middlewares
+Por lo que se refiere a experiencia personal, ha sido muy gratificante llevar a cabo este trabajo. Por un lado, ha servido como ensayo para la futura resolución de problemas mayores en el mundo laboral, aunque también se pueda interpretar este como un trabajo profesional al haberse realizado en el contexto de una empresa. Por otro, ha merecido la pena este último hecho, pues ha otorgado cierta confianza dentro de la propia organización y se cree que con un proyecto real el proceso de aprendizaje ha sido más fructífero, teniendo en cuenta las desventajas que conlleva.
+
+En cuanto a líneas de trabajo futuras, el \emph{proxy} inverso quizás requiera alguna nueva característica o modificación que otra a medida que el resto de la aplicación avance y surjan nuevas necesidades. Para finalizar, también se puede querer extender la funcionalidad más adelante y construir encima un API \emph{Gateway} que ofrezca características específicas de ese patrón. Estas pueden ser agregaciones de peticiones o tareas transversales tales como monitorización de tiempos de las peticiones.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1097,6 +1099,10 @@ ISO/IEC 25010 (SQuaRE):\\
 \bibitem{Kestrel}
 Documentación de Microsoft acerca de Kestrel:\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/servers/kestrel}
+
+\bibitem{WinForms}
+Documentación de Microsoft acerca de Windows Forms:\\
+\url{https://docs.microsoft.com/es-es/dotnet/desktop/winforms/overview}
 
 \end{thebibliography}
 
