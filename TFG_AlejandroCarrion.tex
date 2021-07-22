@@ -156,7 +156,7 @@ Cabe destacar que no hay muchos servicios que se dediquen exclusivamente a funci
 
 	\section{Patrón API \emph{Gateway}}
 
-A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el API \emph{Gateway} \cite{ApiGateway}. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
+A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el API \emph{Gateway} \cite{ApiGateway}, o puerta de enlace de API. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
 
 Generalmente, se entiende que un API \emph{Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
@@ -212,7 +212,7 @@ Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{rele
 
 A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de Microsoft, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que permite cambiar la configuración del \emph{proxy} inverso de forma dinámica, lo que no obliga a tener que volver a lanzarlo a ejecución cuando se añada una nueva ruta, por ejemplo.
 
-Permite construir \emph{proxy} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de .NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
+Permite construir \emph{proxy} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
 \begin{figure}[ht]
 \centering
@@ -227,19 +227,29 @@ Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimi
 
 		\subsection{Ocelot}
 
-Ocelot \footnote{Sitio oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para ASP.NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
+Ocelot \footnote{Sitio oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para ASP.NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Como su propia web dice, está pensada para arquitecturas orientadas a servicios o a microservicios que necesitan un punto único de entrada.
 
-\begin{itemize}
+Se trata de un proyecto que ya tiene cierto tiempo, pues fue creado en 2016. No obstante, su última \emph{release} salió a la luz el 11 de Diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
 
-	\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
+En lo que se refiere a las características propias de API \emph{Gateway}, Ocelot ofrece agregación de peticiones y tareas comunes a todos los \emph{enpoints} como autenticación o trazas distribuidas. También puede hacer transformaciones de \emph{headers} o cambiar el método HTTP utilizado antes de redirigir una petición.
 
-	\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete NuGet más.
+Otras de sus características destacables son el hecho de ser \emph{open source}, su rapidez y su escalabilidad. También es conveniente comentar que proporciona autenticación, descubrimiento de servicios, equilibrio de carga, cacheado y limitación de carga. En sus inicios, uno de sus peores puntos negativos era que no permitía cambiar su configuración de manera dinámica, sin embargo, esta característica fue añadida más tarde y ahora ya está disponible.
 
-	\item Su configuración es muy básica, teniendo que especificarla en un fichero Json.
+Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewares} que se integran en la pipeline de ASP.NET para llevar a cabo sus tareas de API \emph{Gateway}. Su configuración es muy básica, teniendo que especificarla en un fichero Json. La figura \ref{configuracionBasicaOcelot} muestra un ejemplo muy básico de este fichero y la \ref{configuracionAgregacionOcelot} uno con una agregación de peticiones. De estos ejemplos es interesante comentar la nomenclatura que utiliza esta librería para diferenciar el flujo de entrada de peticiones (\emph{upstream}) del de salida (\emph{downstream}). Por último, en el segundo ejemplo se observa lo sencillo que es configurar agregaciones de peticiones, indicando un identificador, la ruta base de peticiones a capturar y los identificadores de las rutas que agregar.
 
-	\item No permite cambiar su configuración de manera dinámica.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/configuracionBasicaOcelot}
+\caption[Ejemplo básico de configuración de Ocelot.]{Ejemplo básico de configuración de Ocelot. Imagen tomada de \url{https://ocelot.readthedocs.io/en/latest/introduction/gettingstarted.html}.}
+	\label{configuracionBasicaOcelot}
+\end{figure}
 
-\end{itemize}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{imagenes/configuracionAgregacionOcelot}
+\caption[Ejemplo de configuración de Ocelot con una agregación de peticiones.]{Ejemplo de configuración de Ocelot con una agregación de peticiones. Imagen tomada de \url{https://ocelot.readthedocs.io/en/latest/features/requestaggregation.html}.}
+	\label{configuracionAgregacionOcelot}
+\end{figure}
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPARATIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -610,7 +620,7 @@ En el proyecto de pruebas (\ref{proyectoTestsLogica}) simplemente destacar la ex
 
 		\subsection{\emph{Pipeline} de YARP} \label{pipelineYARP}
 
-Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Importante destacar que, debido a esa sucesión, el orden en el que se ejecutan los diferentes procesos sí es relevante. Para gestionar las peticiones, .NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
+Una \emph{pipeline} se entiende como una sucesión de procesos que se ejecutan en cadena de manera que la salida de cada uno de ellos se conecta con la entrada del siguiente. Importante destacar que, debido a esa sucesión, el orden en el que se ejecutan los diferentes procesos sí es relevante. Para gestionar las peticiones, ASP.NET define una de ellas en el método \emph{Configure} \cite{MiddlewaresPipeline}. Está formada por componentes llamados \emph{middlewares}, con un determinado propósito cada uno de ellos. Los \emph{middlewares} disponibles cubren aspectos tales como páginas de excepciones especiales para el desarrollador, control de excepciones o seguridad de transporte.
 
 Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \emph{middlewares} se encargan de realizar sesión de afinidad para las peticiones, balanceo de carga, \emph{health checks} pasivos y el enrutamiento final. Sin embargo, se puede personalizar añadiendo nuevos \emph{middlewares} hechos desde cero según la necesidad del desarrollador. La figura \ref{pipelineYARP_imagen} muestra como ha quedado configurada esta última en el \emph{proxy} inverso. En ella, se observa que se han utilizado los siguientes \emph{middlewares}:
 
