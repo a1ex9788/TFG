@@ -206,7 +206,7 @@ Apache HTTPD \footnote{¿Cómo utilizar Apache HTTPD como proxy inverso?: \url{h
 
 		\subsection{YARP}
 
-YARP \footnote{Sitio oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería hecha por el propio Microsoft \footnote{Sitio oficial de Microsoft: \url{https://www.microsoft.com}} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y estandarizar así su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
+YARP \footnote{Sitio oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería para .NET Core \cite{DotNetCore} hecha por el propio Microsoft \footnote{Sitio oficial de Microsoft: \url{https://www.microsoft.com}} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y estandarizar así su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
 Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
 
@@ -226,17 +226,17 @@ Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimi
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Ocelot}
-		
+
 Ocelot \footnote{Sitio oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para .NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Posee las características siguientes:
 
 \begin{itemize}
 
 	\item Está pensada para arquitecturas orientadas a servicios o a microservicios.
-	
+
 	\item Al tratarse de una librería, se utiliza de forma sencilla añadiéndola como un paquete NuGet más.
-	
+
 	\item Su configuración es muy básica, teniendo que especificarla en un fichero Json.
-	
+
 	\item No permite cambiar su configuración de manera dinámica.
 
 \end{itemize}
@@ -1074,6 +1074,10 @@ Artículo breve de J. Lewis y M. Fowler acerca de los microservicios.
 Documentación de Microsoft acerca del patrón API \emph{Gateway}.\\
 \url{https://docs.microsoft.com/es-es/azure/architecture/microservices/design/gateway}
 
+\bibitem{DotNetCore}
+Documentación de Microsoft acerca de ASP.NET Core:\\
+\url{https://docs.microsoft.com/es-es/aspnet/core/?view=aspnetcore-5.0}
+
 \bibitem{MiddlewaresPipeline}
 Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pipeline} de \emph{middlewares}:\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
@@ -1081,10 +1085,6 @@ Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pi
 \bibitem{DotNet}
 Documentación de Microsoft acerca de .NET:\\
 \url{https://docs.microsoft.com/es-es/dotnet}
-
-\bibitem{DotNetCore}
-Documentación de Microsoft acerca de ASP.NET Core:\\
-\url{https://docs.microsoft.com/es-es/aspnet/core/?view=aspnetcore-5.0}
 
 \bibitem{Csharp}
 Documentación de Microsoft acerca de C\#:\\
