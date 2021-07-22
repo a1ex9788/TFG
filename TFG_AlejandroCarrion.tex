@@ -170,7 +170,7 @@ Generalmente, se entiende que un API \emph{Gateway} es una especialización de u
 
 \end{itemize}
 
-Este patrón fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso.
+Este patrón fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso, de ahí que las tecnologías expuestas a continuación sean las que son.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTOS HECHOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -206,7 +206,7 @@ Apache HTTPD \footnote{¿Cómo utilizar Apache HTTPD como proxy inverso?: \url{h
 
 		\subsection{YARP}
 
-YARP \footnote{Sitio oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería hecha por el propio Microsoft \cite{Microsoft} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y así estandarizar su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
+YARP \footnote{Sitio oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería hecha por el propio Microsoft \footnote{Sitio oficial de Microsoft: \url{https://www.microsoft.com}} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y estandarizar así su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
 Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
 
@@ -221,7 +221,7 @@ Permite construir \emph{proxy} inversos de nivel 7. Esto hace referencia a la ca
 	\label{modeloOSI}
 \end{figure}
 
-Por último, la documentación propia no es corta pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones.
+Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
