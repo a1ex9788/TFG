@@ -180,17 +180,27 @@ Este patrón fue descartado desde el primer momento porque no se quería tener l
 
 		\subsection{NGINX}
 
-Originariamente NGINX \footnote{¿Cómo utilizar NGINX como proxy inverso?: \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o \emph{proxy} para protocolos de correo electrónico. Desde la vertiente que interesa a este trabajo:
+Originariamente NGINX \footnote{¿Cómo utilizar NGINX como proxy inverso?: \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la imagen \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
 
-\begin{itemize}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{imagenes/productosNGINX}
+\caption[Productos NGINX]{Productos NGINX. Imagen tomada de \url{https://www.nginx.com}}
+	\label{productosNGINX}
+\end{figure}
 
-	\item Se trata de un \emph{proxy} inverso ligero y de alto rendimiento.
+Desde la vertiente que interesa a este trabajo, se trata de un \emph{proxy} inverso ligero y de alto rendimiento. Sin embargo, no es uno de los servicios más utilizados de NGINX, por lo que no cuenta con muchas funcionalidades ni se puede personalizar en exceso. Las características más importantes que ofrece son transformaciones de \emph{headers}, configuración de \emph{buffers} a modo de memoria caché y creación de reglas de enrutamiento en base a las direcciones origen de las peticiones.
 
-	\item Ofrece una versión gratuita y otra de pago, NGINX Plus, la cual ofrece funcionalidades extra.
+Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente. Un ejemplo de este lo muestra la figura \ref{configuracionNGINX}.
 
-	\item Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/configuracionNGINX}
+\caption[Ejemplo de configuración de NGINX.]{Ejemplo de configuración de NGINX. Imagen tomada de \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}.}
+	\label{configuracionNGINX}
+\end{figure}
 
-\end{itemize}
+Para finalizar, NGINX es ampliamente conocido y utilizado por empresas de todo el mundo, entre ellas: Starbucks \footnote{Sitio oficial de Starbucks: \emph{https://www.starbucks.es}}, Bank of America \footnote{Sitio oficial de Bank of America: \emph{https://www.bankofamerica.com}} o Capital One \footnote{Sitio oficial de Capital One: \emph{https://www.capitalone.com}}.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APACHE HTTPD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
