@@ -202,11 +202,26 @@ Se configura a través de un fichero el cual puede ser recargado durante su ejec
 
 Para finalizar, algunos de los productos y servicios de NGINX son ampliamente conocidos y utilizados por empresas de todo el mundo, entre ellas: Starbucks \footnote{Sitio oficial de Starbucks: \emph{https://www.starbucks.es}}, Bank of America \footnote{Sitio oficial de Bank of America: \emph{https://www.bankofamerica.com}} o Capital One \footnote{Sitio oficial de Capital One: \emph{https://www.capitalone.com}}. No obstante, su función de \emph{proxy} inverso no es una de ellas, como ya se ha comentado.
 
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APACHE HTTPD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% KEMP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		\subsection{Apache HTTPD}
+		\subsection{Kemp}
 
-Apache HTTPD \footnote{¿Cómo utilizar Apache HTTPD como proxy inverso?: \url{https://httpd.apache.org/docs/trunk/es/howto/reverse_proxy.html}}. Además de ser un servidor web ''básico'', y proveer contenido estático y dinámico a los usuarios finales, Apache HTTPD puede también actuar como proxy inverso
+Kemp \footnote{Sitio oficial de Kemp: \url{https://kemptechnologies.com}} es un balanceador de carga muy utilizado a nivel mundial. El término balanceador de carga se refiere a un \emph{proxy} inverso al que se le quiere dar énfasis a su capacidad de distribuir la carga entre varios nodos. Por esta característica es por la que se suele utilizar un producto de este tipo pero no hay que obviar que no deja de ser un \emph{proxy} inverso, con todo lo que conlleva.
+
+En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúa. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
+
+Una de los aspectos más especiales de Kemp es el hecho de que brinda múltiples opciones de implementación, y muy flexibles. Destacan la \emph{hardware}, que facilita la instalación de máquinas con el \emph{software} de Kemp, y la \emph{cloud}, la cual pone a disposición los servicios de manera remota y sin necesidad tener servidores físicos. Cada una de ellas tiene diferentes tarifas en función del tráfico a recibir o de la cantidad de puertos disponibles, entre otros.
+
+El precio por utilizar los servicios de Kemp varía en función de las características del proyecto en el que se quiere incluir. Hay que rellenar un pequeño cuestionario para recibir un presupuesto. En él, hay que indicar cosas como los productos que se quiere contratar y la cantidad de los mismos.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{imagenes/modeloOSI}
+\caption{Modelo OSI.}
+	\label{modeloOSI}
+\end{figure}
+
+Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnote{Sitio oficial de Audi: \url{https://www.audi.es}}, Nestle \footnote{Sitio oficial de Nestle: \url{https://www.nestle.com}} o Galp \footnote{Sitio oficial de Galp: \url{https://www.galpenergia.com/}}.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRERÍAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -222,14 +237,7 @@ Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{rele
 
 A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de Microsoft, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que permite cambiar la configuración del \emph{proxy} inverso de forma dinámica, lo que no obliga a tener que volver a lanzarlo a ejecución cuando se añada una nueva ruta, por ejemplo.
 
-Permite construir \emph{proxy} inversos de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúan, la de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{imagenes/modeloOSI}
-\caption{Modelo OSI.}
-	\label{modeloOSI}
-\end{figure}
+Permite construir \emph{proxy} inversos de nivel 7, la capa de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
 Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones.
 
@@ -265,7 +273,7 @@ Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewa
 
 	\section{Comparativa}
 
-Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configuración, cantidad de posible configuración, extensibilidad, recarga de configuración dinámica.
+Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configuración, cantidad de posible configuración, extensibilidad, recarga de configuración dinámica, capa modelo OSI.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
