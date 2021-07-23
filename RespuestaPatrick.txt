@@ -1,4 +1,9 @@
+Respuestas a tus comentarios y otras cuestiones:
 - Los beneficios de las arquitecturas de microservicios son míos, recopilando información de varias fuentes pero escritos completamente por mí.
 - Todas las figuras que no indican autoría las he hecho yo.
+- La ubicación de las imágenes la corregiré para la versión definitiva para no hacer trabajo en balde.
 - Los CU y RF he optado por dejarlos como estaban para evidenciar las diferencias de que los primeros representan las funcionalidades básicas y los otros son complementarios. Eso sí, a los segundos les he cambiado el nombre y les he puesto 'Otros requisitos funcionales'. También explico en la memoria esto que comento aquí de porqué no se presentan de manera conjunta.
 - ¿La metodología debería ir detrás de las pruebas? En los apartados posteriores hago referencias a la metodología por lo que creo que donde está queda mejor, ¿no? Tomé la referencia de otros TFGs para ubicarla ahí.
+- Falta por traducir el resumen y las palabras clave, cuando des el visto bueno.
+- El Estado del Arte tengo que mejorarlo, soy consciente.
+- En Agosto completaré el apéndice.
