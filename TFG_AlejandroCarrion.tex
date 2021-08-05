@@ -77,7 +77,7 @@ Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios} y
 
 Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que será su puerta de acceso y actuará de intermediario entre este y la interfaz de usuario, además de interconectar los propios microservicios y desacoplar su ubicación. Por otro lado, también permitirá lanzar a ejecución múltiples instancias de estos con el fin de conseguir cierta tolerancia a fallos.
 
-Para comprender correctamente que es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos consumidores no tengan comunicación directa con los servidores a los que se conectan a través de la red. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
+Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos consumidores no tengan comunicación directa con los servidores a los que se conectan a través de la red. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -97,7 +97,7 @@ El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, 
 	\label{proxyInversoContraNoProxyInverso}
 \end{figure}
 
-Este proyecto surge en el contexto de una práctica en empresa. El autor ha tenido la oportunidad de formar parte del equipo de I+D+i de una empresa de desarrollo de software enfocada al sector sociosanitario, durante un periodo de tiempo de más de un año. Esta empresa comercializa un software de gestión geriátrica y actualmente está desarrollando la nueva versión de su producto, utilizando enfoques y tecnologías de vanguardia. Entre ellos: arquitecturas de microservicios, desarrollo de software dirigido por modelos y generación automática de código.
+Este proyecto surge en el contexto de una práctica en empresa. El autor ha tenido la oportunidad de formar parte del equipo de I+D+i de una empresa de desarrollo de software enfocada al sector sociosanitario, durante un periodo de tiempo de más de un año. Esta empresa comercializa un software de gestión de residencias y actualmente está desarrollando la nueva versión de su producto, utilizando enfoques y tecnologías de vanguardia. Entre ellos: arquitecturas de microservicios, desarrollo de software dirigido por modelos y generación automática de código.
 
 La temática comentada fue elegida debido a la estrecha relación que guarda con el desempeño del autor en las prácticas mencionadas, esto es, contribuciones a un microservicio específico destinado a orquestar el despliegue de la aplicación de una forma automatizada. Por otro lado, el desarrollo a llevar a cabo le va a otorgar una visión más global de la aplicación sobre la que se trabaja, así como aumentar el nivel de conocimiento acerca de la misma, con la motivación de seguir contribuyendo al proyecto por mucho tiempo más. Por último, la tecnología a utilizar, .NET, es de su interés y aspira así a crecer como desarrollador de ese \emph{framework}.
 
@@ -189,7 +189,7 @@ Este patrón fue descartado desde el primer momento porque no se quería tener l
 
 		\subsection{NGINX}
 
-Originariamente NGINX \footnote{¿Cómo utilizar NGINX como proxy inverso?: \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la imagen \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
+Originariamente NGINX \footnote{¿Cómo utilizar NGINX como proxy inverso?: \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la figura \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -504,7 +504,7 @@ Un requisito no funcional se entiende como una restricción impuesta sobre un pr
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/iso25010}
-\caption[Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010.]{Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010. Imagen de \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}.}
+\caption[Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010.]{Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010. Imagen tomada de \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}.}
 	\label{iso25010}
 \end{figure}
 
