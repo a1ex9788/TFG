@@ -10,9 +10,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PALABRAS CLAVE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\keywords{????, ?????????} % Paraules clau
-         {\emph{Proxy} inverso, Microservicios, Automatización de despliegues, Metodologías ágiles, YARP, .NET, C\#} % Palabras clave
-         {?????, ?????} % Key words
+\keywords{\emph{Proxy} invers, Microserveis, Automatització de desplegaments, Metodologies Àgils, .NET, YARP, C\#} % Paraules clau
+         {\emph{Proxy} inverso, Microservicios, Automatización de despliegues, Metodologías ágiles, .NET, YARP, C\#} % Palabras clave
+         {Reverse proxy, Microservices, Deployment automation, Agile methodologies, .NET, YARP, C\#} % Key words
 
 \begin{document}
 
@@ -20,23 +20,32 @@
 
 \begin{abstract}[spanish]
 
-El presente trabajo tiene por finalidad desarrollar un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. Dicha aplicación todavía se encuentra en fase de desarrollo y el \emph{proxy} inverso va a ser un punto clave en su construcción. Más concretamente, será el encargado de ocultar el \emph{backend} formado por los microservicios, siendo el intermediario entre la interfaz de usuario y los mencionados servicios, además de interconectar a estos también. De esta forma, se va a convertir en el mediador de todas las comunicaciones de la aplicación y va a desacoplar así la ubicación de los microservicios. Además, también permitirá la coexistencia de múltiples instancias de estos para lograr cierta tolerancia a fallos y mejorar la eficiencia. Por otro lado, el \emph{proxy} inverso adquiere una mayor importancia si se toma en consideración que es requerido por el mecanismo de despliegue automatizado con el que cuenta la aplicación de la que va a formar parte.
+El presente trabajo tiene por finalidad desarrollar un \emph{proxy} inverso para una aplicación con arquitectura de microservicios. Dicha aplicación todavía se encuentra en fase de desarrollo y el \emph{proxy} inverso va a ser un punto clave en su construcción. Más concretamente, será el encargado de ocultar el \emph{backend} formado por los microservicios, siendo el intermediario entre la interfaz de usuario y los mencionados servicios, además de interconectar a estos. De esta forma, se va a convertir en el mediador de todas las comunicaciones de la aplicación y va a desacoplar así la ubicación de los microservicios. Además, también permitirá la coexistencia de múltiples instancias de estos para lograr cierta tolerancia a fallos y mejorar la eficiencia. Por otro lado, el \emph{proxy} inverso adquiere una mayor importancia si se toma en consideración que es requerido por el mecanismo de despliegue automatizado con el que cuenta la aplicación de la que va a formar parte.
 
-Para llevar a cabo este proyecto se ha seguido una metodología ágil adaptada al contexto del desarrollo, llevando a cabo prácticas como el afrontamiento de trabajo incrementalmente. En la misma línea, se han realizado también despliegues del \emph{proxy} inverso de manera paulatina. Estos han servido como pruebas para verificar el correcto funcionamiento del producto \emph{software} en su entorno real de actuación y han permitido descubrir errores y mejoras a realizar.
+Para llevar a cabo este proyecto se ha seguido una metodología ágil adaptada al contexto del desarrollo. Una de las prácticas más destacables ha sido la realización de despliegues del \emph{proxy} inverso de manera incremental. Estos han servido para verificar el correcto funcionamiento del producto \emph{software} en su entorno real de actuación y han permitido descubrir oportunamente errores y mejoras a realizar.
 
-La tecnología utilizada para el desarrollo del producto ha sido ASP.NET Core, con la finalidad de seguir el estándar del resto de microservicios de la aplicación. Para la función de \emph{proxy} inverso se ha elegido una librería de Microsoft llamada YARP.
+La tecnología utilizada para el desarrollo del producto ha sido ASP.NET Core, con la finalidad de seguir el estándar del resto de microservicios de la aplicación. Para la función de \emph{proxy} inverso se ha elegido una librería de Microsoft llamada YARP, apropiada para C\#, el lenguaje de programación empleado.
 
 \end{abstract}
 
 \begin{abstract}[catalan]
 
-????
+El present treball té per finalitat desenvolupar un \emph{proxy} invers per a una aplicació amb arquitectura de microserveis. Aquesta aplicació encara es troba en fase de desenvolupament i el \emph{proxy} invers serà un punt clau en la seua construcció. Més concretament, serà l'encarregat d'ocultar el \emph{backend} format pels microserveis, sent l'intermediari entre la interfície d'usuari i els nomenats serveis, a més d'interconnectar a aquests. D'aquesta manera, es convertirà en el mediador de totes les comunicacions de l'aplicació i desacoblarà així la ubicació dels microserveis. A més, també permetrà la coexistència de múltiples instàncies d'aquests per a aconseguir una certa tolerància a fallades i millorar l'eficiència. D'altra banda, el \emph{proxy} invers adquireix una major importància si es pren en consideració que és requerit pel mecanisme de desplegament automatitzat amb el qual compta l'aplicació de la qual formarà part.
+
+Per a dur a terme aquest projecte s'ha seguit una metodologia àgil adaptada al context del desenvolupament. Una de les pràctiques més destacables ha sigut la realització de desplegaments del \emph{proxy} invers de manera incremental. Aquests han servit per a verificar el correcte funcionament del producte \emph{software} en el seu entorn real d'actuació i han permés descobrir oportunament errors i millores a realitzar.
+
+La tecnologia utilitzada per al desenvolupament del producte ha sigut ASP.NET Core, amb la finalitat de seguir l'estàndard de la resta de microserveis de l'aplicació. Per a la funció de \emph{proxy} invers s'ha triat una llibreria de Microsoft anomenada YARP, apropiada per a C\#, el llenguatge de programació emprat.
+
 
 \end{abstract}
 
 \begin{abstract}[english]
 
-????
+The present work aims to develop a reverse proxy for a microservices architecture application. This application is still in development phase and the reverse proxy is going to be a key point in its construction. More specifically, it will be in charge of hiding the backend formed by the microservices, being the intermediary between the user interface and the aforementioned services, besides interconnecting these. In this way, it will become the mediator of all the communications of the application and will thus decouple the location of the microservices. In addition, it will also allow the coexistence of multiple instances of these to achieve some fault tolerance and improve efficiency. On the other hand, the reverse proxy acquires greater importance if it is taken into consideration that it is required by the mechanism of automated deployment with which the application of which it is going to be part has.
+
+To carry out this project, an agile methodology adapted to the development context has been followed. One of the most notable practices has been to perform reverse proxy deployments incrementally. These have served to verify the correct operation of the software product in its real operating environment and have allowed timely discovery of errors and improvements to be made.
+
+The technology used for the development of the product has been ASP.NET Core, in order to follow the standard of the rest of the application microservices. For function of reverse proxy, a Microsoft library called YARP has been chosen, appropriate for C\#, the programming language used.
 
 \end{abstract}
 
