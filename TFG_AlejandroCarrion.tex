@@ -189,12 +189,12 @@ Este patrón fue descartado desde el primer momento porque no se quería tener l
 
 		\subsection{NGINX}
 
-Originariamente NGINX \footnote{¿Cómo utilizar NGINX como proxy inverso?: \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la figura \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
+Originariamente NGINX \footnote{Web oficial de NGINX: \emph{https://www.nginx.com}} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la figura \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{imagenes/productosNGINX}
-\caption[Productos NGINX]{Productos NGINX. Imagen tomada de \url{https://www.nginx.com}}
+\caption[Productos NGINX.]{Productos NGINX \cite{NGINX}.}
 	\label{productosNGINX}
 \end{figure}
 
@@ -205,17 +205,17 @@ Se configura a través de un fichero el cual puede ser recargado durante su ejec
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.5\textwidth]{imagenes/configuracionNGINX}
-\caption[Ejemplo de configuración de NGINX.]{Ejemplo de configuración de NGINX. Imagen tomada de \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}.}
+\caption[Ejemplo de configuración de NGINX.]{Ejemplo de configuración de NGINX \cite{NGINX_documentacion}.}
 	\label{configuracionNGINX}
 \end{figure}
 
-Para finalizar, algunos de los productos y servicios de NGINX son ampliamente conocidos y utilizados por empresas de todo el mundo, entre ellas: Starbucks \footnote{Sitio oficial de Starbucks: \emph{https://www.starbucks.es}}, Bank of America \footnote{Sitio oficial de Bank of America: \emph{https://www.bankofamerica.com}} o Capital One \footnote{Sitio oficial de Capital One: \emph{https://www.capitalone.com}}. No obstante, su función de \emph{proxy} inverso no es una de ellas, como ya se ha comentado.
+Para finalizar, algunos de los productos y servicios de NGINX son ampliamente conocidos y utilizados por empresas de todo el mundo, entre ellas: Starbucks \footnote{Web oficial de Starbucks: \emph{https://www.starbucks.es}}, Bank of America \footnote{Web oficial de Bank of America: \emph{https://www.bankofamerica.com}} o Capital One \footnote{Web oficial de Capital One: \emph{https://www.capitalone.com}}. No obstante, su función de \emph{proxy} inverso no es una de ellas, como ya se ha comentado.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% KEMP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Kemp}
 
-Kemp \footnote{Sitio oficial de Kemp: \url{https://kemptechnologies.com}} es un balanceador de carga muy utilizado a nivel mundial. El término balanceador de carga se refiere a un \emph{proxy} inverso al que se le quiere dar énfasis a su capacidad de distribuir la carga entre varios nodos. Por esta característica es por la que se suele utilizar un producto de este tipo pero no hay que obviar que no deja de ser un \emph{proxy} inverso, con todo lo que conlleva.
+Kemp \footnote{Web oficial de Kemp: \url{https://kemptechnologies.com}} es un balanceador de carga muy utilizado a nivel mundial. El término balanceador de carga se refiere a un \emph{proxy} inverso al que se le quiere dar énfasis a su capacidad de distribuir la carga entre varios nodos. Por esta característica es por la que se suele utilizar un producto de este tipo pero no hay que obviar que no deja de ser un \emph{proxy} inverso, con todo lo que conlleva.
 
 En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúa. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
 
@@ -226,11 +226,11 @@ El precio por utilizar los servicios de Kemp varía en función de las caracter�
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{imagenes/modeloOSI}
-\caption{Modelo OSI.}
+\caption[Modelo OSI.]{Modelo OSI \cite{OSI}.}
 	\label{modeloOSI}
 \end{figure}
 
-Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnote{Sitio oficial de Audi: \url{https://www.audi.es}}, Nestle \footnote{Sitio oficial de Nestle: \url{https://www.nestle.com}} o Galp \footnote{Sitio oficial de Galp: \url{https://www.galpenergia.com/}}.
+Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnote{Web oficial de Audi: \url{https://www.audi.es}}, Nestle \footnote{Web oficial de Nestle: \url{https://www.nestle.com}} o Galp \footnote{Web oficial de Galp: \url{https://www.galpenergia.com/}}.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRERÍAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -240,7 +240,7 @@ Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnot
 
 		\subsection{YARP}
 
-YARP \footnote{Sitio oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería para ASP.NET Core hecha por el propio Microsoft \footnote{Sitio oficial de Microsoft: \url{https://www.microsoft.com}} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y estandarizar así su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
+YARP \footnote{Web oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}} es una librería para ASP.NET Core hecha por el propio Microsoft \footnote{Web oficial de Microsoft: \url{https://www.microsoft.com}} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y estandarizar así su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
 Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
 
@@ -254,7 +254,7 @@ Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimi
 
 		\subsection{Ocelot}
 
-Ocelot \footnote{Sitio oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para ASP.NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Como su propia web dice, está pensada para arquitecturas orientadas a servicios o a microservicios que necesitan un punto único de entrada.
+Ocelot \footnote{Web oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para ASP.NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Como su propia web dice, está pensada para arquitecturas orientadas a servicios o a microservicios que necesitan un punto único de entrada.
 
 Se trata de un proyecto que ya tiene cierto tiempo, pues fue creado en 2016. No obstante, su última \emph{release} salió a la luz el 11 de Diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
 
@@ -267,14 +267,14 @@ Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewa
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/configuracionBasicaOcelot}
-\caption[Ejemplo básico de configuración de Ocelot.]{Ejemplo básico de configuración de Ocelot. Imagen tomada de \url{https://ocelot.readthedocs.io/en/latest/introduction/gettingstarted.html}.}
+\caption[Ejemplo básico de configuración de Ocelot.]{Ejemplo básico de configuración de Ocelot \cite{Ocelot_documentacion}.}
 	\label{configuracionBasicaOcelot}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth]{imagenes/configuracionAgregacionOcelot}
-\caption[Ejemplo de configuración de Ocelot con una agregación de peticiones.]{Ejemplo de configuración de Ocelot con una agregación de peticiones. Imagen tomada de \url{https://ocelot.readthedocs.io/en/latest/features/requestaggregation.html}.}
+\caption[Ejemplo de configuración de Ocelot con una agregación de peticiones.]{Ejemplo de configuración de Ocelot con una agregación de peticiones \cite{Ocelot_documentacion}.}
 	\label{configuracionAgregacionOcelot}
 \end{figure}
 
@@ -288,12 +288,12 @@ Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configurac
 
 \chapter{Tecnología utilizada} \label{tecnologiaUtilizada}
 
-Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Sitio oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
+Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Web oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
 Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
 particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
 
-Por último, se ha utilizado Postman para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman \footnote{Sitio oficial de Postman: \url{https://www.postman.com}} es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
+Por último, se ha utilizado Postman para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman \footnote{Web oficial de Postman: \url{https://www.postman.com}} es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EJEMPLO DE USO BÁSICO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -504,7 +504,7 @@ Un requisito no funcional se entiende como una restricción impuesta sobre un pr
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/iso25010}
-\caption[Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010.]{Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010. Imagen tomada de \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}.}
+\caption[Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010.]{Características y subcaracterísticas de calidad de un producto \emph{software} definidas en la ISO/IEC 25010 \cite{ISO25010}.}
 	\label{iso25010}
 \end{figure}
 
@@ -680,7 +680,7 @@ Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido 
 
 	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas menudas denominadas unidades de trabajo. Estas definen funcionalidades más pequeñas y concretas que los casos de uso y son más abstractas que las historias de usuario, ya que manifiestan de forma más clara la posibilidad de tratarse de tareas no solo relacionadas con cambiar el producto sino otras como crear una base de datos o renovar una suscripción de un servicio web.
 
-	\item \textbf{Uso de un tablero \emph{Kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{Kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas, por ejemplo. La herramienta utilizada a modo de tablero \emph{Kanban} ha sido Trello \footnote{Sitio oficial de Trello: \url{https://trello.com}}.
+	\item \textbf{Uso de un tablero \emph{Kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{Kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas, por ejemplo. La herramienta utilizada a modo de tablero \emph{Kanban} ha sido Trello \footnote{Web oficial de Trello: \url{https://trello.com}}.
 
 	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{Kanban}, las unidades de trabajo han estado ordenadas de mayor a menor importancia en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
 
@@ -825,7 +825,7 @@ Primero de todo, se va a explicar como se realizan los despliegues de la aplicac
 
 \begin{itemize}
 
-	\item El primero de ellos consiste en desplegar los microservicios mediante contenedores Docker \footnote{Sitio oficial de Docker: \url{https://www.docker.com}}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
+	\item El primero de ellos consiste en desplegar los microservicios mediante contenedores Docker \footnote{Web oficial de Docker: \url{https://www.docker.com}}. Se trata de una manera de poder realizar despliegues antes de que el microservicio específico esté terminado. Permite así hacer pruebas con el resto y ver como se comportan.
 
 	\item El segundo es el que lleva a cabo el microservicio pensado para ello. A grandes rasgos, este ordena y organiza los servidores preparados para correr la aplicación y les dice a cada uno qué microservicio o microservicios tiene que ejecutar. Por el momento, los microservicios que despliega no se utilizan porque se encuentra en fase de pruebas.
 
@@ -1114,6 +1114,22 @@ Documentación de Microsoft acerca de ASP.NET Core:\\
 \bibitem{ApiGateway}
 Documentación de Microsoft acerca del patrón API \emph{Gateway}.\\
 \url{https://docs.microsoft.com/es-es/azure/architecture/microservices/design/gateway}
+
+\bibitem{NGINX}
+Web oficial de NGINX:\\
+\url{https://www.nginx.com}
+
+\bibitem{NGINX_documentacion}
+Documentación oficial de NGINX para funcionar como \emph{proxy} inverso:\\
+\url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}
+
+\bibitem{Ocelot_documentacion}
+Documentación oficial de Ocelot:\\
+\url{https://ocelot.readthedocs.io}
+
+\bibitem{OSI}
+¿Qué es el modelo OSI?:\\
+\url{https://www.ionos.es/digitalguide/servidores/know-how/el-modelo-osi-un-referente-para-normas-y-protocolos}
 
 \bibitem{MiddlewaresPipeline}
 Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pipeline} de \emph{middlewares}:\\
