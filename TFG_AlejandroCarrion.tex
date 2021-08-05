@@ -248,7 +248,7 @@ A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las
 
 Permite construir \emph{proxy} inversos de nivel 7, la capa de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
-Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones.
+Por último, la documentación propia no es escueta pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones en portales como Stack Overflow \footnote{Web oficial de Stack Overflow: \url{https://es.stackoverflow.com}}.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -256,13 +256,13 @@ Por último, la documentación propia no es ínfima pero tampoco excesiva. Asimi
 
 Ocelot \footnote{Web oficial de Ocelot: \url{https://threemammals.com/ocelot}} es una librería para ASP.NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Como su propia web dice, está pensada para arquitecturas orientadas a servicios o a microservicios que necesitan un punto único de entrada.
 
-Se trata de un proyecto que ya tiene cierto tiempo, pues fue creado en 2016. No obstante, su última \emph{release} salió a la luz el 11 de Diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
+Se trata de un proyecto que ya tiene cierto tiempo, pues se inició en 2016. No obstante, su última \emph{release} salió a la luz el 11 de Diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
 
 En lo que se refiere a las características propias de API \emph{Gateway}, Ocelot ofrece agregación de peticiones y tareas comunes a todos los \emph{enpoints} como autenticación o trazas distribuidas. También puede hacer transformaciones de \emph{headers} o cambiar el método HTTP utilizado antes de redirigir una petición.
 
-Otras de sus características destacables son el hecho de ser \emph{open source}, su rapidez y su escalabilidad. También es conveniente comentar que puede proporcionar autenticación, descubrimiento de servicios, equilibrio de carga, cacheado y limitación de carga. En sus inicios, uno de sus peores puntos negativos que tenía era que no permitía cambiar su configuración de manera dinámica, sin embargo, esta característica fue añadida más tarde y ahora ya está disponible.
+Otra de sus características destacables son el hecho de ser \emph{open source}, su rapidez y su escalabilidad. También es conveniente comentar que puede proporcionar autenticación, descubrimiento de servicios, equilibrio de carga, cacheado y limitación de carga. En sus inicios, uno de sus peores puntos negativos era que no permitía cambiar su configuración de manera dinámica, sin embargo, esta característica fue añadida más tarde y ahora ya está disponible.
 
-Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewares} que se integran en la pipeline de ASP.NET para llevar a cabo sus tareas de API \emph{Gateway}. Su configuración es muy básica, teniendo que especificarla en un fichero Json. La figura \ref{configuracionBasicaOcelot} muestra un ejemplo muy básico de este fichero y la \ref{configuracionAgregacionOcelot} uno con una agregación de peticiones. De estos ejemplos es interesante comentar la nomenclatura que utiliza esta librería para diferenciar el flujo de entrada de peticiones (\emph{upstream}) del de salida (\emph{downstream}). Por último, en el segundo ejemplo se observa lo sencillo que es configurar agregaciones de peticiones, indicando un identificador, la ruta base de peticiones a capturar y los identificadores de las rutas que agregar.
+Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewares} que se integran en la pipeline de ASP.NET para llevar a cabo sus tareas de API \emph{Gateway}. Su configuración es muy básica, teniendo que especificarla en un fichero Json. La figura \ref{configuracionBasicaOcelot} muestra un ejemplo muy básico de este fichero y la figura \ref{configuracionAgregacionOcelot} uno con una agregación de peticiones. De estos ejemplos es interesante comentar la nomenclatura que utiliza esta librería para diferenciar el flujo de entrada de peticiones (\emph{upstream}) del de salida (\emph{downstream}). Por último, en el segundo ejemplo se observa lo sencillo que es configurar agregaciones de peticiones, indicando un identificador, la ruta base de peticiones a capturar y los identificadores de las rutas que agregar.
 
 \begin{figure}[ht]
 \centering
@@ -284,24 +284,30 @@ Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewa
 
 Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configuración, cantidad de posible configuración, extensibilidad, recarga de configuración dinámica, capa modelo OSI.
 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\section{Conclusiones}
+
+Conveniencia de la realización de este trabajo.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Tecnología utilizada} \label{tecnologiaUtilizada}
 
-Primero de todo, la tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Web oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
+La tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Web oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
 Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
 particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
 
-Por último, se ha utilizado Postman para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman \footnote{Web oficial de Postman: \url{https://www.postman.com}} es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
+Por último, se ha utilizado Postman \footnote{Web oficial de Postman: \url{https://www.postman.com}} para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EJEMPLO DE USO BÁSICO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EJEMPLO DE USO BÁSICO DE YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\section{Ejemplo de uso básico} \label{ejemploUsoYARP}
+	\section{Ejemplo de uso básico de YARP} \label{ejemploUsoYARP}
 
 Una vez comentada la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
 
-En lineas generales, empezar a utilizar Yarp no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso básico funcionando. Si bien, es más complejo utilizar características avanzadas o personalizarlo en función de las necesidades particulares.
+En lineas generales, empezar a utilizar YARP no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso básico funcionando. Si bien, es más complejo utilizar características avanzadas o personalizarlo en función de las necesidades particulares.
 
 La demostración que se va a realizar consiste en crear un \emph{proxy} inverso que redirija peticiones hacía dos servicios web de prueba, creados anteriormente para el ejemplo. Estos simulan ser un servicio de localización y devuelven siempre ''\emph{Valencia, Spain}''. También muestran este mismo mensaje por consola cuando son consultados para poder visualizar a través de ella la cantidad de peticiones que responden.
 
@@ -314,7 +320,7 @@ Para empezar con el ejemplo, se crea un proyecto web vacío de .NET, en concreto
 	\label{ejemploYARP_instalacionNuGet}
 \end{figure}
 
-Acto seguido, es necesario añadir un poco de código para poner en marcha un \emph{proxy} inverso sencillo. En la clase \emph{Startup} hay que modificar los métodos por defecto \emph{ConfigureServices} y \emph{Configure}. En el primero de ellos es necesario registrar el código del \emph{proxy} inverso, haciendo \emph{services.AddReverseProxy()}, y cargar la configuración de las rutas, \emph{proxyBuilder.LoadFromConfig()}. En el segundo basta con asegurarse de que se haga la llamada \emph{app.UseRouting()} y añadir  \emph{endpoints.MapReverseProxy()} dentro del \emph{UseEndpoint}. Para visualizar mejor estos cambios, figura \ref{ejemploYARP_startup}.
+Acto seguido, es necesario añadir un poco de código para poner en marcha un \emph{proxy} inverso sencillo. En la clase \emph{Startup} hay que modificar los métodos por defecto \emph{ConfigureServices} y \emph{Configure}. En el primero de ellos es necesario registrar el código del \emph{proxy} inverso, haciendo \emph{services.AddReverseProxy()}, y cargar la configuración de las rutas, \emph{proxyBuilder.LoadFromConfig()}. En el segundo basta con asegurarse de que se haga la llamada \emph{app.UseRouting()} y añadir  \emph{MapReverseProxy()} dentro del \emph{UseEndpoint}. Para visualizar mejor estos cambios, figura \ref{ejemploYARP_startup}.
 
 \begin{figure}[ht]
 \centering
@@ -325,7 +331,7 @@ Acto seguido, es necesario añadir un poco de código para poner en marcha un \e
 
 Por otro lado, hay que configurar las rutas que va a tener el \emph{proxy} inverso, es decir, los enrutamientos que debe hacer en tiempo de ejecución. Para ello se necesita especificar dichas rutas en el archivo \emph{appsettings.json}. Este archivo se utiliza para especificar cualquier tipo de configuración y se podría haber utilizado otro diferente. También se puede configurar a través de código pero requiere algo más de trabajo. Por este motivo, en esta demostración se va a utilizar el primer método, ya que se pretende mostrar un ejemplo lo más simple posible.
 
-La figura \ref{ejemploYARP_appsettings} muestra las rutas creadas para esta prueba. Se ha creado un par ruta-\emph{cluster} con dos destinaciones. Para no entrar en mucho detalle, lo que es importante es que la ruta tiene un patrón \emph{\{**catch-all\}}, para capturar todas las peticiones, y el \emph{cluster} contiene dos destinaciones, una por cada servicio de localización, comentados al principio de este apartado. Lo que se pretende conseguir con esta configuración es que el \emph{proxy} inverso capture todas las peticiones y las envíe de manera aleatoria a cualquiera de los dos servicios.
+La figura \ref{ejemploYARP_appsettings} muestra las rutas creadas para esta prueba. Se ha creado un par ruta-\emph{cluster} con dos destinaciones. Para no entrar en mucho detalle, lo que es importante es que la ruta tiene un patrón \emph{\{**catch-all\}} dentro de la cláusula \emph{Match:Path}, para capturar todas las peticiones, y el \emph{cluster} contiene dos destinaciones, una por cada servicio de localización, comentados al principio de este apartado. Lo que se pretende conseguir con esta configuración es que el \emph{proxy} inverso capture todas las peticiones y las envíe de manera aleatoria a cualquiera de los dos servicios.
 
 \begin{figure}[ht]
 \centering
