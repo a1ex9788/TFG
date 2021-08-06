@@ -1177,16 +1177,27 @@ Documentación de Microsoft acerca de Windows Forms:\\
 
 A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle ya que no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código que se ha seguido para elaborar el \emph{proxy} inverso.
 
+El proceso en cuestión se divide en 3 pasos que se repiten continuamente en un proceso iterativo e incremental.
+
+También se modelan interfaces de usuario pero el \emph{proxy} inverso no lo requiere.
+En general, el modelado para el \emph{proxy} inverso es muy simple.
+
 	\section{Modelado}
 
 Entidades, DTOs y acciones \emph{ad hoc}.
+Utilizando los modelos de Dominio y Aplicación. Existen más pero no conviene marear, por simplicidad. 
 
 	\section{Generación de código}
 
 Se ejecuta mediante un \emph{script}.
+Generar código a partir de los modelos. Se genera buena parte de la infraestructura de un microservicio.
+Como se ha visto en el apartado ??????, la arquitectura generada es una arquitectura por capas que trata de seguir siempre buenos principios de programación comos los SOLID.
+
+Referenciar documentación interna de la empresa.
 
 	\section{Programación de particularidades}
 
 Se implementan a través de clases parciales.
+No todo el código se puede generar automáticamente. Es necesaria la intervención humana para programar cosas concretas como campos calculados, validaciones o acciones ad hoc.
 
 \end{document}
