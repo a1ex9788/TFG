@@ -61,7 +61,7 @@ The technology used for the development of the product has been ASP.NET Core, in
 
 La automatización de los despliegues de programas es una práctica en auge hoy en día en el mundo del desarrollo de software. Prácticas de DevOps \cite{DevOps} tales como la entrega continua \cite{DevOpsPracticas} son cada vez más utilizadas con el fin de acortar tiempos en el ciclo de vida del desarrollo de sistemas y facilitar así su construcción, además de sistematizar los despliegues para poder llevarlos a cabo de manera sencilla.
 
-Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios} ya está consolidado. Esto consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
+Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios_articulo} \cite{Microservicios_libro} ya está consolidado. Esto consiste en la construcción de servicios independientes, ejecutados en procesos diferentes, que se encargan de realizar funciones concretas y que trabajan de forma conjunta para lograr el objetivo u objetivos globales de la aplicación que constituyen. Los beneficios que otorga este enfoque frente a la aproximación tradicional monolítica son muchos y muy variados. Algunos de ellos son:
 
 \begin{itemize}
 
@@ -1094,77 +1094,80 @@ Por lo que se refiere a experiencia personal, ha sido muy gratificante llevar a 
 
 En cuanto a líneas de trabajo futuras, el \emph{proxy} inverso quizás requiera alguna nueva característica o modificación que otra a medida que el resto de la aplicación avance y surjan nuevas necesidades. Para finalizar, también se puede querer extender la funcionalidad más adelante y construir encima un API \emph{Gateway} que ofrezca características específicas de ese patrón. Estas pueden ser agregaciones de peticiones o tareas transversales tales como monitorización de tiempos de las peticiones.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAFÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCIAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\bibname}{Referencias}
 
 \begin{thebibliography}{10}
 
 \bibitem{DevOps}
-Documentación de Microsoft acerca de DevOps:\\
-\url{https://azure.microsoft.com/es-es/overview/what-is-devops}
+¿Qué es DevOps? (consultado en 08/2021):\\
+\url{https://azure.microsoft.com/es-es/overview/what-is-devops}.
 
 \bibitem{DevOpsPracticas}
-Documentación de Microsoft acerca de las prácticas de DevOps:\\
+Integración y entrega continua (consultado en 08/2021):\\
 \url{https://azure.microsoft.com/es-es/overview/what-is-devops/#practices}
 
-\bibitem{Microservicios}
-Artículo breve de J. Lewis y M. Fowler acerca de los microservicios.
-\newblock Disponible en:\\
-\url{https://martinfowler.com/articles/microservices.html}\\\\
-\newblock Libro de referencia sobre microservicios:\\
-\newblock Sam Newman,
-\newblock \emph{Building Microservices.}
+\bibitem{Microservicios_articulo}
+\newblock \emph{Microservices}.
+\newblock J. Lewis y M. Fowler, 2014 (consultado en 08/2021):\\
+\url{https://martinfowler.com/articles/microservices.html}
+
+\bibitem{Microservicios_libro}
+\newblock \emph{Building Microservices}.
+\newblock S. Newman, O'REILLY, 2015.
 \newblock ISBN: 9781491950357
 
 \bibitem{DotNetCore}
-Documentación de Microsoft acerca de ASP.NET Core:\\
+Documentación oficial de ASP.NET Core (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/?view=aspnetcore-5.0}
 
 \bibitem{ApiGateway}
-Documentación de Microsoft acerca del patrón API \emph{Gateway}:\\
+Uso de puertas de enlace de API (API \emph{Gateway}) en microservicios (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/azure/architecture/microservices/design/gateway}
 
 \bibitem{NGINX}
-Web oficial de NGINX:\\
+Web oficial de NGINX (consultado en 08/2021):\\
 \url{https://www.nginx.com}
 
 \bibitem{NGINX_documentacion}
-Documentación oficial de NGINX para funcionar como \emph{proxy} inverso:\\
+Documentación oficial de NGINX para funcionar como \emph{proxy} inverso (consultado en 08/2021):\\
 \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}
 
 \bibitem{Ocelot_documentacion}
-Documentación oficial de Ocelot:\\
+Documentación oficial de Ocelot (consultado en 08/2021):\\
 \url{https://ocelot.readthedocs.io}
 
 \bibitem{OSI}
-¿Qué es el modelo OSI?:\\
+¿Qué es el modelo OSI? (consultado en 08/2021):\\
 \url{https://www.ionos.es/digitalguide/servidores/know-how/el-modelo-osi-un-referente-para-normas-y-protocolos}
 
 \bibitem{MiddlewaresPipeline}
-Documentación de Microsoft acerca del método \emph{Configure} y de la \emph{pipeline} de \emph{middlewares}:\\
+El método \emph{Configure} y la \emph{pipeline} de \emph{middlewares} (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
 
 \bibitem{DotNet}
-Documentación de Microsoft acerca de .NET:\\
+Documentación oficial de .NET (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/dotnet}
 
 \bibitem{Csharp}
-Documentación de Microsoft acerca de C\#:\\
+Documentación oficial de C\# (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/dotnet/csharp}
 
 \bibitem{NuGet}
-Documentación de Microsoft acerca de los paquetes NuGet:\\
-\url{https://docs.microsoft.com/es-es/nuget/quickstart/install-and-use-a-package-in-visual-studio}
+Una introducción a NuGet (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}
 
 \bibitem{ISO25010}
-ISO/IEC 25010 (SQuaRE):\\
+\emph{System and software Quality Requirements and Evaluation}, ISO/IEC 25010 (consultado en 08/2021):\\
 \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}
 
 \bibitem{Kestrel}
-Documentación de Microsoft acerca de Kestrel:\\
+Implementación del servidor web Kestrel en ASP.NET Core (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/servers/kestrel}
 
 \bibitem{WinForms}
-Documentación de Microsoft acerca de Windows Forms:\\
+Guía de escritorio, .NET para Windows Forms (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/dotnet/desktop/winforms/overview}
 
 \end{thebibliography}
