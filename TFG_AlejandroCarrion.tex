@@ -587,7 +587,7 @@ Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en pa
 
 	\item \textbf{Dominio}. En ella se encuentran las entidades que representan el dominio de la aplicación. Estas son creadas en base a su previo modelado.
 
-	\item \textbf{Contratos}. Principalmente contiene los DTO, u objetos para la transferencia de datos. Son objetos que representan las entidades de dominio que utiliza el sistema internamente con la intención de no darlas a conocer directamente. De esta forma, se ofrece la información que se quiere y se puede ocultar o modificar parte de ella. Además, esta capa también contiene las interfaces de las acciones del backend que se invocan a través de la capa de proxy.
+	\item \textbf{Contratos}. Principalmente contiene los DTO, u objetos para la transferencia de datos \cite{DTO}. Son objetos que representan las entidades de dominio que utiliza el sistema internamente con la intención de no darlas a conocer directamente. De esta forma, se ofrece la información que se quiere y se puede ocultar o modificar parte de ella. Además, esta capa también contiene las interfaces de las acciones del backend que se invocan a través de la capa de proxy.
 
 	\item \textbf{Persistencia}. Es la capa que se encarga de acceder y realizar las operaciones relacionadas con la base datos. El \emph{proxy} inverso no necesita persistir nada por lo que esta capa no existe en este caso.
 
@@ -742,7 +742,7 @@ El primero de los prototipos se hizo lo más simple posible, es decir, con la l�
 
 Para la creación de este prototipo, primero fue necesario crear un proyecto desde cero y ubicarlo en el lugar correspondiente del directorio de carpetas de la aplicación, junto a los demás microservicios. Acto seguido, se añadió el funcionamiento de \emph{proxy} inverso dado por YARP (CU03 del apartado \ref{casosDeUso}) y se le crearon rutas de manera predefinida para hacer las primeras pruebas con peticiones Postman. Las rutas predefinidas se configuran en el archivo \emph{appsettings.json}. Estos dos últimos aspectos se comentan con más detalle en el apartado \ref{ejemploUsoYARP} y un ejemplo de configuración de rutas estáticas se puede ver en la figura \ref{ejemploYARP_appsettings}.
 
-Después de realizar las tareas comentadas queda un proyecto muy simple pero totalmente funcional. Se muestra la solución de Visual Studio correspondiente en la figura \ref{prototipoMano}.
+Después de realizar las tareas comentadas queda un proyecto muy simple pero totalmente funcional. Se muestra la solución de Visual Studio \cite{SolutionsAndProjects} correspondiente en la figura \ref{prototipoMano}.
 
 \begin{figure}[ht]
 \centering
@@ -1106,8 +1106,9 @@ En cuanto a líneas de trabajo futuras, el \emph{proxy} inverso quizás requiera
 \url{https://azure.microsoft.com/es-es/overview/what-is-devops}.
 
 \bibitem{DevOpsPracticas}
-Integración y entrega continua (consultado en 08/2021):\\
-\url{https://azure.microsoft.com/es-es/overview/what-is-devops/#practices}
+\emph{Continuous Delivery}.
+\newblock M. Fowler, 2013 (consultado en 08/2021):\\
+\url{https://martinfowler.com/bliki/ContinuousDelivery.html}
 
 \bibitem{Microservicios_articulo}
 \newblock \emph{Microservices}.
@@ -1162,6 +1163,15 @@ Una introducción a NuGet (consultado en 08/2021):\\
 \bibitem{ISO25010}
 \emph{System and software Quality Requirements and Evaluation}, ISO/IEC 25010 (consultado en 08/2021):\\
 \url{https://iso25000.com/index.php/normas-iso-25000/iso-25010}
+
+\bibitem{DTO}
+\emph{Data Transfer Object}.
+\newblock M. Fowler, 2002 (consultado en 08/2021):\\
+\url{https://martinfowler.com/eaaCatalog/dataTransferObject.html}
+
+\bibitem{SolutionsAndProjects}
+¿Qué son las soluciones y los proyectos en Visual Studio? (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2019}
 
 \bibitem{Kestrel}
 Implementación del servidor web Kestrel en ASP.NET Core (consultado en 08/2021):\\
