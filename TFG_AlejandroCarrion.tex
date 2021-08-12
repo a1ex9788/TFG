@@ -163,9 +163,9 @@ Cabe destacar que no hay muchos productos que se dediquen exclusivamente a funci
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\section{Patrón API \emph{Gateway}}
+	\section{Patrón API \emph{Gateway}} \label{APIGateway}
 
-A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que atañe a este trabajo: el API \emph{Gateway} \cite{ApiGateway}, o puerta de enlace de API. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
+A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que concierne a este trabajo: el API \emph{Gateway} \cite{ApiGateway}, o puerta de enlace de API. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
 
 Generalmente, se entiende que un API \emph{Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
 
@@ -178,8 +178,6 @@ Generalmente, se entiende que un API \emph{Gateway} es una especialización de u
 	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos, mientras que los \emph{proxy} inversos solo los redirigen donde corresponda.
 
 \end{itemize}
-
-Este patrón fue descartado desde el primer momento porque no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan esta aproximación. Por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso, de ahí que las tecnologías expuestas a continuación sean las que son.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRODUCTOS HECHOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -288,7 +286,11 @@ Precio, API Gateway, Reverse proxy, documentación, comunidad, previa configurac
 
 	\section{Conclusiones}
 
-Conveniencia de la realización de este trabajo.
+Una vez analizadas las diferentes opciones para conseguir un \emph{proxy} inverso, es conveniente comentar la opción escogida y explicar porqué lo ha sido, a modo de conclusión.
+
+El uso de productos ya hechos proporciona facilidad de configuración y se puede considerar como la opción fácil, ya que se puede tener funcionando un \emph{proxy} inverso a pleno rendimiento en no mucho tiempo. No obstante, el contexto de la aplicación de la que tiene que formar parte hace que sea mejor elaborar un \emph{proxy} inverso propio, utilizando una librería que facilite esta tarea. Las dos razones con más peso son el hecho de que se pretende que el microservicio encargado de los despliegues se comunique con dicho producto y la facilidad de despliegue que se puede conseguir al utilizar la arquitectura específica seguida por los microservicios. De esta manera, utilizando un producto ya hecho no se podría conseguir un nivel alto de cohesión y se tendrían que abordar problemas de integración, así como desplegar el mismo de una manera diferente a los microservicios.
+
+Por otro lado, la sencillez de YARP y sus altas prestaciones hacen que destaque frente a Ocelot, la que permite crear API \emph{Gateways}. En concreto, no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan a los API \emph{Gateway} (apartado \ref{APIGateway}), así que, por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -296,8 +298,7 @@ Conveniencia de la realización de este trabajo.
 
 La tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Web oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}.}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
-Por otro lado, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy 
-particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso. Si se hubiera utilizado un producto ya hecho, no se hubiera podido conseguir un nivel alto de cohesión y se hubieran tenido que abordar problemas de integración. Por otro lado, su sencillez y altas prestaciones hacen que destaque frente a Ocelot, la que, como ya se ha comentado, permite crear API \emph{Gateways}.
+En otro orden de ideas, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso.
 
 Por último, se ha utilizado Postman \footnote{Web oficial de Postman: \url{https://www.postman.com}.} para realizar consultas de prueba al \emph{proxy} inverso y comprobar su funcionamiento. Postman es una herramienta gratuita que permite hacer justo lo que se ha descrito. Se trata de un cliente para peticiones HTTP REST que se utiliza para probar de manera sencilla servicios web y así agilizar su desarrollo.
 
@@ -305,7 +306,7 @@ Por último, se ha utilizado Postman \footnote{Web oficial de Postman: \url{http
 
 	\section{Ejemplo de uso básico de YARP} \label{ejemploUsoYARP}
 
-Una vez comentada la elección que finalmente se hizo y el porqué, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
+Una vez comentada la tecnología elegida, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
 
 En lineas generales, empezar a utilizar YARP no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso básico funcionando. Si bien, es más complejo utilizar características avanzadas o personalizarlo en función de las necesidades particulares.
 
