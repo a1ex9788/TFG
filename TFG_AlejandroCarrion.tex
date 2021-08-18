@@ -1184,6 +1184,22 @@ Implementación del servidor web Kestrel en ASP.NET Core (consultado en 08/2021)
 Guía de escritorio, .NET para Windows Forms (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/dotnet/desktop/winforms/overview}
 
+\bibitem{DSL}
+Modelar el SDK de Visual Studio - Lenguajes específicos de dominio (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/visualstudio/modeling/modeling-sdk-for-visual-studio-domain-specific-languages?view=vs-2019}
+
+\bibitem{PowerShell}
+¿Qué es PowerShell? (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/powershell/scripting/overview?view=powershell-7.1}
+
+\bibitem{SOLID}
+SOLID: \emph{The First 5 Principles of Object Oriented Design} (Consultado en 08/2021):\\
+\url{https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design}
+
+\bibitem{ClasesParciales}
+Clases y métodos parciales, Guía de programación de C\# (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}
+
 \end{thebibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APÉNDICE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1192,31 +1208,70 @@ Guía de escritorio, .NET para Windows Forms (consultado en 08/2021):\\
 
 \chapter{Proceso de generación automática de código}
 
-A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle ya que no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código que se ha seguido para elaborar el \emph{proxy} inverso.
+A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle ya que no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código a partir de modelos que se ha seguido para elaborar el \emph{proxy} inverso. Cabe destacar que para la realización de este apéndice se ha consultado documentación interna del equipo de desarrollo con la intención de enriquecer el mismo.
 
-El proceso en cuestión se divide en 3 pasos que se repiten continuamente en un proceso iterativo e incremental.
+Primero de todo, es conveniente explicar qué es generar código de forma automática a partir de modelos. Consiste en autogenerar, a partir de la especificación de ciertos modelos y en base a unas plantillas preconfiguradas, todo el código posible que se repita o que pueda ser escrito de forma automática debido a su similitud. En el marco de esta descripción entra el código encargado de comunicarse con la base de datos o el que prepara las acciones HTTP que un servicio expone al exterior, por ejemplo. Algunas de las ventajas más relevantes que esta aproximación de desarrollo de \emph{software} ofrece son:
 
-También se modelan interfaces de usuario pero el \emph{proxy} inverso no lo requiere.
-En general, el modelado para el \emph{proxy} inverso es muy simple.
+\begin{itemize}
+
+	\item Reduce los errores humanos en código repetitivo.
+
+	\item Permite reducir los tiempos de desarrollo debido a la generación automática de gran parte del código.
+
+	\item El desarrollo de acciones CRUD (\emph{create}, \emph{read}, \emph{update} y \emph{delete}), utilizadas en prácticamente todas las aplicaciones informáticas, es prácticamente cero al tratarse de código repetitivo que se puede automatizar.
+
+\end{itemize}
+
+Como puntos negativos destacar sobre todo la dificultad de creación y mantenimiento de las herramientas utilizadas para autogenerar el código. También puede resultar complejo cuadrar el código autogenerado con la programación de algunos flecos o particularidades de una aplicación concreta.
+
+El proceso de generación automática en cuestión se divide en 3 pasos que se repiten continuamente en un proceso iterativo e incremental. Estos son 'Modelado', 'Generación de código' y 'Programación de particularidades'. Pasan a ser detallados a continuación.
 
 	\section{Modelado}
 
-Entidades, DTOs y acciones \emph{ad hoc}.
-Utilizando los modelos de Dominio y Aplicación. Existen más pero no conviene marear, por simplicidad. 
-Esta parte consiste en utilizar las herramientas de modelado, llamadas DSL Tools. Primero de todo, es necesario construir las entidades que representan el dominio de la aplicación, microservicio en este caso. Para ello se crean modelos de dominio.
-Una vez creados los modelos de dominio, hay que modelar las acciones ad hoc. Estas representan las funcionalidades que el microservicio va a tener.
+De forma general, el modelado consiste en contruir diagramas que representen una abstracción o simplificación de la realidad. Estos diagramas o modelos permiten especificar aspectos de un sistema \emph{software} tales como requisitos, estructura o comportamiento. En este caso, se utilizan para detallar principalmente las entidades del dominio de la aplicación y las acciones del \emph{backend} denominadas acciones \emph{ad hoc}. Para realizar estas especificaciones, se hace uso de las llamadas DSL \emph{Tools}. Estas son unas herramientas de modelado para Visual Studio que han sido creadas internamente a partir del soporte que da Microsoft para ello \cite{DSL} y que están perfectamente adaptadas al proceso seguido de generación automática de código.
+
+Primero de todo, es necesario construir los modelos de dominio. Estos son muy parecidos a los típicos diagramas de entidades UML y en ellos se representan las entidades relevantes del dominio de la aplicación, con las correspondientes propiedades y relaciones entre ellas. En segundo lugar, se elaboran los modelos de aplicación. En ellos se modelan las acciones \emph{ad hoc}, es decir, las acciones de \emph{backend} que el microservicio va a realizar. Para cada una de ellas es posible especificar un DTO de entrada y uno de salida, ambos opcionales, que encapsulan los datos correspondientes. Adicionalmente, también se puede especificar otros DTO para su uso interno u otras situaciones más específicas.
+
+Centrando la vista en el modelado del \emph{proxy} inverso, se ha definido un único modelo de dominio, el cual se encuentra vacío. Esto está relacionado con el hecho de que no necesita persistir nada. Además, la representación interna que utiliza para guardar las rutas durante la ejecución es una interfaz que expone la propia librería de YARP, ya que ella misma lo gestiona, por lo que no ha sido necesario crear ninguna entidad. Con lo referente al modelo de aplicación, se han creado dos acciones \emph{ad hoc}, figura \ref{accionesAdHoc}. La primera corresponde al caso de uso de añadir rutas (CU01) y la segunda al de eliminarlas (CU02). Resaltar la existencia de los DTO de entrada, con la información necesaria para realizar las acciones, pero no de salida.
+
+% TODO:
+\begin{figure}[ht]
+\centering
+%\includegraphics[width=1\textwidth]{imagenes/apendice/accionesAdHoc}
+\caption{Acciones \emph{ad hoc} del \emph{proxy} inverso.}
+	\label{accionesAdHoc}
+\end{figure}
+
+Aparte de los modelos comentados de dominio y de aplicación, existen los de interfaz de usuario. Estos permiten construir formularios utilizando unos patrones preestablecidos y haciendo uso de unos DTO específicos que indican los campos a representar en ellos. Sin embargo, el \emph{proxy} inverso se trata de una aplicación de tipo servicio web que no requiere interfaz de usuario, por lo que no han sido mencionados antes ni se entrará en más detalle. En general, se puede decir que el modelado para el \emph{proxy} inverso es muy simple, nada comparable con el de microservicios más complejos.
 
 	\section{Generación de código}
 
-Se ejecuta mediante un \emph{script}.
-Generar código a partir de los modelos. Se genera buena parte de la infraestructura de un microservicio.
-Como se ha visto en el apartado ??????, la arquitectura generada es una arquitectura por capas que trata de seguir siempre buenos principios de programación comos los SOLID.
+La generación de código consiste en ejecutar el generador de código. Este utiliza unas plantillas con condiciones y patrones que, a partir de los modelos, genera el código correspondiente. Por otro lado, se ejecuta mediante un \emph{script} de PowerShell \cite{PowerShell} que facilita esta tarea.
 
-Referenciar documentación interna de la empresa.
+Con este proceso se genera buena parte de la infraestructura de un microservicio. Esto comprende todas las capas de la arquitectura explicada en el apartado \ref{estructuraSolucion}, que trata de seguir siempre buenos principios de programación comos los SOLID \cite{SOLID}.
+
+Es interesante mencionar que todas las clases autogeneradas se crean con un comentario a modo de encabezado indicando que no se trata de una clase normal (figura \ref{encabezadoAutogenerado}). Esto se hace para indicar a los programadores que no debe ser modificada a mano ya que los cambios desaparecerán al generar código de nuevo.
+
+% TODO:
+\begin{figure}[ht]
+\centering
+%\includegraphics[width=1\textwidth]{imagenes/apendice/encabezadoAutogenerado}
+\caption{Encabezado de código autogenerado.}
+	\label{encabezadoAutogenerado}
+\end{figure}
 
 	\section{Programación de particularidades}
 
-Se implementan a través de clases parciales.
-No todo el código se puede generar automáticamente. Es necesaria la intervención humana para programar cosas concretas como campos calculados, validaciones o acciones ad hoc.
+Para la elaboración de una aplicación qualquiera no todo el código se puede generar automáticamente. Cada una de ellas tiene cierto comportamiento específico por lo que es necesaria la intervención humana para programar aspectos concretos tales como las acciones \emph{ad hoc}.
+
+En el caso de este proceso de generación automática de código la mayoría de flecos o particularidades, por no decir todos, son implementados a través de clases parciales de C\# \cite{ClasesParciales}. La generación de código crea la clase y el programador tiene que crear otro archivo con el sufijo \emph{Partial} para implementar la clase parcial. Por otro lado, el generador de código se adapta y reconoce si una determinada clase parcial está creada o un determinado método gancho implementado para hacer las llamadas correspondientes o añadir o eliminar un determinado código para que todo encaje y funcione correctamente. Un ejemplo de clase parcial para el caso del \emph{proxy} inverso se muestra en la figura \ref{claseParcial}.
+
+% TODO:
+\begin{figure}[ht]
+\centering
+%\includegraphics[width=1\textwidth]{imagenes/apendice/claseParcial}
+\caption{Ejemplo de clase parcial del \emph{proxy} inverso.}
+	\label{claseParcial}
+\end{figure}
 
 \end{document}
