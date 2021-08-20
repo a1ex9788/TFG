@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "v294PBuxmuDQsiQvbALRFqbaGIstMYWOjQFpmEmEyUsfYE2Wwp4UK/atkWEXMPdu+dDh8pctc0WmIM7EPd92iw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alejandro\\source\\repos\\YarpExample\\YarpExample\\YarpExample.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alejandro\\.nuget\\packages\\yarp.reverseproxy\\1.0.0-preview.11.21223.5\\yarp.reverseproxy.1.0.0-preview.11.21223.5.nupkg.sha512"
+  ],
+  "logs": []
+}
