@@ -155,7 +155,7 @@ Como recurso adicional, se presenta un apéndice que explica el proceso de gener
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTADO DEL ARTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Estado del arte}
+\chapter{Estado del arte} \label{estadoDelArte}
 
 En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la escogida para desarrollar el \emph{proxy} inverso. Se hablará de la tecnología utilizada en general y de su elección en el siguiente capítulo (\ref{tecnologiaUtilizada}), donde también se mostrará un ejemplo básico de su uso.
 
@@ -687,7 +687,11 @@ La parte de programación del \emph{proxy} inverso que protagoniza este trabajo 
 
 		\subsection{Construcción de prototipos}
 
-El desarrollo comienza con la elaboración de dos prototipos de microservicio para evaluar la viabilidad de utilizar la estructura autogenerada de los demás microservicios sobre el \emph{proxy} inverso. De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola para medir posteriormente las diferencias de rendimiento entre uno y otro. Por otro lado, cabe destacar que a los \emph{proxy} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
+El desarrollo ha tenido un inicio particular, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
+
+De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola. Esto culminaría con la medición de las diferencias de rendimiento entre ambos y la consiguiente elección, para continuar con el desarrollo de uno u otro prototipo.
+
+Por otro lado, cabe destacar que a los \emph{proxy} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MICROSERVICIO A MANO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -773,7 +777,7 @@ También se creyó conveniente estandarizar el tratamiento de las rutas base de 
 
 Además, se consideró oportuno automatizar algunas de las pruebas de aceptación de las acciones de añadir y eliminar rutas y para el método \emph{GetYarpNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas \ref{pruebas}.
 
-Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados Core. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
+Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados \emph{Core}. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRIMEROS DESPLIEGUES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1072,11 +1076,21 @@ Tras la exposición de la metodología seguida para este proyecto, se va a detal
 
 Una vez elaborado y priorizado el \emph{backlog}, el plan de trabajo ha sido hacer uso del tablero \emph{kanban} e ir desarrollando incrementos de funcionalidad poniendo en práctica las características ágiles comentadas en el punto anterior.
 
-Por último, es interesante comentar el inicio particular de este desarrollo, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CRONOLOGÍA DEL PROYECTO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Así pues, la construcción de los prototipos culminaría en una medición de tiempos para evaluar la eficiencia de las dos soluciones y la consiguiente elección para continuar con el desarrollo de uno u otro prototipo. Se ahondará en todo este proceso en el siguiente apartado.
+		\subsection{Cronología del proyecto}
 
-TODO: Faltaría añadir Cronología del proyecto: hitos principales (apartado 4.4, estudio de tecnologías, revisión de memoria).
+Los hitos de los que consta este proyecto han sido expuestos en orden cronológico a lo largo de esta memoria. A continuación serán comentados brevemente los principales para facilitar su visión de forma global y así entender la cronología del proyecto:
+
+\begin{itemize}
+
+	\item \textbf{Estudio de tecnologías}. Uno de los primeros pasos para realizar este proyecto ha sido revisar las tecnologías disponibles y existentes para resolver problemas parecidos al planteado, esto corresponde al apartado \ref{estadoDelArte}.
+
+	\item \textbf{Programación}. La fase de programación ha tenido, por su parte, 4 hitos principales, comentados en el punto \ref{programacion}: ''Construcción de prototipos'', ''Consolidación del microservicio autogenerado'', ''Primeros despliegues'' y ''Producto final''.
+
+	\item \textbf{Revisión de la memoria}. Por último, se ha completado y revisado como conjunto la presente memoria, habiendo sido elaborada incrementalmente a la vez que se programaba.
+
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES Y TRABAJO FUTURO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
