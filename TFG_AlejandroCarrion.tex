@@ -87,7 +87,7 @@ Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver
 	\label{proxyContraProxyInverso}
 \end{figure}
 
-El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios, pues es importante no exponer estos al exterior. Además, se suele utilizar también para realizar tareas de balanceo de carga entre diferentes instancias de un mismo microservicio. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza un \emph{proxy} inverso. En la segunda se observa que, con el uso de un componente de este tipo, los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
+El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios \cite{ReverseProxyForMicroservices}, pues es importante no exponer estos al exterior. Con el mismo propósito también se suele utilizar el patrón API \emph{Gateway} \cite{APIGatewayParaMicroservicios}, que será comentado en más detalle en el apartado \ref{APIGateway}. Además, se suele utilizar también para realizar tareas de balanceo de carga entre diferentes instancias de un mismo microservicio. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza un \emph{proxy} inverso. En la segunda se observa que, con el uso de un componente de este tipo, los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
 
 \begin{figure}[ht]
 \centering
@@ -1132,6 +1132,14 @@ En cuanto a líneas de trabajo futuras, el \emph{proxy} inverso quizás requiera
 \newblock \emph{Building Microservices}.
 \newblock S. Newman, O'REILLY, 2015.
 \newblock ISBN: 9781491950357
+
+\bibitem{ReverseProxyForMicroservices}
+\emph{Why Proxies Are Important for Microservices} (consultado en 08/2021):\\
+\url{https://dzone.com/articles/why-proxies-are-important-for-microservices}
+
+\bibitem{APIGatewayParaMicroservicios}
+API Gateway en tu arquitectura de microservicios (consultado en 08/2021):\\
+\url{https://www.itdo.com/blog/api-gateway-en-tu-arquitectura-de-microservicios}
 
 \bibitem{DotNetCore}
 Documentación oficial de ASP.NET Core (consultado en 08/2021):\\
