@@ -677,51 +677,6 @@ Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \
 
 \end{itemize}
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METODOLOGÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-	\section{Metodología} \label{metodologia}
-
-Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido de que se han seguido algunas de las prácticas propuestas por varias de las metodologías de este tipo, tales como Scrum o Kanban, con el fin de seguir un enfoque metodológico personalizado y adaptado a las características del proyecto. Las prácticas utilizadas se detallan a continuación:
-
-\begin{itemize}
-
-	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas relativamente pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más pequeñas y concretas que los casos de uso. También manifiestan de forma clara la posibilidad de tratarse de tareas no solo relacionadas con modificar el producto sino otras como crear una base de datos o renovar una suscripción de un servicio web.
-
-	\item \textbf{Uso de un tablero \emph{kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas. La herramienta utilizada a modo de tablero \emph{kanban} ha sido Trello \footnote{Web oficial de Trello: \url{https://trello.com}.}.
-
-	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{kanban}, las unidades de trabajo han estado ordenadas de mayor a menor importancia en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
-
-	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar las unidades de trabajo correspondientes a la funcionalidad básica del \emph{proxy} inverso. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entrará más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
-
-	\item \textbf{Búsqueda de la sencillez y el minimalismo}. Se trata de no realizar esfuerzos innecesarios a la hora de implementar una determinada funcionalidad, esto es, buscar la solución más simple que cumpla los requisitos establecidos. De esta forma, se evita invertir tiempo en aspectos no definitivos o que se modificarán con posterioridad y que no afectan al funcionamiento inmediato del producto.
-
-	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
-
-	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nueva entrega o despliegue. Las pruebas de regresión llevadas a cabo en este proyecto se comentarán en el apartado \ref{pruebasDeRegresion}.
-
-\end{itemize}
-
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PLAN DE TRABAJO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-		\subsection{Plan de trabajo} \label{planDeTrabajo}
-
-Tras la exposición de la metodología seguida para este proyecto, se va a detallar el plan de trabajo trazado. La elaboración del tablero \emph{kanban} se ha tomado como punto de partida y se muestran sus unidades de trabajo iniciales en la figura \ref{kanbanInicial}, las cuales fueron obtenidas a partir de la especificación de requisitos del apartado \ref{especificacionRequisitos}. Cabe destacar que estas no han sido las definitivas y posteriormente se han modificado y creado nuevas, como es habitual en las metodologías ágiles.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.34\textwidth]{imagenes/backlogInicial}
-\caption{\emph{Backlog} con las unidades de trabajo iniciales.}
-	\label{kanbanInicial}
-\end{figure}
-
-Una vez elaborado y priorizado el \emph{backlog}, el plan de trabajo ha sido hacer uso del tablero \emph{kanban} e ir desarrollando incrementos de funcionalidad poniendo en práctica las características ágiles comentadas en el punto anterior.
-
-Por último, es interesante comentar el inicio particular de este desarrollo, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
-
-Así pues, la construcción de los prototipos culminaría en una medición de tiempos para evaluar la eficiencia de las dos soluciones y la consiguiente elección para continuar con el desarrollo de uno u otro prototipo. Se ahondará en todo este proceso en el siguiente apartado.
-
-TODO: Faltaría añadir Cronología del proyecto: hitos principales (apartado 4.4, estudio de tecnologías, revisión de memoria).
-
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROGRAMACIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	\section{Programación} \label{programacion}
@@ -732,7 +687,7 @@ La parte de programación del \emph{proxy} inverso que protagoniza este trabajo 
 
 		\subsection{Construcción de prototipos}
 
-Como el plan de trabajo del punto \ref{planDeTrabajo} establece, el desarrollo comienza con la elaboración de dos prototipos de microservicio para evaluar la viabilidad de utilizar la estructura autogenerada de los demás microservicios sobre el \emph{proxy} inverso. De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola para medir posteriormente las diferencias de rendimiento entre uno y otro. Por otro lado, cabe destacar que a los \emph{proxy} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
+El desarrollo comienza con la elaboración de dos prototipos de microservicio para evaluar la viabilidad de utilizar la estructura autogenerada de los demás microservicios sobre el \emph{proxy} inverso. De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola para medir posteriormente las diferencias de rendimiento entre uno y otro. Por otro lado, cabe destacar que a los \emph{proxy} inversos que forman parte de una arquitectura de microservicios no se les suele dar tal categoría. Sin embargo, en este trabajo sí se le va a incluir dentro de los denominados microservicios debido a que se quiere que tenga la misma estructura, RNF04 del apartado \ref{requisitosNoFuncionales}. Al fin y al cabo es un tema simplemente de nomenclatura.
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MICROSERVICIO A MANO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1077,6 +1032,51 @@ Las figuras \ref{testAñadirRutas}, \ref{testGetYarpNormalizedRequestsBasePath} 
 Las pruebas de regresión son pruebas que se realizan sobre un producto \emph{software} anteriormente probado al que se le han hecho modificaciones. Con ellas se pretende asegurarse de que no se han introducido defectos que puedan producir errores sobre las funcionalidades implementadas previamente. 
 
 En el caso del \emph{proxy} inverso, han consistido en ejecutar todas las pruebas de aceptación, automatizadas y sin automatizar, de las unidades de trabajo ya terminadas. Se han ejecutado antes de cada despliegue y con ellas se ha verificado el correcto funcionamiento de todas las características del producto de cara a que los despliegues no hicieran fallar el \emph{proxy} inverso ni cualquier otro componente de la aplicación. De esta forma, con estas pruebas se ha pretendido evitar todo tipo de problemas que pudieran entorpecer a los demás miembros del equipo de desarrollo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también. Es por esto que se han considerado un seguro de vida para garantizar, en cierta medida, que los despliegues serían un éxito.
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METODOLOGÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\section{Metodología} \label{metodologia}
+
+Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido de que se han seguido algunas de las prácticas propuestas por varias de las metodologías de este tipo, tales como Scrum o Kanban, con el fin de seguir un enfoque metodológico personalizado y adaptado a las características del proyecto. Las prácticas utilizadas se detallan a continuación:
+
+\begin{itemize}
+
+	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas relativamente pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más pequeñas y concretas que los casos de uso. También manifiestan de forma clara la posibilidad de tratarse de tareas no solo relacionadas con modificar el producto sino otras como crear una base de datos o renovar una suscripción de un servicio web.
+
+	\item \textbf{Uso de un tablero \emph{kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas. La herramienta utilizada a modo de tablero \emph{kanban} ha sido Trello \footnote{Web oficial de Trello: \url{https://trello.com}.}.
+
+	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{kanban}, las unidades de trabajo han estado ordenadas de mayor a menor importancia en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
+
+	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar las unidades de trabajo correspondientes a la funcionalidad básica del \emph{proxy} inverso. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entrará más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
+
+	\item \textbf{Búsqueda de la sencillez y el minimalismo}. Se trata de no realizar esfuerzos innecesarios a la hora de implementar una determinada funcionalidad, esto es, buscar la solución más simple que cumpla los requisitos establecidos. De esta forma, se evita invertir tiempo en aspectos no definitivos o que se modificarán con posterioridad y que no afectan al funcionamiento inmediato del producto.
+
+	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
+
+	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nueva entrega o despliegue. Las pruebas de regresión llevadas a cabo en este proyecto se comentarán en el apartado \ref{pruebasDeRegresion}.
+
+\end{itemize}
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PLAN DE TRABAJO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		\subsection{Plan de trabajo} \label{planDeTrabajo}
+
+Tras la exposición de la metodología seguida para este proyecto, se va a detallar el plan de trabajo trazado. La elaboración del tablero \emph{kanban} se ha tomado como punto de partida y se muestran sus unidades de trabajo iniciales en la figura \ref{kanbanInicial}, las cuales fueron obtenidas a partir de la especificación de requisitos del apartado \ref{especificacionRequisitos}. Cabe destacar que estas no han sido las definitivas y posteriormente se han modificado y creado nuevas, como es habitual en las metodologías ágiles.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.34\textwidth]{imagenes/backlogInicial}
+\caption{\emph{Backlog} con las unidades de trabajo iniciales.}
+	\label{kanbanInicial}
+\end{figure}
+
+Una vez elaborado y priorizado el \emph{backlog}, el plan de trabajo ha sido hacer uso del tablero \emph{kanban} e ir desarrollando incrementos de funcionalidad poniendo en práctica las características ágiles comentadas en el punto anterior.
+
+Por último, es interesante comentar el inicio particular de este desarrollo, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
+
+Así pues, la construcción de los prototipos culminaría en una medición de tiempos para evaluar la eficiencia de las dos soluciones y la consiguiente elección para continuar con el desarrollo de uno u otro prototipo. Se ahondará en todo este proceso en el siguiente apartado.
+
+TODO: Faltaría añadir Cronología del proyecto: hitos principales (apartado 4.4, estudio de tecnologías, revisión de memoria).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONCLUSIONES Y TRABAJO FUTURO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
