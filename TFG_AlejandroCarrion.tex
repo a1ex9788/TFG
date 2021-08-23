@@ -363,7 +363,7 @@ Para simular una petición de un cliente se va a realizar una consulta con Postm
 
 \chapter{Desarrollo de la solución}
 
-Este capítulo va a explicar el proceso que se ha seguido para construir el \emph{proxy} inverso. Primero se detallará la funcionalidad que este debe tener mediante la especificación de requisitos previa al desarrollo. En segundo lugar, se verá una sección de diseño para ver cómo se organiza el código de la solución implementada. A continuación, se explicará la metodología \emph{software} seguida. Después, la sección más amplia, correspondiente a la programación del \emph{proxy} inverso, la cual se comentará divida en fases con las funcionalidades implementadas en cada una de ellas y los problemas encontrados. Por último, se expondrán las pruebas realizadas para verificar el correcto funcionamiento del producto elaborado.
+Este capítulo va a explicar el proceso que se ha seguido para construir el \emph{proxy} inverso. Primero se detallará la funcionalidad que este debe tener mediante la especificación de requisitos previa al desarrollo. En segundo lugar, se verá una sección de diseño para ver cómo se organiza el código de la solución implementada. Después, la sección más amplia, correspondiente a la programación del \emph{proxy} inverso, la cual se comentará divida en fases con las funcionalidades implementadas en cada una de ellas y los problemas encontrados. A continuación, se expondrán las pruebas realizadas para verificar el correcto funcionamiento del producto elaborado. Por último, se explicará la metodología \emph{software} seguida.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIÓN DE REQUISITOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -410,7 +410,7 @@ Los casos de uso van a ser expuestos a continuación con un diagrama de casos de
 \hline
 \textbf{Identificador} & CU03
 \\ \hline
-\textbf{Nombre} & Enrutamiento
+\textbf{Nombre} & Enrutar peticiones
 \\ \hline
 \textbf{Actor} & Interfaz de usuario / Microservicio X
 \\ \hline
@@ -421,7 +421,7 @@ Los casos de uso van a ser expuestos a continuación con un diagrama de casos de
 
 		\subsection{Otros requisitos funcionales} \label{requisitosFuncionales}
 
-Aparte de los casos de uso comentados en el apartado anterior, el \emph{proxy} inverso ha de cumplir otros requisitos funcionales, o características concretas, que no son propiamente casos de uso pero que se considera de interés mencionarlos, pues son relevantes para su funcionamiento. Los requisitos funcionales a mostrar se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudan también a comprender qué debe hacer exactamente el producto. Cabe destacar que estos aspectos se podrían haber presentado de forma conjunta a los casos de uso, ya que ambos se pueden considerar requisitos funcionales. No obstante, se cree que de esta manera quedan más claras, por un lado, las tres funcionalidades básicas y, por otro lado, algunos detalles más concretos.
+Aparte de los casos de uso comentados, el \emph{proxy} inverso ha de cumplir otros requisitos funcionales, o características concretas, que no son propiamente casos de uso pero que se considera de interés mencionarlos, pues son relevantes para su funcionamiento. Los requisitos funcionales a mostrar se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudan también a comprender qué debe hacer exactamente el producto. Cabe destacar que estos aspectos se podrían haber presentado de forma conjunta a los casos de uso, ya que ambos se pueden considerar requisitos funcionales. No obstante, se cree que de esta manera quedan más claras, por un lado, las tres funcionalidades básicas y, por otro lado, algunos detalles más concretos.
 
 Estos requisitos van a ser representados mediante un identificador, un nombre, el caso de uso con el que guardan relación, y una breve descripción:
 
@@ -429,7 +429,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF01
 \\ \hline
-\textbf{Nombre} & Carga de rutas dinámica
+\textbf{Nombre} & Añadir rutas dinámicamente
 \\ \hline
 \textbf{Caso de uso relacionado} & CU01
 \\ \hline
@@ -440,7 +440,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF02
 \\ \hline
-\textbf{Nombre} & Doble comunicación
+\textbf{Nombre} & Efectuar doble comunicación
 \\ \hline
 \textbf{Caso de uso relacionado} & CU03
 \\ \hline
@@ -451,7 +451,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF03
 \\ \hline
-\textbf{Nombre} & Multiinstancia de microservicios
+\textbf{Nombre} & Multiinstanciar microservicios
 \\ \hline
 \textbf{Caso de uso relacionado} & CU01, CU02 y CU03
 \\ \hline
@@ -462,7 +462,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF04
 \\ \hline
-\textbf{Nombre} & Balanceo de carga
+\textbf{Nombre} & Balancear la carga
 \\ \hline
 \textbf{Caso de uso relacionado} & CU03
 \\ \hline
@@ -473,7 +473,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF05
 \\ \hline
-\textbf{Nombre} & Versionado de microservicios
+\textbf{Nombre} & Versionar microservicios
 \\ \hline
 \textbf{Caso de uso relacionado} & CU01, CU02 y CU03
 \\ \hline
@@ -484,7 +484,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF06
 \\ \hline
-\textbf{Nombre} & Multiinstancia de \emph{proxy} inversos
+\textbf{Nombre} & Multiinstanciar \emph{proxy} inversos
 \\ \hline
 \textbf{Caso de uso relacionado} & CU03
 \\ \hline
@@ -495,7 +495,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \hline
 \textbf{Identificador} & RF07
 \\ \hline
-\textbf{Nombre} & Instancias exclusivas
+\textbf{Nombre} & Instanciar \emph{proxy} inversos exclusivos
 \\ \hline
 \textbf{Caso de uso relacionado} & CU03
 \\ \hline
@@ -811,7 +811,7 @@ Además, como paso previo a incluir el \emph{proxy} inverso al proceso de despli
 
 La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}. Para ello, fue necesario modificar las direcciones a las que apuntaba, en concreto, substituir las de cada microservicio por la del \emph{proxy} inverso. De esta forma, la interfaz de usuario dejaba de conocer todos los microservicios para solo conocer su dirección.
 
-No obstante, las direcciones de los microservicios ahora debían ser conocidas por el \emph{proxy} inverso, por lo que hubo que cargárselas. Aquí es donde entran en juego los diferentes modos de despliegue. Para los despliegues con el microservicio específico, esté es quien tiene que cargar de rutas el \emph{proxy} inverso cada vez que le ordene a un servidor ejecutar un determinado microservicio. Con respecto al despliegue en Docker, las rutas han de ser cargadas de una manera predefinida. Para especificar dichas rutas, se ha creado un fichero llamado \emph{defaultRoutes.json} (figura \ref{defaultRoutes}), que es leído al iniciarse el \emph{proxy} inverso y las rutas que describe son añadidas. De esto se encarga una clase llamada \emph{RoutesLoaderHostedService}, que, como su propio nombre indica, es un \emph{hosted service} \cite{HostedServices}. Este tipo de clase ejecuta una determinada lógica como tarea en segundo plano.
+No obstante, las direcciones de los microservicios ahora debían ser conocidas por el \emph{proxy} inverso, por lo que hubo que cargárselas. Aquí es donde entran en juego los diferentes modos de despliegue. Para los despliegues con el microservicio específico, esté es quien tiene que añadir las rutas al \emph{proxy} inverso cada vez que le ordene a un servidor ejecutar un determinado microservicio. Con respecto al despliegue en Docker, las rutas han de ser cargadas de una manera predefinida. Para especificar dichas rutas, se ha creado un fichero llamado \emph{defaultRoutes.json} (figura \ref{defaultRoutes}), que es leído al iniciarse el \emph{proxy} inverso y las rutas que describe son añadidas. De esto se encarga una clase llamada \emph{RoutesLoaderHostedService}, que, como su propio nombre indica, es un \emph{hosted service} \cite{HostedServices}. Este tipo de clase ejecuta una determinada lógica como tarea en segundo plano.
 
 \begin{figure}[ht]
 \centering
