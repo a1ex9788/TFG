@@ -88,7 +88,7 @@ Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver
 	\label{proxyContraProxyInverso}
 \end{figure}
 
-El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios \cite{ReverseProxyForMicroservices}, pues es importante no exponer estos al exterior. Con el mismo propósito también se suele utilizar el patrón API \emph{Gateway} \cite{APIGatewayParaMicroservicios}, que será comentado en más detalle en el apartado \ref{APIGateway}. Además, se suele utilizar también para realizar tareas de balanceo de carga entre diferentes instancias de un mismo microservicio. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza un \emph{proxy} inverso. En la segunda se observa que, con el uso de un componente de este tipo, los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
+El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios \cite{ReverseProxyForMicroservices}, pues es importante no exponer estos al exterior. Con el mismo propósito también se suele utilizar el patrón API \emph{Gateway} \cite{APIGatewayParaMicroservicios}, que será comentado en más detalle en el apartado \ref{patronesRelacionados}. Además, se suele utilizar también para realizar tareas de balanceo de carga entre diferentes instancias de un mismo microservicio. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza un \emph{proxy} inverso. En la segunda se observa que, con el uso de un componente de este tipo, los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
 
 \begin{figure}[ht]
 \centering
@@ -146,7 +146,7 @@ Este documento se divide en 5 grandes bloques o capítulos:
 
 	\item El capítulo número 3 comenta la tecnología que finalmente ha sido utilizada, justificando su elección y mostrando un ejemplo básico de su uso.
 
-	\item El cuarto capítulo es el más extenso y comenta el proceso que se ha seguida para desarrollar el \emph{proxy} inverso. Incluye la especificación de requisitos, el diseño de la solución, la metodología seguida, las funcionalidades implementadas en un apartado dedicado a la programación y las pruebas realizadas.
+	\item El cuarto capítulo es el más extenso y comenta el proceso que se ha seguido para desarrollar el \emph{proxy} inverso. Incluye la especificación de requisitos, el diseño de la solución, las funcionalidades implementadas en un apartado dedicado a la programación, las pruebas realizadas y la metodología seguida.
 
 	\item Por último, el capítulo 5 hace una reflexión sobre el trabajo realizado y concluye la misma valorando el grado de cumplimiento de los objetivos planteados. También presenta el trabajo futuro a realizar.
 
@@ -174,7 +174,7 @@ A modo de aparte, es interesante mencionar algunos patrones relacionados con el 
 
 	\begin{itemize}
 	
-		\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
+		\item Ofrecen agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
 	
 		\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
 
@@ -233,7 +233,7 @@ Para finalizar, algunos de los productos y servicios de NGINX son ampliamente co
 
 Kemp \footnote{Web oficial de Kemp: \url{https://kemptechnologies.com}.} es un balanceador de carga muy utilizado a nivel mundial. No obstante, se suele utilizar también como \emph{proxy} inverso. Al final, a estos dos patrones les separa una fina linea (apartado \ref{patronesRelacionados}) y la terminología se utiliza indistintamente a menudo.
 
-En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también de nivel 7, en referencia a las capas OSI. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
+En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también puede serlo de nivel 7, en referencia a las capas OSI. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
 
 Una de los aspectos más especiales de Kemp es el hecho de que brinda múltiples opciones de implementación (figura \ref{productosKemp}), y muy flexibles. Destacan la \emph{hardware}, que facilita la instalación de máquinas con el \emph{software} de Kemp, y la \emph{cloud}, la cual pone a disposición los servicios de manera remota y sin necesidad de tener servidores físicos. Cada una de ellas tiene diferentes tarifas en función del tráfico a recibir o de la cantidad de puertos disponibles, entre otros.
 
@@ -298,7 +298,7 @@ Su configuración es muy básica, teniendo que especificarla en un fichero Json.
 
 	\section{Comparativa}
 
-Tras comentar algunas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso, se presenta a continuación una comparativa de dichas herramientas para mostrar de manera concreta las diferencias entre ellas. Para cada una de ellas se indica el patrón que implementa, el nivel del modelo OSI sobre el que actúa, el coste de implantación, si permite recarga de configuración dinámica, si permite mucha personalización y la facilidad para ponerla en marcha de una manera rápida:
+Tras comentar algunas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso, se presenta a continuación una comparativa de dichas herramientas para mostrar de manera concisa las diferencias entre ellas. Para cada una de ellas se indica el patrón que implementa, el nivel del modelo OSI sobre el que actúa, el coste de implantación, si permite recarga de configuración dinámica, si permite mucha personalización y el grado de facilidad para ponerla en marcha de una manera rápida:
 
 \begin{figure}[ht]
 \centering
@@ -314,7 +314,7 @@ Una vez analizadas las diferentes opciones para conseguir un \emph{proxy} invers
 
 El uso de productos ya hechos proporciona facilidad de configuración y se puede considerar como la opción fácil, ya que se puede tener funcionando un \emph{proxy} inverso a pleno rendimiento en no mucho tiempo. No obstante, el contexto de la aplicación de la que tiene que formar parte hace que sea mejor elaborar un \emph{proxy} inverso propio, utilizando una librería que facilite esta tarea. Las dos razones con más peso son el hecho de que se pretende que el microservicio encargado de los despliegues se comunique con dicho producto y la facilidad de despliegue que se puede conseguir al utilizar la arquitectura específica seguida por los microservicios. De esta manera, utilizando un producto ya hecho no se podría conseguir un nivel alto de cohesión y se tendrían que abordar problemas de integración, así como desplegar el mismo de una manera diferente a los microservicios.
 
-Por otro lado, la sencillez de YARP y sus altas prestaciones hacen que destaque frente a Ocelot, la que permite crear API \emph{Gateways}. En concreto, no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan a los API \emph{Gateway} (apartado \ref{patronesRelacionados}), así que, por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso.
+Por otro lado, la sencillez de YARP y sus altas prestaciones hacen que destaque frente a Ocelot, la que permite crear API \emph{Gateways}. En concreto, no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan a los API \emph{Gateway} (apartado \ref{patronesRelacionados}), así que, por este motivo, y por la búsqueda de simplicidad, ha sido más apropiado decantarse por un \emph{proxy} inverso.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -438,7 +438,7 @@ Los casos de uso van a ser expuestos a continuación con un diagrama de casos de
 \\ \hline
 \textbf{Actor} & Interfaz de usuario / Microservicio X
 \\ \hline
-\textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por una determinada ruta. Las rutas determinan qué peticiones tienen que ser encaminadas a qué direcciones. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
+\textbf{Descripción} & La interfaz de usuario o cualquier microservicio de la aplicación envía una petición a la dirección en la que escucha el \emph{proxy} inverso y esta es capturada y redirigida hacia un \emph{endpoint} especificado por una ruta concreta. Las rutas determinan qué peticiones tienen que ser encaminadas hacia qué direcciones. Es necesario cargar previamente la ruta correspondiente mediante el caso de uso CU01.
 \\ \hline \end{tabular} \end{center}
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUISITOS FUNCIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -503,7 +503,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \\ \hline
 \textbf{Caso de uso relacionado} & CU01, CU02 y CU03
 \\ \hline
-\textbf{Descripción} & Relacionado con el RF03, las diferentes instancias de un mismo microservicio pueden corresponder a versiones diferentes del mismo. De esta forma, las peticiones deberán ser redirigidas a una dirección u otra en función de la versión del microservicio que se quiera utilizar.
+\textbf{Descripción} & Relacionado con el RF03, las diferentes instancias de un mismo microservicio pueden corresponder a versiones diferentes del mismo. De esta forma, las peticiones deberán ser redirigidas a una dirección u otra en función de la versión del microservicio que se quiera utilizar. Las peticiones lo especificarán.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{9.5cm} |}
@@ -564,9 +564,9 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 \\ \hline
 \textbf{Característica} & Eficiencia de desempeño
 \\ \hline
-\textbf{Descripción} & El enrutamiento, CU03, no debe ralentizar las peticiones en exceso de forma que las peticiones enrutadas no tomen un tiempo superior al 115\% del tiempo que tardaría la petición si no pasara por el \emph{proxy} inverso.
+\textbf{Descripción} & La acción de enrutar peticiones, CU03, no debe ralentizarlas en exceso de forma que las peticiones enrutadas no tomen un tiempo superior al 115\% del tiempo que tardarían si no pasaran por el \emph{proxy} inverso.
 \\ \hline
-\textbf{Motivación} & Evitar que el \emph{proxy} inverso suponga un retardo elevado en el tiempo de respuesta de las peticiones.
+\textbf{Motivación} & Evitar que el uso del \emph{proxy} inverso suponga un retardo elevado en el tiempo de respuesta de las peticiones.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{11.3cm} |}
@@ -629,7 +629,7 @@ Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en pa
 
 \end{itemize}
 
-Tras comentar las capas que forman la arquitectura del \emph{proxy} inverso, se muestra en la figura \ref{arquitectura} un esquema de cómo interactúan entre ellas. Es interesante resaltar el hecho de que la capa de Contratos actúa como capa base y la mayoría de las demás la referencian. Por otra parte, la distinción \emph{frontend}/\emph{backend} se aprecia con claridad.
+Tras comentar las capas que forman la arquitectura del \emph{proxy} inverso, se muestra en la figura \ref{arquitectura} un esquema de cómo interactúan entre ellas. Es interesante resaltar el hecho de que la capa de Contratos actúa como capa base y la mayoría de las demás la referencian. Por otra parte, la distinción \emph{frontend}/\emph{backend} queda reflejada con claridad.
 
 \begin{figure}[ht]
 \centering
@@ -779,7 +779,7 @@ En concreto, para 10000 iteraciones se obtuvieron tiempos medios de respuesta de
 
 Una vez elegida la opción de seguir el estándar de microservicio de la aplicación, hubo que resolver los aspectos de la generación de código que no quedaron ajustados. Así pues, se tuvieron que modificar algunas plantillas de código a partir de las cuales se generan las clases y proyectos que forman los microservicios.
 
-Un ejemplo de problemas con la generación de código fue el método \emph{Configure} de la clase \emph{Startup}. Este tenía que ser modificado para añadir la llamada \emph{endpoint.MapReverseProxy()} pero la generación de código no lo permitía, no pudiéndose personalizar este método en función del microservicio en cuestión. De esta forma, la modificación de las plantillas consistió en generar una llamada a un método estático dentro de ese \emph{Configure}, que se implementaría en una clase parcial. La figura \ref{startup} muestra cómo queda la clase \emph{Startup}.
+Un ejemplo de problemas con la generación de código fue el método \emph{Configure} de la clase \emph{Startup}. Este tenía que ser modificado para añadir la llamada \emph{endpoint.MapReverseProxy()} pero la generación de código no lo permitía, no pudiéndose personalizar este método en función del microservicio en cuestión. De esta forma, la modificación de las plantillas consistió en generar una llamada a un método estático dentro de ese \emph{Configure}, que se implementaría en una clase parcial \cite{ClasesParciales}. La figura \ref{startup} muestra cómo queda la clase \emph{Startup}.
 
 \begin{figure}[ht]
 \centering
@@ -950,7 +950,7 @@ La documentación oficial no decía nada al respecto por lo que se dedujo, despu
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{imagenes/configuracionKestrel}
-\caption{Esquema de dos niveles de \emph{proxy} inverso.}
+\caption{Configuración de Kestrel para eliminar el peso máximo de las peticiones.}
 	\label{configuracionKestrel}
 \end{figure}
 
@@ -981,7 +981,7 @@ Desde una perspectiva diferente a las pruebas de puesta en funcionamiento real r
 
 		\subsection{Pruebas de aceptación} \label{pruebasDeAceptacion}
 
-Recordando lo comentado en el apartado \ref{metodologia}, se han definido pruebas de aceptación (PA) para especificar muchas de las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si esta se ha implementado correctamente.
+Avanzando lo que se comenta en el apartado \ref{metodologia}, se han definido pruebas de aceptación (PA) para especificar muchas de las unidades de trabajo que representan el trabajo a realizar. Estas determinan el buen o mal funcionamiento de la característica descrita por la unidad de trabajo en cuestión por lo que se utilizan para comprobar si esta se ha implementado correctamente.
 
 Una unidad de trabajo no se considera terminada hasta que no pasa satisfactoriamente las pruebas de aceptación que tiene asignadas. Así pues, las pruebas de aceptación han sido ejecutadas cuando se ha creído que la unidad de trabajo a la cual hacen referencia ha estado correctamente implementada y como paso previo a incluirla en el grupo de las terminadas. En caso de no obtener un resultado positivo, estas se pasaban de nuevo una vez corregido el problema, pudiéndose repetir este proceso más de una vez.
 
@@ -1071,19 +1071,19 @@ Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido 
 
 \begin{itemize}
 
-	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas relativamente pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más pequeñas y concretas que los casos de uso. También manifiestan de forma clara la posibilidad de tratarse de tareas no solo relacionadas con modificar el producto sino otras como crear una base de datos o renovar una suscripción de un servicio web.
+	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas relativamente pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más simples y concretas que los casos de uso. Pueden referirse a tareas no solo relacionadas con modificar el producto sino otras no técnicas como crear una base de datos o renovar una suscripción de un servicio web.
 
 	\item \textbf{Uso de un tablero \emph{kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas. La herramienta utilizada a modo de tablero \emph{kanban} ha sido Trello \footnote{Web oficial de Trello: \url{https://trello.com}.}.
 
 	\item \textbf{Priorización de las unidades de trabajo}. Dentro de la propia columna \emph{TODO} del tablero \emph{kanban}, las unidades de trabajo han estado ordenadas de mayor a menor importancia en todo momento. Este almacén de trabajo priorizado a realizar se conoce como \emph{backlog} y ha permitido conocer con facilidad las unidades de trabajo que se debían abordar al terminar otras.
 
-	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar las unidades de trabajo correspondientes a la funcionalidad básica del \emph{proxy} inverso. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entrará más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
+	\item \textbf{Definición de pruebas de aceptación}. Se ha utilizado este tipo de pruebas para especificar las unidades de trabajo correspondientes a la funcionalidad básica del \emph{proxy} inverso. Con ellas se establecen los límites de lo que se ha de considerar funcionamiento correcto o incorrecto. Además, algunas de las pruebas de aceptación han sido automatizadas, es decir, programadas dentro del propio proyecto, sistematizando y haciendo más fácil su ejecución. Se entra en más en detalle sobre las pruebas de aceptación definidas en el apartado \ref{pruebasDeAceptacion}.
 
 	\item \textbf{Búsqueda de la sencillez y el minimalismo}. Se trata de no realizar esfuerzos innecesarios a la hora de implementar una determinada funcionalidad, esto es, buscar la solución más simple que cumpla los requisitos establecidos. De esta forma, se evita invertir tiempo en aspectos no definitivos o que se modificarán con posterioridad y que no afectan al funcionamiento inmediato del producto.
 
 	\item \textbf{Afrontamiento y entrega de trabajo terminado de forma incremental}. Con el uso de unidades de trabajo se ha pretendido dividir y afrontar el trabajo a realizar mediante incrementos de funcionalidad, definidos precisamente por un conjunto de unidades de trabajo. Además, a medida que se ha terminado cada uno de estos incrementos, se ha entregado una nueva versión del producto. En este caso, las entregas del producto han correspondido con el despliegue de la determinada versión, quedando disponible para ser utilizada por el resto de la aplicación.
 
-	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nueva entrega o despliegue. Las pruebas de regresión llevadas a cabo en este proyecto se comentarán en el apartado \ref{pruebasDeRegresion}.
+	\item \textbf{Ejecución de pruebas de regresión}. Han consistido en ejecutar las pruebas de aceptación de todas las unidades de trabajo finalizadas hasta la fecha cada vez que un incremento considerable de funcionalidad era terminado. Con estas se consigue asegurar el correcto funcionamiento del producto antes de cada nueva entrega o despliegue. Las pruebas de regresión llevadas a cabo en este proyecto se comentan en el apartado \ref{pruebasDeRegresion}.
 
 \end{itemize}
 
@@ -1106,11 +1106,11 @@ Una vez elaborado y priorizado el \emph{backlog}, el plan de trabajo ha sido hac
 
 		\subsection{Cronología del proyecto}
 
-Los hitos de los que consta este proyecto han sido expuestos en orden cronológico a lo largo de esta memoria. A continuación serán comentados brevemente los principales para facilitar su visión de forma global y así entender la cronología del proyecto:
+Los hitos de los que consta este proyecto han sido expuestos en orden cronológico a lo largo de esta memoria. A continuación los principales serán comentados brevemente para facilitar su visión de forma global y así entender la cronología del proyecto:
 
 \begin{itemize}
 
-	\item \textbf{Estudio de tecnologías}. Uno de los primeros pasos para realizar este proyecto ha sido revisar las tecnologías disponibles y existentes para resolver problemas parecidos al planteado, esto corresponde al apartado \ref{estadoDelArte}.
+	\item \textbf{Estudio de tecnologías}. Uno de los primeros pasos para realizar este proyecto ha sido revisar las tecnologías disponibles y existentes para resolver problemas parecidos al planteado. Esto corresponde al apartado \ref{estadoDelArte}.
 
 	\item \textbf{Programación}. La fase de programación ha tenido, por su parte, 4 hitos principales, comentados en el punto \ref{programacion}: ''Construcción de prototipos'', ''Consolidación del microservicio autogenerado'', ''Primeros despliegues'' y ''Producto final''.
 
@@ -1128,7 +1128,7 @@ Desde otra perspectiva, el producto resultante también cumple los objetivos ini
 
 A pesar de haber cumplido los objetivos, es interesante hacer una breve reflexión para reconocer los aspectos negativos del producto desarrollado. Así pues, el \emph{proxy} inverso constituye un nuevo punto único de fallo, además de tener la posibilidad de actuar como cuello de botella, ralentizando las peticiones de toda la aplicación. Sin embargo, estos dos aspectos se han combatido permitiendo la existencia de más de una instancia del \emph{proxy} inverso. Por otra parte, un asunto al cual no se le ha dado solución es el hecho de que los \emph{middleware} construidos para la \emph{pipeline} de YARP aumentan el tiempo de respuesta de las peticiones. No obstante, no se supera el límite definido por el requisito no funcional RNF02, en el apartado \ref{requisitosNoFuncionales}.
 
-En lo referente a los conocimientos necesarios para la ejecución de este proyecto, es interesante comentar que el lenguaje de programación utilizado, C\#, es visto en los estudios en los que se enmarca este trabajo, si bien, no con la profundidad suficiente para poder abordar un problema de estas características. Además, no es lo mismo hacer programas de escritorio con Windows Forms \cite{WinForms} como \emph{framework}, que es lo enseñado en ellos principalmente, que aplicaciones de tipo servicio web. Por otra parte, las asignaturas de metodología \emph{software} , de sistemas en red y de modelado \emph{software} también han resultado una muy buena base. Las primeras han servido para establecer y seguir una disciplina de desarrollo acorde a las características del proyecto y a su contexto. Las segundas, para entender mejor el funcionamiento de las comunicaciones entre varios servicios y las del propio \emph{proxy} inverso. Las terceras, para entender y dominar el proceso de generación automática de código a partir de modelos seguido. Por último, YARP es una librería con un propósito muy específico, por lo que su aprendizaje ha requerido cierto esfuerzo, sobre todo para poder utilizar algunas de sus características más avanzadas.
+En lo referente a los conocimientos necesarios para la consecución de este proyecto, es interesante comentar que el lenguaje de programación utilizado, C\#, es visto en los estudios en los que se enmarca este trabajo, si bien, no con la profundidad suficiente para poder abordar un problema de estas características. Además, no es lo mismo hacer programas de escritorio con Windows Forms \cite{WinForms} como \emph{framework}, que es lo enseñado en ellos principalmente, que aplicaciones de tipo servicio web. Por otra parte, las asignaturas de metodología \emph{software}, de sistemas en red y de modelado también han resultado una muy buena base. Las primeras han servido para establecer y seguir una disciplina de desarrollo acorde a las características del proyecto y a su contexto. Las segundas, para entender mejor el funcionamiento de las comunicaciones entre varios servicios y las del propio \emph{proxy} inverso. Las terceras, para comprender y dominar el proceso de generación automática de código a partir de modelos seguido. Por último, YARP es una librería con un propósito muy específico, por lo que su aprendizaje ha requerido cierto esfuerzo, sobre todo para poder utilizar algunas de sus características más avanzadas.
 
 Por lo que se refiere a experiencia personal, ha sido muy gratificante llevar a cabo este trabajo. Por un lado, ha servido como ensayo para la futura resolución de problemas mayores en el mundo laboral, aunque también se pueda interpretar este como un trabajo profesional al haberse realizado en el contexto de una empresa. Por otro, ha merecido la pena este último hecho, pues ha otorgado cierta confianza dentro de la propia organización y se cree que con un proyecto real el proceso de aprendizaje ha sido más fructífero, teniendo en cuenta las desventajas que conlleva.
 
@@ -1278,7 +1278,7 @@ Clases y métodos parciales, Guía de programación de C\# (consultado en 08/202
 
 A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle ya que no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código a partir de modelos que se ha seguido para elaborar el \emph{proxy} inverso. Cabe destacar que para la realización de este apéndice se ha consultado documentación interna del equipo de desarrollo con la intención de enriquecer el mismo.
 
-Primero de todo, es conveniente explicar qué es generar código de forma automática a partir de modelos. Consiste en autogenerar, a partir de la especificación de ciertos modelos y en base a unas plantillas preconfiguradas, todo el código posible que se repita o que pueda ser escrito de forma automática debido a su poca o escasa variabilidad. En el marco de esta descripción entra el código encargado de comunicarse con la base de datos o el que prepara las acciones HTTP que un servicio expone al exterior, por ejemplo, pues siempre se debe hacer una forma concreta y establecida. Algunas de las ventajas más relevantes que esta aproximación de desarrollo de \emph{software} ofrece son:
+Primero de todo, es conveniente explicar qué es generar código de forma automática a partir de modelos. Consiste en autogenerar, a partir de la especificación de ciertos modelos y en base a unas plantillas preconfiguradas, todo el código posible que se repita o que pueda ser escrito de forma automática debido a su poca o escasa variabilidad. En el marco de esta descripción entra el código encargado de comunicarse con la base de datos o el que prepara las acciones HTTP que un servicio expone al exterior, por ejemplo, pues siempre se debe hacer de una forma concreta y establecida. Algunas de las ventajas más relevantes que esta aproximación de desarrollo de \emph{software} ofrece son:
 
 \begin{itemize}
 
@@ -1292,7 +1292,7 @@ Primero de todo, es conveniente explicar qué es generar código de forma autom�
 
 Como puntos negativos destacar, sobre todo, la dificultad de creación y mantenimiento de las herramientas utilizadas para generar el código. También puede resultar complejo cuadrar el código autogenerado con la programación de algunos flecos o particularidades de una aplicación concreta.
 
-El proceso de generación automática utilizado para este trabajo se divide en 3 pasos que se repiten continuamente en un proceso iterativo e incremental. Estos son 'Modelado', 'Generación de código' y 'Programación de particularidades'. Pasan a ser detallados a continuación.
+El proceso de generación automática utilizado para este trabajo se divide en tres pasos que se repiten continuamente en un proceso iterativo e incremental. Estos son 'Modelado', 'Generación de código' y 'Programación de particularidades'. Pasan a ser detallados a continuación.
 
 	\section{Modelado}
 
@@ -1313,7 +1313,7 @@ Aparte de los modelos comentados de dominio y de aplicación, existen los de int
 
 	\section{Generación de código}
 
-La generación de código consiste en ejecutar el generador de código. Este utiliza unas plantillas con condiciones y patrones que, a partir de los modelos, genera el código correspondiente. Por otra parte, se ejecuta mediante un \emph{script} de PowerShell \cite{PowerShell} que facilita esta tarea.
+La generación de código consiste en ejecutar el generador de código. Este utiliza unas plantillas con condiciones y patrones que, a partir de los modelos, genera el código correspondiente. Se ejecuta mediante un \emph{script} de PowerShell \cite{PowerShell} que facilita esta tarea.
 
 Con este proceso se genera buena parte de la infraestructura de un microservicio. Esto comprende todas las capas de la arquitectura explicada en el apartado \ref{estructuraSolucion}, que trata de seguir siempre buenos principios de programación comos los SOLID \cite{SOLID}.
 
@@ -1330,7 +1330,9 @@ Es interesante mencionar que todas las clases autogeneradas se crean con un come
 
 Para la elaboración de una aplicación qualquiera no todo el código se puede generar automáticamente. Cada una de ellas tiene cierto comportamiento específico por lo que es necesaria la intervención humana para programar aspectos concretos tales como las acciones ad hoc.
 
-En el caso de este proceso de generación automática de código la mayoría de flecos o particularidades, por no decir todos, son implementados a través de clases parciales de C\# \cite{ClasesParciales}. La generación de código crea la clase y el programador tiene que crear otro archivo, con el sufijo ''\emph{Partial}'', para implementar la clase parcial. Por otro lado, el generador de código se adapta y reconoce si una determinada clase parcial está creada o un determinado método gancho implementado para hacer las llamadas correspondientes o añadir o eliminar un determinado código para que todo encaje y funcione correctamente. Un ejemplo de clase parcial para el caso del \emph{proxy} inverso se muestra en la figura \ref{claseParcial}. Corresponde a un código llamado por la clase \emph{Startup} para añadir dependencias y la clase parcial permite añadir las dependencias manuales que se crean para tareas como implementar las acciones ad hoc.
+En el caso de este proceso de generación automática de código la mayoría de flecos o particularidades, por no decir todos, son implementados a través de clases parciales de C\#. La generación de código crea la clase y el programador tiene que crear otro archivo, con el sufijo ''\emph{Partial}'', para implementar la clase parcial. Por otro lado, el generador de código se adapta y reconoce si una determinada clase parcial está creada o un determinado método gancho implementado para hacer las llamadas correspondientes o añadir o eliminar un determinado código para que todo encaje y funcione correctamente.
+
+Un ejemplo de clase parcial para el caso del \emph{proxy} inverso se muestra en la figura \ref{claseParcial}. Corresponde a un código llamado por la clase \emph{Startup} para añadir dependencias, de esta forma, la clase parcial permite añadir las dependencias manuales específicas que se crean para tareas como implementar las acciones ad hoc.
 
 \begin{figure}[ht]
 \centering
