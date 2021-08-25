@@ -182,7 +182,7 @@ A modo de aparte, es interesante mencionar algunos patrones relacionados con el 
 
 	\end{itemize}
 
-	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del Modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: transporte o aplicación, respectivamente. Puede parecer que se trata de un un \emph{proxy} inverso pero la diferencia principal es que el \emph{load balancer} solo interacciona con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
+	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: transporte o aplicación, respectivamente. Puede parecer que se trata de un un \emph{proxy} inverso pero la diferencia principal es que el \emph{load balancer} solo interacciona con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
 
 \begin{figure}[ht]
 \centering
@@ -193,7 +193,7 @@ A modo de aparte, es interesante mencionar algunos patrones relacionados con el 
 
 	\item \textbf{\emph{Backend for frontend} (BFF)}. Es un patrón que consiste en ofrecer API \emph{Gateway} específicos para cada tipo de cliente. Los servicios internos desconocen por completo sus posibles clientes. Este conocimiento lo albergan los API \emph{Gateway}, creados a propósito para cada tipo de cliente, por lo que ofrecen una API pública acorde a las necesidades de estos. De esta forma, el API \emph{Gateway} se encarga de hablar con los servicios internos y de combinar los resultados para mandárselos al cliente.
 
-	\item \textbf{\emph{Service mesh}, o malla de servicio}. Es una infraestructura dedicada para realizar llamadas entre servicios, especialmente microservicios. El objetivo es implementar protocolos que permitan a estas llamadas ser rápidas y fiables. Para ello, el \emph{service mesh} utiliza patrones de tipo \emph{retry} y \emph{circuit breaker}, entre otros, desligando así al código de los servicios de hacerlo. A nivel de red se puede decir que funciona en los niveles 3 y 4 del Modelo OSI. De esta manera, se puede considerar un sustituto de TCP/IP que garantiza reintentos, \emph{circuit breakers}, caché y alguna que otra característica más.
+	\item \textbf{\emph{Service mesh}, o malla de servicio}. Es una infraestructura dedicada para realizar llamadas entre servicios, especialmente microservicios. El objetivo es implementar protocolos que permitan a estas llamadas ser rápidas y fiables. Para ello, el \emph{service mesh} utiliza patrones de tipo \emph{retry} y \emph{circuit breaker}, entre otros, desligando así al código de los servicios de hacerlo. A nivel de red se puede decir que funciona en los niveles 3 y 4 del modelo OSI. De esta manera, se puede considerar un sustituto de TCP/IP que garantiza reintentos, \emph{circuit breakers}, caché y alguna que otra característica más.
 
 \end{itemize}
 
@@ -216,7 +216,7 @@ Originariamente NGINX \footnote{Web oficial de NGINX: \url{https://www.nginx.com
 
 Desde la vertiente que interesa a este trabajo, NGINX ofrece un \emph{proxy} inverso ligero y de alto rendimiento. Sin embargo, no es uno de sus servicios más utilizados, por lo que no cuenta con muchas funcionalidades ni se puede personalizar en exceso. Las características más importantes con las que cuenta son transformaciones de \emph{headers}, configuración de \emph{buffers} a modo de memoria caché y creación de reglas de enrutamiento en base a las direcciones origen de las peticiones.
 
-Se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente. Un ejemplo de este lo muestra la figura \ref{configuracionNGINX}.
+Actúa sobre la capa de aplicación del modelo OSI (nivel 7) y se configura a través de un fichero el cual puede ser recargado durante su ejecución, es decir, se puede configurar dinámicamente, lo que no obliga a tener que volver a lanzarlo a ejecución cuando se añada una nueva ruta, por ejemplo. Un caso concreto de este fichero lo muestra la figura \ref{configuracionNGINX}.
 
 \begin{figure}[ht]
 \centering
@@ -253,11 +253,11 @@ YARP \footnote{Web oficial de YARP: \url{https://microsoft.github.io/reverse-pro
 
 Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
 
-A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de Microsoft, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que permite cambiar la configuración del \emph{proxy} inverso de forma dinámica, lo que no obliga a tener que volver a lanzarlo a ejecución cuando se añada una nueva ruta, por ejemplo.
+A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de Microsoft, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que da la posibilidad de cambiar la configuración del \emph{proxy} inverso de forma dinámica.
 
-Permite construir \emph{proxy} inversos de nivel 7, la capa de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
+Permite construir \emph{proxy} inversos de nivel 7, la capa OSI de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
-Por último, la documentación propia no es escueta pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones en portales como Stack Overflow \footnote{Web oficial de Stack Overflow: \url{https://es.stackoverflow.com}.}.
+Por último, la documentación propia \cite{YARP} no es escueta pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones en portales como Stack Overflow \footnote{Web oficial de Stack Overflow: \url{https://es.stackoverflow.com}.}.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OCELOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1173,6 +1173,10 @@ Web oficial de NGINX (consultado en 08/2021):\\
 \bibitem{NGINX_documentacion}
 Documentación oficial de NGINX para funcionar como \emph{proxy} inverso (consultado en 08/2021):\\
 \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}
+
+\bibitem{YARP}
+Documentación oficial de YARP (consultado en 08/2021):\\
+\url{https://microsoft.github.io/reverse-proxy/articles/index.html}
 
 \bibitem{Ocelot_documentacion}
 Documentación oficial de Ocelot (consultado en 08/2021):\\
