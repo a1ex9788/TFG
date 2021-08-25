@@ -88,7 +88,7 @@ Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver
 	\label{proxyContraProxyInverso}
 \end{figure}
 
-El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios \cite{ReverseProxyForMicroservices}, pues es importante no exponer estos al exterior. Con el mismo propósito también se suele utilizar el patrón API \emph{Gateway} \cite{APIGatewayParaMicroservicios}, que será comentado en más detalle en el apartado \ref{patronesRelacionados}. Además, se suele utilizar también para realizar tareas de balanceo de carga entre diferentes instancias de un mismo microservicio. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza un \emph{proxy} inverso. En la segunda se observa que, con el uso de un componente de este tipo, los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
+El uso de un \emph{proxy} inverso no queda restringido a ciertas arquitecturas, pudiéndose utilizar para ocultar el servicio o servicios que consume cualquier aplicación. Sin embargo, este componente adquiere una gran importancia en el enfoque de microservicios \cite{ReverseProxyForMicroservices}, pues es importante no exponer estos al exterior. Con el mismo propósito también se suele utilizar el patrón API \emph{Gateway} \cite{ApiGatewayParaMicroservicios}, que será comentado en más detalle en el apartado \ref{patronesRelacionados}. Además, se suele utilizar también para realizar tareas de balanceo de carga entre diferentes instancias de un mismo microservicio. La figura \ref{proxyInversoContraNoProxyInverso} muestra la comparativa de una arquitectura de microservicios básica y otra que utiliza un \emph{proxy} inverso. En la segunda se observa que, con el uso de un componente de este tipo, los clientes no acceden directamente a los microservicios, ni siquiera los conocen.
 
 \begin{figure}[ht]
 \centering
@@ -320,7 +320,7 @@ Por otro lado, la sencillez de YARP y sus altas prestaciones hacen que destaque 
 
 \chapter{Tecnología utilizada} \label{tecnologiaUtilizada}
 
-La tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core \cite{DotNetCore}, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Web oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}.}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
+La tecnología utilizada es .NET \cite{DotNet}, más concreto, ASP.NET Core, con el lenguaje de programación C\# \cite{Csharp} y el entorno de desarrollo habitual para él, Visual Studio \footnote{Web oficial de Visual Studio: \url{https://visualstudio.microsoft.com/es/vs}.}, en la versión del 2019. Como se comenta en la introducción del capítulo anterior, la aplicación en la cual se incluye el \emph{proxy} inverso está construida con ese \emph{framework}, por lo que se quiso mantener ese aspecto también en el nuevo componente. Esto corresponde al requisito no funcional RNF03, que se verá en el apartado \ref{requisitosNoFuncionales}.
 
 En otro orden de ideas, se ha decidido utilizar YARP para construir el \emph{proxy} inverso. La aplicación sobre la que se trabaja posee un mecanismo de despliegue automático muy particular, por lo que la flexibilidad y capacidad de adaptación que ofrece esta librería son muy adecuadas para integrar el \emph{proxy} inverso con dicho proceso.
 
@@ -1167,7 +1167,7 @@ Algunos conceptos en arquitecturas de (¿micro?)servicios que se suelen confundi
 \emph{Why Proxies Are Important for Microservices} (consultado en 08/2021):\\
 \url{https://dzone.com/articles/why-proxies-are-important-for-microservices}
 
-\bibitem{APIGatewayParaMicroservicios}
+\bibitem{ApiGatewayParaMicroservicios}
 API Gateway en tu arquitectura de microservicios (consultado en 08/2021):\\
 \url{https://www.itdo.com/blog/api-gateway-en-tu-arquitectura-de-microservicios}
 
@@ -1179,6 +1179,10 @@ Documentación oficial de ASP.NET Core (consultado en 08/2021):\\
 Uso de puertas de enlace de API (API \emph{Gateway}) en microservicios (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/azure/architecture/microservices/design/gateway}
 
+\bibitem{OSI}
+¿Qué es el modelo OSI? (consultado en 08/2021):\\
+\url{https://www.ionos.es/digitalguide/servidores/know-how/el-modelo-osi-un-referente-para-normas-y-protocolos}
+
 \bibitem{NGINX}
 Web oficial de NGINX (consultado en 08/2021):\\
 \url{https://www.nginx.com}
@@ -1187,13 +1191,17 @@ Web oficial de NGINX (consultado en 08/2021):\\
 Documentación oficial de NGINX para funcionar como \emph{proxy} inverso (consultado en 08/2021):\\
 \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}
 
+\bibitem{Kemp_products}
+\emph{Why buy a Kemp Technologies load balancer} (consultado en 08/2021):\\
+\url{https://www.connection.com/brand/kemp/why-buy-a-kemp-technologies-load-balancer}
+
 \bibitem{Kemp_empresas}
 \emph{Kemp: Case Studies and Customer Success Stories} (consultado en 08/2021):\\
 \url{https://kemptechnologies.com/customers-success-stories/}
 
-\bibitem{Kemp_products}
-\emph{Why buy a Kemp Technologies load balancer} (consultado en 08/2021):\\
-\url{https://www.connection.com/brand/kemp/why-buy-a-kemp-technologies-load-balancer}
+\bibitem{MiddlewaresPipeline}
+El método \emph{Configure} y la \emph{pipeline} de \emph{middlewares} (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
 
 \bibitem{YARP}
 Documentación oficial de YARP (consultado en 08/2021):\\
@@ -1202,14 +1210,6 @@ Documentación oficial de YARP (consultado en 08/2021):\\
 \bibitem{Ocelot_documentacion}
 Documentación oficial de Ocelot (consultado en 08/2021):\\
 \url{https://ocelot.readthedocs.io}
-
-\bibitem{OSI}
-¿Qué es el modelo OSI? (consultado en 08/2021):\\
-\url{https://www.ionos.es/digitalguide/servidores/know-how/el-modelo-osi-un-referente-para-normas-y-protocolos}
-
-\bibitem{MiddlewaresPipeline}
-El método \emph{Configure} y la \emph{pipeline} de \emph{middlewares} (consultado en 08/2021):\\
-\url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/startup?view=aspnetcore-5.0#the-configure-method}
 
 \bibitem{DotNet}
 Documentación oficial de .NET (consultado en 08/2021):\\
@@ -1235,6 +1235,10 @@ Una introducción a NuGet (consultado en 08/2021):\\
 \bibitem{SolutionsAndProjects}
 ¿Qué son las soluciones y los proyectos en Visual Studio? (consultado en 08/2021):\\
 \url{https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio?view=vs-2019}
+
+\bibitem{ClasesParciales}
+Clases y métodos parciales, Guía de programación de C\# (consultado en 08/2021):\\
+\url{https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}
 
 \bibitem{HostedServices}
 Tareas en segundo plano con servicios hospedados en ASP.NET Core (consultado en 08/2021):\\
@@ -1263,10 +1267,6 @@ Modelar el SDK de Visual Studio - Lenguajes específicos de dominio (consultado 
 \bibitem{SOLID}
 SOLID: \emph{The First 5 Principles of Object Oriented Design} (Consultado en 08/2021):\\
 \url{https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design}
-
-\bibitem{ClasesParciales}
-Clases y métodos parciales, Guía de programación de C\# (consultado en 08/2021):\\
-\url{https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}
 
 \end{thebibliography}
 
