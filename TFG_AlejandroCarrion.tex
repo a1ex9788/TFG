@@ -607,7 +607,7 @@ En lo que se refiere al diseño de la solución, se va presentar su estructura f
 
 En el apartado \ref{requisitosNoFuncionales}, el requisito no funcional RNF04 impone que la estructura del \emph{proxy} inverso debe ser similar a la del resto de microservicios. Por este motivo, la estructura del producto final sigue esa referencia, que pasa a detallarse a continuación.
 
-Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en particular, tiene una arquitectura autogenerada de 8 capas:
+Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en particular, tiene una arquitectura autogenerada de ocho capas:
 
 \begin{itemize}
 
@@ -707,7 +707,7 @@ Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \
 
 	\section{Programación} \label{programacion}
 
-La parte de programación del \emph{proxy} inverso que protagoniza este trabajo ha pasado por distintas etapas o fases que se van a comentar a continuación. Estas etapas han sido creadas para facilitar la comprensión del desarrollo y las funcionalidades añadidas al producto. De esta forma, las agrupan para comentarlas poco a poco junto con los problemas o dificultades encontradas a la hora de implementarlas.
+La parte de programación del \emph{proxy} inverso que protagoniza este trabajo ha pasado por distintas etapas o fases que se van a comentar a continuación. Estas etapas corresponden con los hitos principales y facilitan así la comprensión del desarrollo y las funcionalidades añadidas al producto. De esta forma, las agrupan para comentarlas poco a poco junto con los problemas o dificultades encontradas a la hora de implementarlas.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSTRUCCIÓN DE PROTOTIPOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -723,7 +723,7 @@ Por otro lado, cabe destacar que a los \emph{proxy} inversos que forman parte de
 
 			\subsubsection{Microservicio a mano}
 
-El primero de los prototipos se hizo lo más simple posible, es decir, con la lógica justa y necesaria para desempeñar su trabajo y sin seguir ninguna arquitectura concreta. Esto último choca con el requisito no funcional comentado en el párrafo anterior pero se hizo para que las diferencias de rendimiento se evidenciaran más todavía, pues así se compararía un prototipo únicamente con el funcionamiento de \emph{proxy} inverso y otro con también una estructura con multitud de clases que pudiera penalizar el rendimiento.
+El primero de los prototipos se hizo lo más simple posible, es decir, con la lógica justa y necesaria para desempeñar su trabajo y sin seguir ninguna arquitectura concreta. Esto último choca con el requisito no funcional comentado en el párrafo anterior pero se hizo para que las diferencias de rendimiento se evidenciaran más todavía, pues así se compararía un prototipo únicamente con el funcionamiento de \emph{proxy} inverso básico y otro con una estructura con multitud de clases que pudiera penalizar el rendimiento.
 
 Para la creación de este prototipo, primero fue necesario crear un proyecto desde cero y ubicarlo en el lugar correspondiente del directorio de carpetas de la aplicación, junto a los demás microservicios. Acto seguido, se añadió el funcionamiento de \emph{proxy} inverso dado por YARP (CU03 del apartado \ref{casosDeUso}) y se le crearon rutas de manera predefinida para hacer las primeras pruebas con peticiones Postman. Las rutas predefinidas se configuran en el archivo \emph{appsettings.json}. Estos dos últimos aspectos se comentan con más detalle en el apartado \ref{ejemploUsoYARP} y un ejemplo de configuración de rutas estáticas se puede ver en la figura \ref{ejemploYARP_appsettings}.
 
@@ -742,9 +742,9 @@ Después de realizar las tareas comentadas queda un proyecto muy simple pero tot
 
 Respecto al segundo prototipo, fue construido utilizando las mismas herramientas de generación automática de código con las que fueron construidos el resto de microservicios de la aplicación. Cabe destacar que, para no realizar esfuerzos en vano (práctica ágil comentada en el apartado \ref{metodologia}) sin saber qué prototipo iba a ser la opción elegida, se dejaron algunos detalles correspondientes a la generación de código pendientes. Esto se debe a que el proceso de generación de código no se adaptaba al cien por cien a las necesidades del nuevo microservicio, lo que suele ser habitual al crear microservicios con características diferentes.
 
-Así pues, se creó desde cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello fue necesario modelar una entidad \emph{Route} con los campos necesarios para identificar las rutas, esto es, la ruta base de las peticiones que se tiene que capturar y la dirección a la que redirigirlas. También se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estas tres últimas acciones son las mismas que para el caso del microservicio manual, con algunas diferencias para adaptarse a la solución concreta.
+Así pues, se creó desde cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello, se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estos pasos son los mismos que para el caso del microservicio manual, con algunas diferencias para adaptarse a la solución concreta.
 
-El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltarían los proyectos correspondientes a la capa de dominio y contratos, los cuales se encuentran en una solución aparte y no es necesario mostrarlos para realizar esta comparativa puesto que las evidencias comentadas son suficientes.
+El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltarían los proyectos correspondientes a la capa de contratos, los cuales se encuentran en una solución aparte y no es necesario mostrarlos para realizar esta comparativa puesto que las evidencias comentadas son suficientes. Dominio y persistencia no tiene al no ser necesario modelar ninguna entidad. El apéndice \ref{generacionDeCodigo} detalla más el modelado del \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -801,7 +801,7 @@ También se creyó conveniente estandarizar el tratamiento de las rutas base de 
 	\label{getYarpNormalizedPath}
 \end{figure}
 
-Además, se consideró oportuno automatizar algunas de las pruebas de aceptación de las acciones de añadir y eliminar rutas y para el método \emph{GetYarpNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas \ref{pruebas}.
+Además, se consideró oportuno automatizar algunas de las pruebas de aceptación de las acciones de añadir y eliminar rutas y para el método \emph{GetYarpNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas (\ref{pruebas}).
 
 Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados \emph{Core}. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
 
@@ -815,7 +815,7 @@ A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy
 
 			\subsubsection{Sistema de despliegue}
 
-Primero de todo, se va a explicar como se realizan los despliegues de la aplicación. Como se ha comentado de pasada en varios puntos de esta memoria, la aplicación sobre la cual se trabaja tiene un microservicio especial encargado de orquestar los despliegues. La cuestión es que no está del todo operativo todavía, pues la aplicación se encuentra en desarrollo, y por este motivo se realizan dos tipos de despliegue:
+Primero de todo, se va a explicar cómo se realizan los despliegues de la aplicación. Como se ha comentado de pasada en varios puntos de esta memoria, la aplicación sobre la cual se trabaja tiene un microservicio especial encargado de orquestar los despliegues. La cuestión es que no está del todo operativo todavía, pues la aplicación se encuentra en desarrollo, y por este motivo se realizan dos tipos de despliegue:
 
 \begin{itemize}
 
@@ -872,24 +872,24 @@ Un problema menor que también surgió fue uno relacionado con los códigos de e
 
 		\subsection{Producto final}
 
-En esta etapa final se hicieron algunos retoques y se implementaron algunas funcionalidades más que se pasan a detallar.
+En esta etapa final se hicieron algunos retoques y se implementaron algunas funcionalidades más que pasan a ser detalladas.
 
-			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PERSONALIZACIÓN DE LOS MENSAJES DE LOG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PERSONALIZAR LOS MENSAJES DE LOG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-			\subsubsection{Personalización de los mensajes de log}
+			\subsubsection{Personalizar los mensajes de log}
 
-Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{log} para mostrar más información acerca de las peticiones enrutadas. YARP ya muestra mensajes pero se consideraba interesante añadir la fecha y hora en la que se produjo y el código de estado resultante de la petición. De esta manera, se facilitaría la labor de encontrar posibles errores derivados del enrutamiento de peticiones tales como el de los \emph{timeouts}. Para ello, fue necesario crear y añadir un \emph{middleware} nuevo a la \emph{pipeline} de YARP, explicada en el apartado \ref{pipelineYARP}. El \emph{middleware} creado ha sido llamado \emph{CustomProxyLog} y la figura \ref{logs} muestra los mensajes por defecto de YARP y los personalizados a través de este \emph{middleware} para ver las diferencias y el resultado final.
+Una de las mejoras que se llevó a cabo fue personalizar los mensajes de \emph{log} para mostrar más información acerca de las peticiones enrutadas. YARP ya muestra mensajes pero se consideraba interesante añadir la fecha y hora en la que se produjo y el código de estado resultante de la petición. De esta manera, se facilitaría la labor de encontrar posibles errores derivados del enrutamiento de peticiones tales como el de los \emph{timeouts}. Para ello, fue necesario crear y añadir un \emph{middleware} nuevo a la \emph{pipeline} de YARP, explicada en el apartado \ref{pipelineYARP}. El \emph{middleware} creado ha sido llamado \emph{CustomProxyLog} y la figura \ref{logs} muestra los mensajes personalizados a través de este \emph{middleware} y los por defecto de YARP para ver las diferencias y el resultado final.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{imagenes/logs}
-\caption{Mensajes de \emph{log} por defecto de YARP y personalizados.}
+\caption{Mensajes de \emph{log} personalizados y por defecto de YARP.}
 	\label{logs}
 \end{figure}
 
-			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MULTIINSTANCIA DE MICROSERVICIOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MULTIINSTANCIAR MICROSERVICIOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-			\subsubsection{Multiinstancia de microservicios}
+			\subsubsection{Multiinstanciar microservicios}
 
 Una de las funcionalidades más importantes añadidas en esta etapa ha sido permitir la multiinstancia de microservicios. Esta consiste en soportar la coexistencia de varias instancias de un mismo microservicio de forma que las mismas peticiones puedan ser enrutadas a diferentes direcciones. De esta forma se permite tener más de un recurso atendiendo determinadas peticiones, si se necesita. Relacionado con esto, se permite también realizar balanceo de carga entre las diferentes instancias de un mismo microservicio.
 
@@ -958,7 +958,9 @@ La documentación oficial no decía nada al respecto por lo que se dedujo, despu
 
 			\subsubsection{Recorrido peticiones}
 
-Una vez comentadas todas la funcionalidades del producto desarrollado se quiere mostrar un esquema (figura \ref{esquemaInteraccionProxyInverso}) del recorrido completo de una petición que proviene de la interfaz de usuario y que pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él. Entrando en detalle, la interfaz de usuario realiza una petición al microservicio 1 y para ello primero pasa por el \emph{proxy} inverso general y después por el concreto del servidor que contiene el microservicio en cuestión. Para poder responder, el microservicio 1 necesita hacer una petición al A y este, a su vez, al Z. Una vez terminadas estas peticiones anidadas, la respuesta le llega al microservicio 1 y este devuelve a la interfaz la respuesta a la petición primera. Para finalizar, es interesante resaltar el uso de los \emph{proxy} inversos tanto para las peticiones de la interfaz de usuario como para las que se realizan entre microservicios, es decir, nadie se comunica con nadie sin pasar por alguno de ellos.
+Una vez comentadas todas la funcionalidades del producto desarrollado se quiere mostrar un esquema (figura \ref{esquemaInteraccionProxyInverso}) del recorrido completo de una petición que proviene de la interfaz de usuario y que pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él. Entrando en detalle, la interfaz de usuario realiza una petición al microservicio 1 y para ello primero pasa por el \emph{proxy} inverso general y después por el concreto del servidor que contiene el microservicio en cuestión. Para poder responder, el microservicio 1 necesita hacer una petición al A y este, a su vez, al Z. Una vez terminadas estas peticiones anidadas, la respuesta le llega al microservicio 1 y este devuelve a la interfaz la respuesta a la petición primera.
+
+Para finalizar, es interesante resaltar el uso de los \emph{proxy} inversos tanto para las peticiones de la interfaz de usuario como para las que se realizan entre microservicios, es decir, nadie se comunica con nadie sin pasar por alguno de ellos. De esta forma, los microservicios no conocen la dirección de ninguno de los otros, solo la de un \emph{proxy} inverso, que será el encargado de redirigir las peticiones donde corresponda.
 
 \begin{figure}[ht]
 \centering
@@ -1274,7 +1276,7 @@ SOLID: \emph{The First 5 Principles of Object Oriented Design} (Consultado en 08
 
 \APPENDIX
 
-\chapter{Proceso de generación automática de código}
+\chapter{Proceso de generación automática de código} \label{generacionDeCodigo}
 
 A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle ya que no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código a partir de modelos que se ha seguido para elaborar el \emph{proxy} inverso. Cabe destacar que para la realización de este apéndice se ha consultado documentación interna del equipo de desarrollo con la intención de enriquecer el mismo.
 
