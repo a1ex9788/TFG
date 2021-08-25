@@ -1,5 +1,6 @@
 \documentclass[11pt,spanish,listoffigures]{tfgetsinf}
 \usepackage[utf8]{inputenc}
+\usepackage{xurl}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -77,7 +78,7 @@ Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios_ar
 
 Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que será su puerta de acceso y actuará de intermediario entre este y la interfaz de usuario, además de interconectar los propios microservicios y desacoplar su ubicación. Por otro lado, también permitirá lanzar a ejecución múltiples instancias de estos con el fin de conseguir cierta tolerancia a fallos.
 
-Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos consumidores no tengan comunicación directa con los servidores a los que se conectan a través de la red. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
+Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano \cite{ConceptosMicroservicios}: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos consumidores no tengan comunicación directa con los servidores a los que se conectan a través de la red. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -161,21 +162,38 @@ En la actualidad existen en el mercado muchas aplicaciones y servicios que se pu
 
 Cabe destacar que no hay muchos productos que se dediquen exclusivamente a funcionar como \emph{proxy} inverso. Estos suelen ofrecer otros servicios como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se quiere utilizar. En relación con esto, las librerías elegidas son para ASP.NET Core \cite{DotNetCore}, tecnología empleada en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% API GATEWAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PATRONES RELACIONADOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\section{Patrón API \emph{Gateway}} \label{APIGateway}
+	\section{Patrones relacionados} \label{patronesRelacionados}
 
-A modo de aparte, es interesante mencionar un patrón parecido al \emph{proxy} inverso y que también podría haber sido utilizado para resolver el problema que concierne a este trabajo: el API \emph{Gateway} \cite{ApiGateway}, o puerta de enlace de API. Ambos comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras.
-
-Generalmente, se entiende que un API \emph{Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
+A modo de aparte, es interesante mencionar algunos patrones relacionados con el \emph{proxy} inverso. Cuando se investiga un poco acerca del tema y se estudian los productos y servicios disponibles se observa que estos ofrecen otras soluciones que guardan cierta relación con él \cite{ConceptosMicroservicios}. Se cree conveniente comentarlas para evitar posibles malentendidos, ya que se suelen confundir y resulta complejo encontrar sus diferencias y propósitos específicos. Principalmente se trata de los siguientes:
 
 \begin{itemize}
-	
-	\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
-	
-	\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
 
-	\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos, mientras que los \emph{proxy} inversos solo los redirigen donde corresponda.
+	\item \textbf{API \emph{Gateway}, o puerta de enlace de API}. Se trata de un patrón que también podría haber sido utilizado para resolver el problema que concierne a este trabajo \cite{ApiGateway}. El \emph{proxy} inverso y él comparten algunos casos de uso, por lo que sus diferencias causan confusión y no suelen quedar claras. Generalmente, se entiende que un API \emph{Gateway} es una especialización de un \emph{proxy} inverso, proporcionando así funcionalidades extra. Las más aceptadas e importantes son:
+
+	\begin{itemize}
+	
+		\item Suelen ofrecer agregaciones de peticiones, esto es, aunar dos o más llamadas al \emph{backend} y exponer esta composición a través de un único \emph{endpoint}.
+	
+		\item Realizan tareas transversales a todos los \emph{endpoints} como autenticación, autorización o monitorización.
+
+		\item Interpretan los mensajes que reciben y pueden hacer transformaciones sobre ellos, mientras que los \emph{proxy} inversos solo los redirigen donde corresponda.
+
+	\end{itemize}
+
+	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del Modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: transporte o aplicación, respectivamente. Puede parecer que se trata de un un \emph{proxy} inverso pero la diferencia principal es que el \emph{load balancer} solo interacciona con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{imagenes/modeloOSI}
+\caption[Modelo OSI.]{Modelo OSI \cite{OSI}.}
+	\label{modeloOSI}
+\end{figure}
+
+	\item \textbf{\emph{Backend for frontend} (BFF)}. Es un patrón que consiste en ofrecer API \emph{Gateway} específicos para cada tipo de cliente. Los servicios internos desconocen por completo sus posibles clientes. Este conocimiento lo albergan los API \emph{Gateway}, creados a propósito para cada tipo de cliente, por lo que ofrecen una API pública acorde a las necesidades de estos. De esta forma, el API \emph{Gateway} se encarga de hablar con los servicios internos y de combinar los resultados para mandárselos al cliente.
+
+	\item \textbf{\emph{Service mesh}, o malla de servicio}. Es una infraestructura dedicada para realizar llamadas entre servicios, especialmente microservicios. El objetivo es implementar protocolos que permitan a estas llamadas ser rápidas y fiables. Para ello, el \emph{service mesh} utiliza patrones de tipo \emph{retry} y \emph{circuit breaker}, entre otros, desligando así al código de los servicios de hacerlo. A nivel de red se puede decir que funciona en los niveles 3 y 4 del Modelo OSI. De esta manera, se puede considerar un sustituto de TCP/IP que garantiza reintentos, \emph{circuit breakers}, caché y alguna que otra característica más.
 
 \end{itemize}
 
@@ -215,18 +233,11 @@ Para finalizar, algunos de los productos y servicios de NGINX son ampliamente co
 
 Kemp \footnote{Web oficial de Kemp: \url{https://kemptechnologies.com}.} es un balanceador de carga muy utilizado a nivel mundial. El término balanceador de carga se refiere a un \emph{proxy} inverso al que se le quiere dar énfasis a su capacidad de distribuir la carga entre varios nodos. Por esta característica es por la que se suele utilizar un producto de este tipo pero no hay que obviar que no deja de ser un \emph{proxy} inverso, con todo lo que conlleva.
 
-En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también de nivel 7. Esto hace referencia a la capa del Modelo OSI (figura \ref{modeloOSI}) sobre la que actúa. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
+En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también de nivel 7, en referencia a las capas OSI. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
 
 Una de los aspectos más especiales de Kemp es el hecho de que brinda múltiples opciones de implementación, y muy flexibles. Destacan la \emph{hardware}, que facilita la instalación de máquinas con el \emph{software} de Kemp, y la \emph{cloud}, la cual pone a disposición los servicios de manera remota y sin necesidad tener servidores físicos. Cada una de ellas tiene diferentes tarifas en función del tráfico a recibir o de la cantidad de puertos disponibles, entre otros.
 
 El precio por utilizar los servicios de Kemp varía en función de las características del proyecto en el que se quiere incluir. Hay que rellenar un pequeño cuestionario para recibir un presupuesto. En él, hay que indicar cosas como los productos que se quiere contratar y la cantidad de los mismos.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{imagenes/modeloOSI}
-\caption[Modelo OSI.]{Modelo OSI \cite{OSI}.}
-	\label{modeloOSI}
-\end{figure}
 
 Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnote{Web oficial de Audi: \url{https://www.audi.es}.}, Nestle \footnote{Web oficial de Nestle: \url{https://www.nestle.com}.} o Galp \footnote{Web oficial de Galp: \url{https://www.galpenergia.com/}.}.
 
@@ -290,7 +301,7 @@ Una vez analizadas las diferentes opciones para conseguir un \emph{proxy} invers
 
 El uso de productos ya hechos proporciona facilidad de configuración y se puede considerar como la opción fácil, ya que se puede tener funcionando un \emph{proxy} inverso a pleno rendimiento en no mucho tiempo. No obstante, el contexto de la aplicación de la que tiene que formar parte hace que sea mejor elaborar un \emph{proxy} inverso propio, utilizando una librería que facilite esta tarea. Las dos razones con más peso son el hecho de que se pretende que el microservicio encargado de los despliegues se comunique con dicho producto y la facilidad de despliegue que se puede conseguir al utilizar la arquitectura específica seguida por los microservicios. De esta manera, utilizando un producto ya hecho no se podría conseguir un nivel alto de cohesión y se tendrían que abordar problemas de integración, así como desplegar el mismo de una manera diferente a los microservicios.
 
-Por otro lado, la sencillez de YARP y sus altas prestaciones hacen que destaque frente a Ocelot, la que permite crear API \emph{Gateways}. En concreto, no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan a los API \emph{Gateway} (apartado \ref{APIGateway}), así que, por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso.
+Por otro lado, la sencillez de YARP y sus altas prestaciones hacen que destaque frente a Ocelot, la que permite crear API \emph{Gateways}. En concreto, no se quería tener la funcionalidad de ninguno de los tres puntos clave que caracterizan a los API \emph{Gateway} (apartado \ref{patronesRelacionados}), así que, por este motivo, y por la búsqueda de sencillez, ha sido más apropiado decantarse por un \emph{proxy} inverso.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TECNOLOGÍA UTILIZADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1134,6 +1145,10 @@ En cuanto a líneas de trabajo futuras, el \emph{proxy} inverso quizás requiera
 \newblock \emph{Building Microservices}.
 \newblock S. Newman, O'REILLY, 2015.
 \newblock ISBN: 9781491950357
+
+\bibitem{ConceptosMicroservicios}
+Algunos conceptos en arquitecturas de (¿micro?)servicios que se suelen confundir (consultado en 08/2021):\\
+\url{https://geeks.ms/etomas/2018/01/26/algunos-conceptos-en-arquitrcturas-de-microservicios-que-se-suelen-confundir}
 
 \bibitem{ReverseProxyForMicroservices}
 \emph{Why Proxies Are Important for Microservices} (consultado en 08/2021):\\
