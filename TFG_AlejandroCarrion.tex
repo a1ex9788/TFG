@@ -46,7 +46,7 @@ The present work aims to develop a reverse proxy for a microservices architectur
 
 To carry out this project, an agile methodology adapted to the development context has been followed. One of the most notable practices has been to perform reverse proxy deployments incrementally. These have served to verify the correct operation of the software product in its real operating environment and have allowed timely discovery of errors and improvements to be made.
 
-The technology used for the development of the product has been ASP.NET Core, in order to follow the standard of the rest of the application microservices. For function of reverse proxy, a Microsoft library called YARP has been chosen, appropriate for C\#, the programming language used.
+The technology used for the development of the product has been ASP.NET Core, in order to follow the standard of the rest of the application microservices. For the function of reverse proxy, a Microsoft library called YARP has been chosen, appropriate for C\#, the programming language used.
 
 \end{abstract}
 
@@ -78,7 +78,7 @@ Por otro lado, el uso de arquitecturas de microservicios \cite{Microservicios_ar
 
 Por contra, este tipo de arquitecturas aumentan la complejidad del desarrollo en algunos aspectos concretos como pueden ser el versionado de los microservicios o la coordinación de las comunicaciones entre ellos. A raíz de otra de sus desventajas surge este trabajo: la exposición de múltiples puntos de entrada al \emph{backend} formado por los microservicios. Para ello, se desarrollará un \emph{proxy} inverso que será su puerta de acceso y actuará de intermediario entre este y la interfaz de usuario, además de interconectar los propios microservicios y desacoplar su ubicación. Por otro lado, también permitirá lanzar a ejecución múltiples instancias de estos con el fin de conseguir cierta tolerancia a fallos.
 
-Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano \cite{ConceptosMicroservicios}: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos consumidores no tengan comunicación directa con los servidores a los que se conectan a través de la red. Por otro lado, un \emph{proxy} inverso hace la misma función pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
+Para comprender correctamente qué es un \emph{proxy} inverso es conveniente ver su relación con su patrón hermano \cite{ConceptosMicroservicios}: el \emph{proxy} de reenvío, o simplemente \emph{proxy}. Un \emph{proxy} es un componente intermediario que se encarga de proteger una red cliente haciendo que estos consumidores no tengan comunicación directa con los servidores a los que se conectan a través de la red. Por otro lado, un \emph{proxy} inverso hace la misma función, pero protegiendo a un grupo de servidores, ocultándolos así de sus clientes. Ambos pueden coexistir, de hecho suelen hacerlo. Para ilustrar mejor esta diferencia, la figura \ref{proxyContraProxyInverso} presenta un esquema conceptual de un \emph{proxy} y otro de un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -158,7 +158,7 @@ Como recurso adicional, se presenta un apéndice que explica el proceso de gener
 
 \chapter{Estado del arte} \label{estadoDelArte}
 
-En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la escogida para desarrollar el \emph{proxy} inverso. Se hablará de la tecnología utilizada en general y de su elección en el siguiente capítulo (\ref{tecnologiaUtilizada}), donde también se mostrará un ejemplo básico de su uso.
+En la actualidad existen en el mercado muchas aplicaciones y servicios que se pueden utilizar como \emph{proxy} inverso. Algunas de estas soluciones son de pago, otras gratuitas e incluso algunas de código abierto. Se pueden dividir en dos tipos: productos \emph{software} ya construidos y librerías. Los primeros suelen ser fáciles de configurar y se pueden poner en marcha de una manera muy rápida. Las segundas requieren una parte de programación, pero se adaptan mejor a las necesidades particulares, pues permiten tener más control al usuario. A continuación se van a comentar dos herramientas de cada tipo, una de las cuales será la escogida para desarrollar el \emph{proxy} inverso. Se hablará de la tecnología utilizada en general y de su elección en el siguiente capítulo (\ref{tecnologiaUtilizada}), donde también se mostrará un ejemplo básico de su uso.
 
 Cabe destacar que no hay muchos productos que se dediquen exclusivamente a funcionar como \emph{proxy} inverso. Estos suelen ofrecer otros servicios como servidores web o balanceadores de carga. Por otro lado, lo habitual es hacer uso de un producto ya hecho, por lo que tampoco es fácil encontrar librerías que permitan personalizar un \emph{proxy} inverso, menos aún si hay que tener en cuenta la tecnología que se quiere utilizar. En relación con esto, las librerías elegidas son para ASP.NET Core \cite{DotNetCore}, tecnología empleada en el resto de la aplicación de la que forma parte el \emph{proxy} inverso.
 
@@ -182,7 +182,7 @@ A modo de aparte, es interesante mencionar algunos patrones relacionados con el 
 
 	\end{itemize}
 
-	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: aplicación o transporte, respectivamente. Puede parecer que se trata de un un \emph{proxy} inverso pero la diferencia principal es que el \emph{load balancer} está enfocado a interaccionar con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
+	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: aplicación o transporte, respectivamente. Puede parecer que se trata de un \emph{proxy} inverso, pero la diferencia principal es que el \emph{load balancer} está enfocado a interaccionar con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
 
 \begin{figure}[ht]
 \centering
@@ -205,7 +205,7 @@ A modo de aparte, es interesante mencionar algunos patrones relacionados con el 
 
 		\subsection{NGINX}
 
-Originariamente NGINX \footnote{Web oficial de NGINX: \url{https://www.nginx.com}.} fue construido para ser un servidor web pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la figura \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
+Originariamente NGINX \footnote{Web oficial de NGINX: \url{https://www.nginx.com}.} fue construido para ser un servidor web, pero más tarde ofreció la posibilidad de actuar como \emph{proxy} inverso, balanceador de carga o incluso \emph{proxy} para protocolos de correo electrónico, entre otros. De este modo, NGINX brinda muchos productos, con un conjunto de servicios cada uno. Se muestran los principales en la figura \ref{productosNGINX}. Los dos más utilizados son NGINX Open Source y NGINX Plus. El primero de ellos ofrece un servidor web \emph{open} source mientras que el segundo es de pago y permite utilizar un API \emph{Gateway} o un \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -233,7 +233,7 @@ Para finalizar, algunos de los productos y servicios de NGINX son ampliamente co
 
 Kemp \footnote{Web oficial de Kemp: \url{https://kemptechnologies.com}.} es un balanceador de carga muy utilizado a nivel mundial. No obstante, se suele utilizar también como \emph{proxy} inverso. Al final, a estos dos patrones les separa una fina linea (apartado \ref{patronesRelacionados}) y la terminología se utiliza indistintamente a menudo.
 
-En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también puede serlo de nivel 7, en referencia a las capas OSI. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
+En cuanto a sus características, ofrece ser un balanceador de nivel 4, pero también puede serlo de nivel 7, en referencia a las capas OSI. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
 
 Una de los aspectos más especiales de Kemp es el hecho de que brinda múltiples opciones de implementación (figura \ref{productosKemp}), y muy flexibles. Destacan la \emph{hardware}, que facilita la instalación de máquinas con el \emph{software} de Kemp, y la \emph{cloud}, la cual pone a disposición los servicios de manera remota y sin necesidad de tener servidores físicos. Cada una de ellas tiene diferentes tarifas en función del tráfico a recibir o de la cantidad de puertos disponibles, entre otros.
 
@@ -258,11 +258,11 @@ La página web oficial contiene un apartado en el que muestra casos de estudio r
 
 YARP \footnote{Web oficial de YARP: \url{https://microsoft.github.io/reverse-proxy}.} es una librería para ASP.NET Core hecha por el propio Microsoft \footnote{Web oficial de Microsoft: \url{https://www.microsoft.com}.} y su objetivo es facilitar la creación de \emph{proxy} inversos. Surgió dentro de la propia infraestructura de la empresa, en la que diferentes equipos preguntaban si existía algún producto de este tipo disponible para utilizar en sus respectivos proyectos. La respuesta de la compañía fue crear un equipo especializado para construir esta librería y estandarizar así su uso. Además, se decidió hacer pública tanto su existencia como su código, siendo así una opción \emph{open source} a tener en cuenta.
 
-Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de Junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5 pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
+Se encuentra todavía en desarrollo, habiendo sido lanzada su primera \emph{release} el 25 de junio de 2020, y, a fecha de este trabajo, todavía solo se puede utilizar una \emph{preview}. Se prevé que vayan saliendo a la luz más versiones con más funcionalidades basadas en la experiencia de la propia empresa pero también en las opiniones de los usuarios externos. YARP es compatible con .NET Core 3.1 y .NET 5, pero algunas funcionalidades solo están disponibles para el segundo \emph{framework}, ya que se trata de la generación inmediatamente más moderna.
 
 A raíz de la heterogeneidad de casos de uso que debe cubrir para satisfacer las necesidades de los diferentes equipos de Microsoft, está diseñada para ser muy personalizable y flexible. Otro aspecto importante es que da la posibilidad de cambiar la configuración del \emph{proxy} inverso de forma dinámica.
 
-Permite construir \emph{proxy} inversos de nivel 7, la capa OSI de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
+Permite construir \emph{proxy} inversos de nivel 7, la capa OSI de aplicación en este caso. Gracias a esto, es posible modificar una petición HTTP antes de redirigirla, como por ejemplo sus \emph{headers} o ruta de destino. Sin embargo, no se puede hacer lo mismo con su contenido, ni siquiera es interpretado para tardar el menor tiempo posible en redirigir las peticiones. Además, no es un componente aparte, sino que se integra con la \emph{pipeline} de \emph{middlewares} de ASP.NET \cite{MiddlewaresPipeline}, haciendo que su eficiencia sea muy alta.
 
 Por último, la documentación propia \cite{YARP} no es escueta pero tampoco excesiva. Asimismo, su corta edad hace que no se encuentren referencias o ejemplos de código de la comunidad fácilmente. Tampoco problemas planteados con sus posibles soluciones en portales como Stack Overflow \footnote{Web oficial de Stack Overflow: \url{https://es.stackoverflow.com}.}.
 
@@ -272,7 +272,7 @@ Por último, la documentación propia \cite{YARP} no es escueta pero tampoco exc
 
 Ocelot \footnote{Web oficial de Ocelot: \url{https://threemammals.com}.} es una librería para ASP.NET Core que permite a una aplicación de ese \emph{framework} actuar como API \emph{Gateway}. Como su propia web dice, está pensada para arquitecturas orientadas a servicios o a microservicios que necesitan un punto único de entrada.
 
-Se trata de un proyecto que ya tiene cierto tiempo, pues se inició en 2016. No obstante, su última \emph{release} salió a la luz el 11 de Diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
+Se trata de un proyecto que ya tiene cierto tiempo, pues se inició en 2016. No obstante, su última \emph{release} salió a la luz el 11 de diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
 
 En lo que se refiere a las características propias de API \emph{Gateway}, Ocelot ofrece agregación de peticiones y tareas comunes a todos los \emph{endpoints} como autenticación o trazas distribuidas. También puede hacer transformaciones de \emph{headers} o cambiar el método HTTP utilizado antes de redirigir una petición.
 
@@ -310,7 +310,7 @@ Tras comentar algunas aplicaciones y servicios que se pueden utilizar como \emph
 
 	\section{Conclusiones}
 
-Una vez analizadas las diferentes opciones para conseguir un \emph{proxy} inverso, es conveniente comentar la opción escogida y explicar porqué lo ha sido, a modo de conclusión.
+Una vez analizadas las diferentes opciones para conseguir un \emph{proxy} inverso, es conveniente comentar la opción escogida y explicar por qué lo ha sido, a modo de conclusión.
 
 El uso de productos ya hechos proporciona facilidad de configuración y se puede considerar como la opción fácil, ya que se puede tener funcionando un \emph{proxy} inverso a pleno rendimiento en no mucho tiempo. No obstante, el contexto de la aplicación de la que tiene que formar parte hace que sea mejor elaborar un \emph{proxy} inverso propio, utilizando una librería que facilite esta tarea. Las dos razones con más peso son el hecho de que se pretende que el microservicio encargado de los despliegues se comunique con dicho producto y la facilidad de despliegue que se puede conseguir al utilizar la arquitectura específica seguida por los microservicios. De esta manera, utilizando un producto ya hecho no se podría conseguir un nivel alto de cohesión y se tendrían que abordar problemas de integración, así como desplegar el mismo de una manera diferente a los microservicios.
 
@@ -332,7 +332,7 @@ Por último, se ha utilizado Postman \footnote{Web oficial de Postman: \url{http
 
 Una vez comentada la tecnología elegida, se va a introducir un ejemplo de uso básico de YARP para dar una visión general de lo que es capaz de hacer esta librería. De este modo, también será más fácil comprender el funcionamiento del \emph{proxy} inverso desarrollado.
 
-En lineas generales, empezar a utilizar YARP no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso básico funcionando. Si bien, es más complejo utilizar características avanzadas o personalizarlo en función de las necesidades particulares.
+En líneas generales, empezar a utilizar YARP no es nada difícil, en un par de horas se puede llegar a tener un \emph{proxy} inverso básico funcionando. Si bien, es más complejo utilizar características avanzadas o personalizarlo en función de las necesidades particulares.
 
 La demostración que se va a realizar consiste en crear un \emph{proxy} inverso que redirija peticiones hacía dos servicios web de prueba, creados anteriormente para el ejemplo. Estos simulan ser un servicio de localización y devuelven siempre ''\emph{Valencia, Spain}''. También muestran este mismo mensaje por consola cuando son consultados para poder visualizar a través de ella la cantidad de peticiones que responden.
 
@@ -354,7 +354,7 @@ Acto seguido, es necesario añadir un poco de código para poner en marcha un \e
 	\label{ejemploYARP_startup}
 \end{figure}
 
-Por otro lado, hay que configurar las rutas que va a tener el \emph{proxy} inverso, es decir, los enrutamientos que debe hacer en tiempo de ejecución. Para ello se necesita especificar dichas rutas en el archivo \emph{appsettings.json}. Este archivo se utiliza para especificar cualquier tipo de configuración y se podría haber utilizado otro diferente. También se puede configurar a través de código pero requiere algo más de trabajo. Por este motivo, en esta demostración se va a utilizar el primer método, ya que se pretende mostrar un ejemplo lo más simple posible.
+Por otro lado, hay que configurar las rutas que va a tener el \emph{proxy} inverso, es decir, los enrutamientos que debe hacer en tiempo de ejecución. Para ello se necesita especificar dichas rutas en el archivo \emph{appsettings.json}. Este archivo se utiliza para especificar cualquier tipo de configuración y se podría haber utilizado otro diferente. También se puede configurar a través de código, pero requiere algo más de trabajo. Por este motivo, en esta demostración se va a utilizar el primer método, ya que se pretende mostrar un ejemplo lo más simple posible.
 
 La figura \ref{ejemploYARP_appsettings} muestra las rutas creadas para esta prueba. Se ha creado un par ruta-\emph{cluster} con dos destinaciones. Para no entrar en mucho detalle, lo que es importante es que la ruta tiene un patrón \emph{\{**catch-all\}} dentro de la cláusula \emph{Match:Path}, para capturar todas las peticiones, y el \emph{cluster} contiene dos destinaciones, una por cada servicio de localización, comentados al principio de este apartado. Lo que se pretende conseguir con esta configuración es que el \emph{proxy} inverso capture todas las peticiones y las envíe de manera aleatoria a cualquiera de los dos servicios.
 
@@ -365,7 +365,7 @@ La figura \ref{ejemploYARP_appsettings} muestra las rutas creadas para esta prue
 	\label{ejemploYARP_appsettings}
 \end{figure}
 
-Lo siguiente es preparar los servicios para una prueba rápida. En la figura \ref{ejemploYARP_servicios_preparacion} se observa el escenario inicial. En la parte superior se encuentra el \emph{proxy} inverso creado y, en la inferior, los dos servicios de localización . Importante destacar que los puertos de estos últimos coinciden con los que se han indicado en el \emph{appsettings.json}.
+Lo siguiente es preparar los servicios para una prueba rápida. En la figura \ref{ejemploYARP_servicios_preparacion} se observa el escenario inicial. En la parte superior se encuentra el \emph{proxy} inverso creado y, en la inferior, los dos servicios de localización. Importante destacar que los puertos de estos últimos coinciden con los que se han indicado en el \emph{appsettings.json}.
 
 \begin{figure}[ht]
 \centering
@@ -445,7 +445,7 @@ Los casos de uso van a ser expuestos a continuación con un diagrama de casos de
 
 		\subsection{Otros requisitos funcionales} \label{requisitosFuncionales}
 
-Aparte de los casos de uso comentados, el \emph{proxy} inverso ha de cumplir otros requisitos funcionales, o características concretas, que no son propiamente casos de uso pero que se considera de interés mencionarlos, pues son relevantes para su funcionamiento. Los requisitos funcionales a mostrar se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudan también a comprender qué debe hacer exactamente el producto.
+Aparte de los casos de uso comentados, el \emph{proxy} inverso ha de cumplir otros requisitos funcionales, o características concretas, que no son propiamente casos de uso, pero que se considera de interés mencionarlos, pues son relevantes para su funcionamiento. Los requisitos funcionales a mostrar se centran en lo que debe hacer el sistema y dejan de lado la interacción con el usuario. Complementan así los casos de uso y ayudan también a comprender qué debe hacer exactamente el producto.
 
 Cabe destacar que estos aspectos se podrían haber presentado de forma conjunta a los casos de uso, ya que ambos se pueden considerar requisitos funcionales. No obstante, se cree que de esta manera quedan más claras, por un lado, las tres funcionalidades básicas y, por otro lado, algunos detalles más concretos. De esta forma, se  muestran de forma aislada las tres acciones principales que el \emph{proxy} inverso debe realizar, pues si se mostraran todos los requisitos juntos, unidos con relaciones \emph{extend} e \emph{include} por ejemplo, su comprensión sería más compleja.
 
@@ -459,7 +459,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \\ \hline
 \textbf{Caso de uso relacionado} & CU01
 \\ \hline
-\textbf{Descripción} & La acción de añadir rutas a las que redirigir peticiones se debe poder hacer de manera dinámica, es decir, durante la propia ejecución. Esto permite no tener que parar y volver a lanzar el \emph{proxy} inverso cada vez que se añaden o eliminan rutas. Esta es una característica bastante importante ya que el tiempo en el que se reinicia no estaría atendiendo peticiones y estas fallarían, quedando el sistema inaccesible durante ese tiempo.
+\textbf{Descripción} & La acción de añadir rutas a las que redirigir peticiones se debe poder hacer de manera dinámica, es decir, durante la propia ejecución. Esto permite no tener que parar y volver a lanzar el \emph{proxy} inverso cada vez que se añaden o eliminan rutas. Esta es una característica bastante importante, ya que el tiempo en el que se reinicia no estaría atendiendo peticiones y estas fallarían, quedando el sistema inaccesible durante ese tiempo.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{9.5cm} |}
@@ -470,7 +470,7 @@ Estos requisitos van a ser representados mediante un identificador, un nombre, e
 \\ \hline
 \textbf{Caso de uso relacionado} & CU03
 \\ \hline
-\textbf{Descripción} & El \emph{proxy} inverso tiene que estar preparado para servir de puerta de entrada al \emph{backend} desde la interfaz de usuario pero también debe interconectar los microservicios que forman dicho \emph{backend}. De esta forma, todas las peticiones que se lleven a cabo desde fuera o dentro del propio sistema deben pasar por él.
+\textbf{Descripción} & El \emph{proxy} inverso tiene que estar preparado para servir de puerta de entrada al \emph{backend} desde la interfaz de usuario, pero también debe interconectar los microservicios que forman dicho \emph{backend}. De esta forma, todas las peticiones que se lleven a cabo desde fuera o dentro del propio sistema deben pasar por él.
 \\ \hline \end{tabular} \end{center}
 
 \begin{center} \begin{tabular}{| l | p{9.5cm} |}
@@ -599,7 +599,7 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 
 	\section{Diseño}
 
-En lo que se refiere al diseño de la solución, se va presentar su estructura final. Por otro lado, también se cree conveniente comentar los \emph{middlewares} que forman la \emph{pipeline} de YARP para ver qué componentes personalizados han sido desarrollados y añadidos.
+En lo que se refiere al diseño de la solución, se va a presentar su estructura final. Por otro lado, también se cree conveniente comentar los \emph{middlewares} que forman la \emph{pipeline} de YARP para ver qué componentes personalizados han sido desarrollados y añadidos.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTRUCTURA DE LA SOLUCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -617,7 +617,7 @@ Un microservicio cualquiera de esta aplicación, y el \emph{proxy} inverso en pa
 
 	\item \textbf{Persistencia}. Es la capa que se encarga de acceder y realizar las operaciones relacionadas con la base datos. El \emph{proxy} inverso no necesita persistir nada por lo que esta capa no existe en este caso.
 
-	\item \textbf{Lógica}. Esta capa contiene la lógica de negocio. Al igual que la entidades de dominio, las acciones que representan la lógica han de ser modeladas. No solo incluye código autogenerado sino que las acciones son programadas aquí también.
+	\item \textbf{Lógica}. Esta capa contiene la lógica de negocio. Al igual que las entidades de dominio, las acciones que representan la lógica han de ser modeladas. No solo incluye código autogenerado sino que las acciones son programadas aquí también.
 
 	\item \textbf{Aplicación}. Se encarga de dar soporte a las operaciones CRUD (\emph{create}, \emph{read}, \emph{update} y \emph{delete}). También comprueba los permisos del usuario sobre la acción que se quiere realizar.
 
@@ -642,7 +642,7 @@ Tras comentar las capas que forman la arquitectura del \emph{proxy} inverso, se 
 
 			\subsubsection{Capa de lógica}
 
-La capa que más ha sido necesario modificar es la de lógica, pues las acciones del \emph{proxy} inverso se implementan en ella. Es por esto que se va a entrar en más detalle acerca de esta capa. Las figuras \ref{proyectoLogica} y \ref{proyectoTestsLogica} muestran la estructura de carpetas y clases que forman los proyectos de la capa de lógica y de sus pruebas, respectivamente. No todas las clases pero sí las más importantes serán comentadas a continuación.
+La capa que más ha sido necesario modificar es la de lógica, pues las acciones del \emph{proxy} inverso se implementan en ella. Es por esto que se va a entrar en más detalle acerca de esta capa. Las figuras \ref{proyectoLogica} y \ref{proyectoTestsLogica} muestran la estructura de carpetas y clases que forman los proyectos de la capa de lógica y de sus pruebas, respectivamente. No todas las clases, pero sí las más importantes serán comentadas a continuación.
 
 \begin{figure}[ht]
 \centering
@@ -697,7 +697,7 @@ Por su parte, YARP tiene una propia, integrada en la de .NET. Por defecto, sus \
 
 	\item \textbf{\emph{SameMachineFilter}}. Su finalidad es filtrar las posibles destinaciones del enrutamiento de una petición de forma que si una de las direcciones corresponde a la misma máquina en la que se encuentra el \emph{proxy} inverso, sea redirigida hacía ella. Esto puede suceder cuando el microservicio destino se encuentra desplegado en la misma máquina. De esta manera se ahorra tiempo evitando hacer una petición a otra dirección.
 
-	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
+	\item \textbf{\emph{CustomProxyLog}}. Se encarga de personalizar los mensajes de \emph{log} que muestra el \emph{proxy} inverso por consola cuando enruta una petición. YARP muestra por defecto un mensaje, pero se considera interesante mostrar más información para facilitar las tareas de depuración, por ejemplo.
 
 	\item \textbf{\emph{ProxyLoadBalancing}}. No es un \emph{middleware} creado para este proyecto, se trata de uno predefinido por YARP que se encarga de realizar las tareas de balanceo de carga cuando una misma ruta tiene diferentes posibles destinaciones. En concreto, elige una entre las disponibles en base a un algoritmo que se puede configurar. Tiene que ser el último \emph{middleware} añadido porque es él el que se encarga de elegir finalmente dónde se redirigen las peticiones de entre las destinaciones disponibles y no filtradas por los anteriores.
 
@@ -713,7 +713,7 @@ La parte de programación del \emph{proxy} inverso que protagoniza este trabajo 
 
 		\subsection{Construcción de prototipos}
 
-El desarrollo ha tenido un inicio particular, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión pero que sí son adecuadas para el resto de microservicios.
+El desarrollo ha tenido un inicio particular, pues se planificó la elaboración de dos prototipos de microservicio. Estos tendrían la misión de demostrar si el uso de código autogenerado a partir de modelos, como en el resto de microservicios, penaliza en exceso el rendimiento del \emph{proxy} inverso. Esto podía deberse al tratarse de un código menos específico y más genérico, así como al poseer un exceso de características innecesarias para el caso en cuestión, pero que sí son adecuadas para el resto de microservicios.
 
 De esta forma, se construyó un microservicio sin utilizar la generación de código y otro utilizándola. Esto culminaría con la medición de las diferencias de rendimiento entre ambos y la consiguiente elección, para continuar con el desarrollo de uno u otro prototipo.
 
@@ -744,7 +744,7 @@ Respecto al segundo prototipo, fue construido utilizando las mismas herramientas
 
 Así pues, se creó desde cero otro proyecto, ahora utilizando la generación automática de código a partir de modelos. Para ello, se escribió el código correspondiente a YARP para crear el \emph{proxy} inverso y se configuraron algunas rutas por defecto. Por último, se crearon algunas consultas Postman para probar este prototipo. Estos pasos son los mismos que para el caso del microservicio manual, con algunas diferencias para adaptarse a la solución concreta.
 
-El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltarían los proyectos correspondientes a la capa de contratos, los cuales se encuentran en una solución aparte y no es necesario mostrarlos para realizar esta comparativa puesto que las evidencias comentadas son suficientes. Dominio y persistencia no tiene al no ser necesario modelar ninguna entidad. El apéndice \ref{generacionDeCodigo} detalla más el modelado del \emph{proxy} inverso.
+El microservicio autogenerado resultante se muestra en la figura \ref{prototipoAutogenerado}. Es interesante comparar esta solución con la del prototipo hecho a mano para comprobar que la complejidad y cantidad de proyectos de Visual Studio, y por consiguiente también de clases, es muchísimo mayor en este caso. Cabe resaltar que faltarían los proyectos correspondientes a la capa de contratos, los cuales se encuentran en una solución aparte y no es necesario mostrarlos para realizar esta comparativa, puesto que las evidencias comentadas son suficientes. Dominio y persistencia no tiene al no ser necesario modelar ninguna entidad. El apéndice \ref{generacionDeCodigo} detalla más el modelado del \emph{proxy} inverso.
 
 \begin{figure}[ht]
 \centering
@@ -766,12 +766,12 @@ Una vez construidos los prototipos, se procedió a medir el impacto de seguir la
 	\label{medidorTiempos}
 \end{figure}
 
-Es importante destacar que las acciones de añadir y eliminar rutas dinámicamente, todavía por implementar, no son relevantes en esta comparativa ya que se llevan a cabo muy pocas veces en relación con el enrutamiento, es decir, no son las más comunes. Por este motivo, no se ha creído conveniente medirlas y han sido implementadas con posterioridad.
+Es importante destacar que las acciones de añadir y eliminar rutas dinámicamente, todavía por implementar, no son relevantes en esta comparativa, ya que se llevan a cabo muy pocas veces en relación con el enrutamiento, es decir, no son las más comunes. Por este motivo, no se ha creído conveniente medirlas y han sido implementadas con posterioridad.
 
 Por otro lado, es interesante comentar por qué desde un primer momento se enfocaba la comparativa como una prueba para ver si el microservicio autogenerado era viable y, por tanto, preferible sobre el otro. Uno de los motivos era que, si se utilizaba la generación de código, el \emph{proxy} inverso se podría desplegar con el mismo procedimiento que estaba pensado para el resto de microservicios, lo que evitaría tener que crear un mecanismo especial para él y permitiría conservar esa homogeneidad para simplificar los despliegues. Otro motivo se trataba de la trivialidad para hacer cualquier cambio de estructura, pues la generación de código lo haría de forma automática. Por el contrario, habría que hacerlo manualmente en el microservicio a mano para continuar con el cumplimiento del requisito no funcional RNF04, del apartado \ref{requisitosNoFuncionales}.
 
 Los resultados de las mediciones fueron claros: ambos prototipos tenían un rendimiento casi idéntico.
-En concreto, para 10000 iteraciones se obtuvieron tiempos medios de respuesta de 3,6 milisegundos para el prototipo a mano y de 3,7 para el autogenerado. Se realizaron pruebas con diferente número de iteraciones pero los resultados no variaron en demasía. Con esto se concluye que utilizar el segundo prototipo supone una penalización de tiempo de no llega al 3\%. Esto se consideró despreciable e insuficiente para contrarrestar las ventajas comentadas por lo que se decidió eliminar el primer prototipo y continuar así con la versión autogenerada.
+En concreto, para 10000 iteraciones se obtuvieron tiempos medios de respuesta de 3,6 milisegundos para el prototipo a mano y de 3,7 para el autogenerado. Se realizaron pruebas con diferente número de iteraciones, pero los resultados no variaron en demasía. Con esto se concluye que utilizar el segundo prototipo supone una penalización de tiempo de no llega al 3\%. Esto se consideró despreciable e insuficiente para contrarrestar las ventajas comentadas por lo que se decidió eliminar el primer prototipo y continuar así con la versión autogenerada.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSOLIDACIÓN DEL MICROSERVICIO AUTOGENERADO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -803,13 +803,13 @@ También se creyó conveniente estandarizar el tratamiento de las rutas base de 
 
 Además, se consideró oportuno automatizar algunas de las pruebas de aceptación de las acciones de añadir y eliminar rutas y para el método \emph{GetYarpNormalizedPath}, recién comentado en el párrafo anterior. Se entrará más en detalle acerca de estas pruebas en el apartado de pruebas (\ref{pruebas}).
 
-Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados \emph{Core}. Estos son los que se despliegan en primer lugar ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
+Por último, se incluyó el \emph{proxy} inverso en el núcleo de microservicios principales llamados \emph{Core}. Estos son los que se despliegan en primer lugar, ya que son utilizados por todos los demás, o al menos por la mayoría. Se ahondará en este aspecto de los despliegues en el siguiente apartado. Microservicios de este tipo son los que se encargan de aspectos clave tales como la seguridad, el despliegue de la aplicación o, como es el caso de este, la comunicación entre los microservicios.
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRIMEROS DESPLIEGUES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		\subsection{Primeros despliegues}
 
-A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy} inverso perfectamente funcional pero antes de llevar a cabo los primeros despliegues había que hacer algunas modificaciones para que la interfaz de usuario y los microservicios lo utilizaran. Derivado de estos despliegues se presentaron algunos problemas que también serán comentados.
+A estas alturas del desarrollo ya se tenía una primera versión del \emph{proxy} inverso perfectamente funcional, pero antes de llevar a cabo los primeros despliegues había que hacer algunas modificaciones para que la interfaz de usuario y los microservicios lo utilizaran. Derivado de estos despliegues se presentaron algunos problemas que también serán comentados.
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SISTEMAS DE DESPLIEGUE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -831,9 +831,9 @@ Una vez expuestos los modos de despliegue y el por qué de su coexistencia, cabe
 
 			\subsubsection{Interfaz de usuario}
 
-Para empezar con los despliegues, se decidió hacer que solo la interfaz de usuario utilizara el \emph{proxy} inverso para no romper toda la aplicación en caso de fallar. Cabe destacar que, como la aplicación se encontraba todavía en fase de desarrollo, no hubiera sido un gran problema si la interfaz de usuario quedara inutilizable por un breve periodo de tiempo por culpa del nuevo microservicio. Sin embargo, la caída del \emph{backend} podría haber supuesto algún inconveniente para el resto del equipo de la aplicación puesto que no sería posible hacer pruebas sobre los microservicios desplegados. De esta manera, se pretendía minimizar riesgos.
+Para empezar con los despliegues, se decidió hacer que solo la interfaz de usuario utilizara el \emph{proxy} inverso para no romper toda la aplicación en caso de fallar. Cabe destacar que, como la aplicación se encontraba todavía en fase de desarrollo, no hubiera sido un gran problema si la interfaz de usuario quedara inutilizable por un breve periodo de tiempo por culpa del nuevo microservicio. Sin embargo, la caída del \emph{backend} podría haber supuesto algún inconveniente para el resto del equipo de la aplicación, puesto que no sería posible hacer pruebas sobre los microservicios desplegados. De esta manera, se pretendía minimizar riesgos.
 
-Además, como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue, también se hicieron pruebas de manera local para comprobar que todo funcionaba correctamente y que la interfaz de usuario no se iba a quedar caída. Se desplegó el \emph{proxy} inverso en una máquina a parte y se le cargó de rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se hicieron peticiones desde dicha interfaz de usuario y no hubo problemas.
+Además, como paso previo a incluir el \emph{proxy} inverso al proceso de despliegue, también se hicieron pruebas de manera local para comprobar que todo funcionaba correctamente y que la interfaz de usuario no se iba a quedar caída. Se desplegó el \emph{proxy} inverso en una máquina aparte y se le cargó de rutas que apuntaban a los microservicios ya desplegados para que la interfaz de usuario lo utilizara. Se hicieron peticiones desde dicha interfaz de usuario y no hubo problemas.
 
 La interfaz de usuario de la aplicación se conectaba directamente a los microservicios por lo que hizo falta interponer el nuevo componente entre ella y el \emph{backend}. Para ello, fue necesario modificar las direcciones a las que apuntaba, en concreto, substituir las de cada microservicio por la del \emph{proxy} inverso. De esta forma, la interfaz de usuario dejaba de conocer todos los microservicios para solo conocer su dirección.
 
@@ -864,7 +864,7 @@ El problema más grande que surgió a raíz de los primeros despliegues fue con 
 
 El problema recién expuesto fue estudiado a fondo más tarde y al final resultó ser culpa de YARP, que utiliza un timeout por defecto de 100 segundos para redirigir peticiones. La solución fue aumentarlo para las rutas correspondientes a las peticiones que se redirigen hacia los microservicios en cuestión. Para ello, fue necesario modelar y añadir un parámetro opcional para el \emph{timeout} en la creación de las rutas. De esta forma se permite su personalización en función de la ruta que se utilice.
 
-La solución dada al problema puede parecer que no es la óptima ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se emparejan con esa ruta, siendo no del todo correcto. Una posible mejora sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones que lo necesiten. No obstante, no se cree necesario complicar el funcionamiento de esa manera ya que, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado. Además, si un cliente con un determinado \emph{timeout} realiza una petición a través del \emph{proxy} inverso y la ruta correspondiente tiene uno mayor, el que prevalecerá será el del cliente y el del \emph{proxy} inverso no tendrá efecto. De esta manera, solo sirve de límite en caso de que el del \emph{proxy} inverso sea menor.
+La solución dada al problema puede parecer que no es la óptima, ya que cualquier petición relacionada con una ruta de \emph{timeout} grande podría durar más de lo esperado, es decir, el aumento del \emph{timeout} afecta a todas las peticiones que se emparejan con esa ruta, siendo no del todo correcto. Una posible mejora sería crear rutas específicas con \emph{timeouts} grandes para solo las peticiones que lo necesiten. No obstante, no se cree necesario complicar el funcionamiento de esa manera porque, en la práctica, el comportamiento del \emph{proxy} inverso no variaría demasiado. Además, si un cliente con un determinado \emph{timeout} realiza una petición a través del \emph{proxy} inverso y la ruta correspondiente tiene uno mayor, el que prevalecerá será el del cliente y el del \emph{proxy} inverso no tendrá efecto. De esta manera, solo sirve de límite en caso de que el del \emph{proxy} inverso sea menor.
 
 Un problema menor que también surgió fue uno relacionado con los códigos de estado de las peticiones. El \emph{proxy} inverso devolvía uno con número 502. Este a menudo era confundido con el 504 recién explicado y provocaba malentendidos. Su mensaje en inglés era ''\emph{Bad Gateway}'', lo que parecía ser culpa del nuevo componente, generando confusión en el resto de desarrolladores de la aplicación. Finalmente resultó ser debido a enrutamientos cuyo destino no estaba disponible, es decir, el \emph{proxy} inverso no tenía ninguna culpa, simplemente mostraba un 502 en lugar del habitual 404, ''\emph{Not Found}'', que se hubiera mostrado en caso de que las peticiones no fueran respuestas por su destinatario.
 
@@ -902,7 +902,7 @@ Para llevar a cabo esta modificación fue necesario primero mejorar el sistema d
 	\label{creacionIdentificadores}
 \end{figure}
 
-De una manera similar, las acciones de añadir y eliminar rutas fueron modificadas para jugar con los tres tipos de entidades de YARP. Un ejemplo del tratamiento que requieren puede ser el hecho de que un \emph{Cluster} tiene una o más \emph{Destinations}, por lo que no tendrá que ser creado si ya existe cuando se añade una nueva destinación. Todo esto sería trivial si se utilizara el mecanismo de carga estático pero, como se ha comentado en varias ocasiones a lo largo de este memoria, no encaja con el contexto de este \emph{proxy} inverso.
+De una manera similar, las acciones de añadir y eliminar rutas fueron modificadas para jugar con los tres tipos de entidades de YARP. Un ejemplo del tratamiento que requieren puede ser el hecho de que un \emph{Cluster} tiene una o más \emph{Destinations}, por lo que no tendrá que ser creado si ya existe cuando se añade una nueva destinación. Todo esto sería trivial si se utilizara el mecanismo de carga estático pero, como se ha comentado en varias ocasiones a lo largo de esta memoria, no encaja con el contexto de este \emph{proxy} inverso.
 
 Por otro lado, YARP ofrece diferentes algoritmos de balanceo de carga: \emph{First}, \emph{Random}, \emph{RoundRobin}, \emph{LeastRequests} y \emph{PowerOfTwoChoices}. Se ha utilizado el último de ellos, el cual selecciona dos destinaciones aleatorias y elige la que menos peticiones esté atendiendo. Esta política intenta evitar la sobrecarga de buscar la dirección que está atendiendo menos peticiones y el caso peor de elegir de manera aleatoria una que esté muy ocupada.
 
@@ -943,7 +943,7 @@ Cabe destacar que no fue sencillo implementar el hecho de pasar un \emph{header}
 
 De la misma manera que se encontró un fallo del \emph{proxy} inverso correspondiente a las peticiones con \emph{timeouts} grandes gracias a los despliegues progresivos que se han ido realizando, también se descubrió otra deficiencia relacionada con las peticiones que pesaban mucho, es decir, las que tenían un cuerpo muy grande. En este caso la petición problemática devolvía un código de estado 400, error general del lado del cliente.
 
-Es interesante resaltar que la petición que produjo el fallo no podía ser reproducida ya que era fruto de la interacción múltiple entre varios microservicios. Además, el código de estado de error era mucho menos descriptivo que en el otro problema, un 400 genérico que no aportaba casi información. Tras mucho tiempo de investigaciones se llegó a la conclusión de que la única posibilidad era que tratase de una petición demasiado pesada. De esta forma, se intentó reproducir el mensaje de error con una petición Postman con un cuerpo muy grande y, ¡tachán!, problema encontrado. Sin embargo, faltaba averiguar cómo indicar a YARP que dejara de tener ese comportamiento o, al menos, aumentar el peso máximo de las peticiones.
+Es interesante resaltar que la petición que produjo el fallo no podía ser reproducida porque era fruto de la interacción múltiple entre varios microservicios. Además, el código de estado de error era mucho menos descriptivo que en el otro problema, un 400 genérico que no aportaba casi información. Tras mucho tiempo de investigaciones se llegó a la conclusión de que la única posibilidad era que tratase de una petición demasiado pesada. De esta forma, se intentó reproducir el mensaje de error con una petición Postman con un cuerpo muy grande y, ¡tachán!, problema encontrado. Sin embargo, faltaba averiguar cómo indicar a YARP que dejara de tener ese comportamiento o, al menos, aumentar el peso máximo de las peticiones.
 
 La documentación oficial no decía nada al respecto por lo que se dedujo, después de unas cuantas pruebas, que YARP utilizaba la configuración de Kestrel \cite{Kestrel} para establecer el máximo peso que puede tener una petición. Kestrel no es más que el servidor web que utilizan por debajo las aplicaciones de .NET y, por consiguiente, YARP. De esta forma, se eliminó el límite máximo de peso para las peticiones de la manera que muestra la figura \ref{configuracionKestrel}, en el método \emph{CreateHostBuilder} de la clase \emph{Program}. Con esta solución, los microservicios destino de los enrutamientos serían quienes establecerían el peso máximo.
 
@@ -958,7 +958,7 @@ La documentación oficial no decía nada al respecto por lo que se dedujo, despu
 
 			\subsubsection{Recorrido peticiones}
 
-Una vez comentadas todas la funcionalidades del producto desarrollado se quiere mostrar un esquema (figura \ref{esquemaInteraccionProxyInverso}) del recorrido completo de una petición que proviene de la interfaz de usuario y que pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él. Entrando en detalle, la interfaz de usuario realiza una petición al microservicio 1 y para ello primero pasa por el \emph{proxy} inverso general y después por el concreto del servidor que contiene el microservicio en cuestión. Para poder responder, el microservicio 1 necesita hacer una petición al A y este, a su vez, al Z. Una vez terminadas estas peticiones anidadas, la respuesta le llega al microservicio 1 y este devuelve a la interfaz la respuesta a la petición primera.
+Una vez comentadas todas las funcionalidades del producto desarrollado se quiere mostrar un esquema (figura \ref{esquemaInteraccionProxyInverso}) del recorrido completo de una petición que proviene de la interfaz de usuario y que pasa por varios microservicios. De esta forma, se pretende ilustrar la función del \emph{proxy} inverso y cómo el resto de componentes de la aplicación interactúa con él. Entrando en detalle, la interfaz de usuario realiza una petición al microservicio 1 y para ello primero pasa por el \emph{proxy} inverso general y después por el concreto del servidor que contiene el microservicio en cuestión. Para poder responder, el microservicio 1 necesita hacer una petición al A y este, a su vez, al Z. Una vez terminadas estas peticiones anidadas, la respuesta le llega al microservicio 1 y este devuelve a la interfaz la respuesta a la petición primera.
 
 Para finalizar, es interesante resaltar el uso de los \emph{proxy} inversos tanto para las peticiones de la interfaz de usuario como para las que se realizan entre microservicios, es decir, nadie se comunica con nadie sin pasar por alguno de ellos. De esta forma, los microservicios no conocen la dirección de ninguno de los otros, solo la de un \emph{proxy} inverso, que será el encargado de redirigir las peticiones donde corresponda.
 
@@ -989,9 +989,9 @@ Una unidad de trabajo no se considera terminada hasta que no pasa satisfactoriam
 
 A continuación, se va a mostrar una parte de las pruebas de aceptación elaboradas partiendo del nombre de la unidad de trabajo que prueban. Cabe destacar que, además, se han automatizado algunas de las más importantes para facilitar así su ejecución. Se enseñará también el código de alguna de ellas.
 
-			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEFINICIÓN DE ALGUNAS PAs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEFINICIÓN DE ALGUNAS PA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-			\subsubsection{Definición de algunas PAs}
+			\subsubsection{Definición de algunas PA}
 
 Las figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones}, \ref{PAsEnrutamiento}, \ref{PAsPersonalizacionTimeouts} y \ref{PAsMultiinstanciaDeMicroservicios} son capturas de pantalla de las pruebas de aceptación de cuatro unidades de trabajo. Para cada PA se indica un nombre que la identifica, un primer punto con la acción o acciones que hay que llevar a cabo para ejecutarla y otro punto con el resultado esperado.
 
@@ -1034,7 +1034,7 @@ Las figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePetici
 
 			\subsubsection{Pruebas automatizadas}
 
-Las figuras \ref{testAñadirRutas}, \ref{testGetYarpNormalizedRequestsBasePath} y \ref{testsEnrutamiento} muestran el código de algunas de las pruebas de aceptación automatizadas. Es interesante mencionar que corresponden a PAs cuyas descripciones se han enseñado en la sección anterior, figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones} y \ref{PAsEnrutamiento} en concreto. Así pues, se puede observar cómo se han automatizado y reflejado en código para entenderlas mejor.
+Las figuras \ref{testAñadirRutas}, \ref{testGetYarpNormalizedRequestsBasePath} y \ref{testsEnrutamiento} muestran el código de algunas de las pruebas de aceptación automatizadas. Es interesante mencionar que corresponden a PA cuyas descripciones se han enseñado en la sección anterior, figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones} y \ref{PAsEnrutamiento} en concreto. Así pues, se puede observar cómo se han automatizado y reflejado en código para entenderlas mejor.
 
 \begin{figure}[ht]
 \centering
@@ -1073,7 +1073,7 @@ Para llevar a cabo este desarrollo se ha seguido un enfoque ágil en el sentido 
 
 \begin{itemize}
 
-	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha divido en tareas relativamente pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más simples y concretas que los casos de uso. Pueden referirse a tareas no solo relacionadas con modificar el producto sino otras no técnicas como crear una base de datos o renovar una suscripción de un servicio web.
+	\item \textbf{Organización de las tareas en unidades de trabajo}. El trabajo a realizar para construir el \emph{proxy} inverso se ha dividido en tareas relativamente pequeñas denominadas unidades de trabajo. Estas definen funcionalidades más simples y concretas que los casos de uso. Pueden referirse a tareas no solo relacionadas con modificar el producto sino otras no técnicas como crear una base de datos o renovar una suscripción de un servicio web.
 
 	\item \textbf{Uso de un tablero \emph{kanban}}. En relación con la anterior práctica ágil, las unidades de trabajo han sido gestionadas a través de un tablero \emph{kanban} con tres columnas: \emph{TODO}, \emph{DOING}, \emph{DONE}. La única columna reseñable es la segunda, en la que primero se lleva a cabo una pequeña especificación de la unidad de trabajo en cuestión, principalmente definiendo sus pruebas de aceptación, y después, se implementa. Cabe destacar que el tablero utilizado es muy simple, sin embargo, podía haberse tratado de uno más complejo si el desarrollo se hubiera llevado a cabo en equipo con más personas. La herramienta utilizada a modo de tablero \emph{kanban} ha sido Trello \footnote{Web oficial de Trello: \url{https://trello.com}.}.
 
@@ -1130,7 +1130,7 @@ Desde otra perspectiva, el producto resultante también cumple los objetivos ini
 
 A pesar de haber cumplido los objetivos, es interesante hacer una breve reflexión para reconocer los aspectos negativos del producto desarrollado. Así pues, el \emph{proxy} inverso constituye un nuevo punto único de fallo, además de tener la posibilidad de actuar como cuello de botella, ralentizando las peticiones de toda la aplicación. Sin embargo, estos dos aspectos se han combatido permitiendo la existencia de más de una instancia del \emph{proxy} inverso. Por otra parte, un asunto al cual no se le ha dado solución es el hecho de que los \emph{middleware} construidos para la \emph{pipeline} de YARP aumentan el tiempo de respuesta de las peticiones. No obstante, no se supera el límite definido por el requisito no funcional RNF02, en el apartado \ref{requisitosNoFuncionales}.
 
-En lo referente a los conocimientos necesarios para la consecución de este proyecto, es interesante comentar que el lenguaje de programación utilizado, C\#, es visto en los estudios en los que se enmarca este trabajo, si bien, no con la profundidad suficiente para poder abordar un problema de estas características. Además, no es lo mismo hacer programas de escritorio con Windows Forms \cite{WinForms} como \emph{framework}, que es lo enseñado en ellos principalmente, que aplicaciones de tipo servicio web. Por otra parte, las asignaturas de metodología \emph{software}, de sistemas en red y de modelado también han resultado una muy buena base. Las primeras han servido para establecer y seguir una disciplina de desarrollo acorde a las características del proyecto y a su contexto. Las segundas, para entender mejor el funcionamiento de las comunicaciones entre varios servicios y las del propio \emph{proxy} inverso. Las terceras, para comprender y dominar el proceso de generación automática de código a partir de modelos seguido. Por último, YARP es una librería con un propósito muy específico, por lo que su aprendizaje ha requerido cierto esfuerzo, sobre todo para poder utilizar algunas de sus características más avanzadas.
+En lo referente a los conocimientos necesarios para la consecución de este proyecto, es interesante comentar que el lenguaje de programación utilizado, C\#, es visto en los estudios en los que se enmarca este trabajo, si bien, no con la profundidad suficiente para poder abordar un problema de estas características. Además, no es lo mismo hacer programas de escritorio con Windows Forms \cite{WinForms} como \emph{framework}, que es lo enseñado en ellos principalmente, que aplicaciones de tipo servicio web. Por otra parte, las asignaturas de metodología \emph{software}, de sistemas en red y de modelado también han resultado una muy buena base. Las primeras han servido para establecer y seguir una disciplina de desarrollo acorde a las características del proyecto y a su contexto. Las segundas, para entender mejor el funcionamiento de las comunicaciones entre varios servicios y las del propio \emph{proxy} inverso. Las terceras, para comprender y dominar el proceso seguido de generación automática de código a partir de modelos. Por último, YARP es una librería con un propósito muy específico, por lo que su aprendizaje ha requerido cierto esfuerzo, sobre todo para poder utilizar algunas de sus características más avanzadas.
 
 Por lo que se refiere a experiencia personal, ha sido muy gratificante llevar a cabo este trabajo. Por un lado, ha servido como ensayo para la futura resolución de problemas mayores en el mundo laboral, aunque también se pueda interpretar este como un trabajo profesional al haberse realizado en el contexto de una empresa. Por otro, ha merecido la pena este último hecho, pues ha otorgado cierta confianza dentro de la propia organización y se cree que con un proyecto real el proceso de aprendizaje ha sido más fructífero, teniendo en cuenta las desventajas que conlleva.
 
@@ -1278,7 +1278,7 @@ SOLID: \emph{The First 5 Principles of Object Oriented Design} (Consultado en 08
 
 \chapter{Proceso de generación automática de código} \label{generacionDeCodigo}
 
-A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle ya que no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código a partir de modelos que se ha seguido para elaborar el \emph{proxy} inverso. Cabe destacar que para la realización de este apéndice se ha consultado documentación interna del equipo de desarrollo con la intención de enriquecer el mismo.
+A lo largo de toda la memoria se ha mencionado el hecho de que la aplicación de la que forma parte el \emph{proxy} inverso, y finalmente él mismo también, se ha construido utilizando técnicas de generación automática de código a partir de modelos. Sin embargo, no se ha entrado en mucho más detalle porque no se ha considerado imprescindible y no se ha querido desviar la atención del producto desarrollado. De esta forma, este apéndice está destinado a complementar la información dada hasta ahora, explicando y dando ejemplos para el caso particular, del proceso de generación automática de código a partir de modelos que se ha seguido para elaborar el \emph{proxy} inverso. Cabe destacar que para la realización de este apéndice se ha consultado documentación interna del equipo de desarrollo con la intención de enriquecer el mismo.
 
 Primero de todo, es conveniente explicar qué es generar código de forma automática a partir de modelos. Consiste en autogenerar, a partir de la especificación de ciertos modelos y en base a unas plantillas preconfiguradas, todo el código posible que se repita o que pueda ser escrito de forma automática debido a su poca o escasa variabilidad. En el marco de esta descripción entra el código encargado de comunicarse con la base de datos o el que prepara las acciones HTTP que un servicio expone al exterior, por ejemplo, pues siempre se debe hacer de una forma concreta y establecida. Algunas de las ventajas más relevantes que esta aproximación de desarrollo de \emph{software} ofrece son:
 
@@ -1319,7 +1319,7 @@ La generación de código consiste en ejecutar el generador de código. Este uti
 
 Con este proceso se genera buena parte de la infraestructura de un microservicio. Esto comprende todas las capas de la arquitectura explicada en el apartado \ref{estructuraSolucion}, que trata de seguir siempre buenos principios de programación comos los SOLID \cite{SOLID}.
 
-Es interesante mencionar que todas las clases autogeneradas se crean con un comentario a modo de encabezado indicando que no se trata de una clase normal (figura \ref{encabezadoAutogenerado}). Esto se hace para indicar a los programadores que no debe ser modificada a mano ya que los cambios desaparecerán al generar código de nuevo.
+Es interesante mencionar que todas las clases autogeneradas se crean con un comentario a modo de encabezado indicando que no se trata de una clase normal (figura \ref{encabezadoAutogenerado}). Esto se hace para indicar a los programadores que no debe ser modificada a mano, ya que los cambios desaparecerán al generar código de nuevo.
 
 \begin{figure}[ht]
 \centering
