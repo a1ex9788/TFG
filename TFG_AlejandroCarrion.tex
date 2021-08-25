@@ -182,7 +182,7 @@ A modo de aparte, es interesante mencionar algunos patrones relacionados con el 
 
 	\end{itemize}
 
-	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: transporte o aplicación, respectivamente. Puede parecer que se trata de un un \emph{proxy} inverso pero la diferencia principal es que el \emph{load balancer} solo interacciona con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
+	\item \textbf{\emph{Load balancer}}, o balanceador de carga. Es un producto que se dedica a balancear la carga entre distintos servidores iguales. De este modo, para el cliente hay un único punto de entrada y redistribuyen las peticiones basándose en determinadas reglas. Hay que distinguir entre balanceadores de nivel 7 (L7) o de nivel 4 (L4). Esto hace referencia al nivel del modelo OSI (figura \ref{modeloOSI}) sobre el que trabajan: transporte o aplicación, respectivamente. Puede parecer que se trata de un un \emph{proxy} inverso pero la diferencia principal es que el \emph{load balancer} está enfocado a interaccionar con un mismo tipo de servidor, mientras que el otro patrón redirige a servidores que ofrecen servicios diferentes. Además, el \emph{proxy} inverso va un poco más allá que simplemente balancear la carga, puesto que puede interaccionar con el protocolo de aplicación.
 
 \begin{figure}[ht]
 \centering
@@ -231,15 +231,22 @@ Para finalizar, algunos de los productos y servicios de NGINX son ampliamente co
 
 		\subsection{Kemp}
 
-Kemp \footnote{Web oficial de Kemp: \url{https://kemptechnologies.com}.} es un balanceador de carga muy utilizado a nivel mundial. El término balanceador de carga se refiere a un \emph{proxy} inverso al que se le quiere dar énfasis a su capacidad de distribuir la carga entre varios nodos. Por esta característica es por la que se suele utilizar un producto de este tipo pero no hay que obviar que no deja de ser un \emph{proxy} inverso, con todo lo que conlleva.
+Kemp \footnote{Web oficial de Kemp: \url{https://kemptechnologies.com}.} es un balanceador de carga muy utilizado a nivel mundial. No obstante, se suele utilizar también como \emph{proxy} inverso. Al final, a estos dos patrones les separa una fina linea (apartado \ref{patronesRelacionados}) y la terminología se utiliza indistintamente a menudo.
 
 En cuanto a sus características, ofrece ser un balanceador de nivel 4 pero también de nivel 7, en referencia a las capas OSI. Además, soporta HTTP/2, cuenta con un \emph{firewall} que se puede activar y tiene un mecanismo de \emph{health checks} para comprobar el estado de los \emph{endpoints} con los que trabaja.
 
-Una de los aspectos más especiales de Kemp es el hecho de que brinda múltiples opciones de implementación, y muy flexibles. Destacan la \emph{hardware}, que facilita la instalación de máquinas con el \emph{software} de Kemp, y la \emph{cloud}, la cual pone a disposición los servicios de manera remota y sin necesidad tener servidores físicos. Cada una de ellas tiene diferentes tarifas en función del tráfico a recibir o de la cantidad de puertos disponibles, entre otros.
+Una de los aspectos más especiales de Kemp es el hecho de que brinda múltiples opciones de implementación (figura \ref{productosKemp}), y muy flexibles. Destacan la \emph{hardware}, que facilita la instalación de máquinas con el \emph{software} de Kemp, y la \emph{cloud}, la cual pone a disposición los servicios de manera remota y sin necesidad de tener servidores físicos. Cada una de ellas tiene diferentes tarifas en función del tráfico a recibir o de la cantidad de puertos disponibles, entre otros.
 
-El precio por utilizar los servicios de Kemp varía en función de las características del proyecto en el que se quiere incluir. Hay que rellenar un pequeño cuestionario para recibir un presupuesto. En él, hay que indicar cosas como los productos que se quiere contratar y la cantidad de los mismos.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/productosKemp}
+\caption[Opciones de implementación de Kemp.]{Opciones de implementación de Kemp \cite{Kemp_products}.}
+	\label{productosKemp}
+\end{figure}
 
-Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnote{Web oficial de Audi: \url{https://www.audi.es}.}, Nestle \footnote{Web oficial de Nestle: \url{https://www.nestle.com}.} o Galp \footnote{Web oficial de Galp: \url{https://www.galpenergia.com/}.}.
+De esta manera, el precio por utilizar los servicios de Kemp varía en función de las características del proyecto en el que se quiere incluir. Hay que rellenar un pequeño cuestionario para recibir un presupuesto. En él, hay que indicar cosas como los productos que se quiere contratar y la cantidad de los mismos.
+
+La página web oficial contiene un apartado en el que muestra casos de estudio reales correspondientes a empresas que han decidido utilizarlo \cite{Kemp_empresas}. En ellos, se cuenta de manera individual los problemas que tenían esas empresas y las soluciones implementadas utilizando Kemp. Son útiles para comprender qué es Kemp y en qué casos de uso se puede utilizar. Ejemplos de empresas que utilizan Kemp en sus infraestructuras son Audi \footnote{Web oficial de Audi: \url{https://www.audi.es}.}, Nestle \footnote{Web oficial de Nestle: \url{https://www.nestle.com}.} o Galp \footnote{Web oficial de Galp: \url{https://www.galpenergia.com/}.}.
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIBRERÍAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -267,7 +274,7 @@ Ocelot \footnote{Web oficial de Ocelot: \url{https://threemammals.com}.} es una 
 
 Se trata de un proyecto que ya tiene cierto tiempo, pues se inició en 2016. No obstante, su última \emph{release} salió a la luz el 11 de Diciembre de 2020 y es compatible con la última versión de .NET, .NET 5. También lo es con todas las anteriores de .NET Core.
 
-En lo que se refiere a las características propias de API \emph{Gateway}, Ocelot ofrece agregación de peticiones y tareas comunes a todos los \emph{enpoints} como autenticación o trazas distribuidas. También puede hacer transformaciones de \emph{headers} o cambiar el método HTTP utilizado antes de redirigir una petición.
+En lo que se refiere a las características propias de API \emph{Gateway}, Ocelot ofrece agregación de peticiones y tareas comunes a todos los \emph{endpoints} como autenticación o trazas distribuidas. También puede hacer transformaciones de \emph{headers} o cambiar el método HTTP utilizado antes de redirigir una petición.
 
 Otra de sus características destacables son el hecho de ser \emph{open source}, su rapidez y su escalabilidad. También es conveniente comentar que puede proporcionar autenticación, descubrimiento de servicios, equilibrio de carga, cacheado y limitación de carga. En sus inicios, uno de sus peores puntos negativos era que no permitía cambiar su configuración de manera dinámica, sin embargo, esta característica fue añadida más tarde y ahora ya está disponible. Al igual que YARP, Ocelot también está formado por una serie de \emph{middlewares} que se integran en la pipeline de ASP.NET para llevar a cabo sus tareas de API \emph{Gateway}.
 
@@ -1173,6 +1180,14 @@ Web oficial de NGINX (consultado en 08/2021):\\
 \bibitem{NGINX_documentacion}
 Documentación oficial de NGINX para funcionar como \emph{proxy} inverso (consultado en 08/2021):\\
 \url{https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy}
+
+\bibitem{Kemp_empresas}
+\emph{Kemp: Case Studies and Customer Success Stories} (consultado en 08/2021):\\
+\url{https://kemptechnologies.com/customers-success-stories/}
+
+\bibitem{Kemp_products}
+\emph{Why buy a Kemp Technologies load balancer} (consultado en 08/2021):\\
+\url{https://www.connection.com/brand/kemp/why-buy-a-kemp-technologies-load-balancer}
 
 \bibitem{YARP}
 Documentación oficial de YARP (consultado en 08/2021):\\
