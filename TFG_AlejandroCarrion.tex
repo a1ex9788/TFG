@@ -797,6 +797,8 @@ Un ejemplo de problemas con la generación de código fue el método \emph{Confi
 	\label{startup}
 \end{figure}
 
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
+
 Después de terminar los flecos de generación de código, era momento de seguir añadiendo funcionalidad. De este modo, se modelaron e implementaron las acciones de añadir y eliminar rutas dinámicamente, correspondientes a los casos de uso CU01 y CU02 del apartado \ref{casosDeUso}. También fueron probadas con las correspondientes peticiones Postman.
 
 Por otro lado, se añadió un mecanismo de autenticación de peticiones, tal y como demanda el requisito no funcional RNF01 de la sección \ref{requisitosNoFuncionales}. Este consistió simplemente en utilizar el mismo mecanismo de seguridad que se utiliza en el resto de microservicios, el cual utiliza el sistema de autenticación que ofrece .NET y se genera de manera automática para las acciones modeladas, como es el caso de las dos acciones comentadas en el párrafo anterior. Solo sería necesario indicar a YARP que utilizase dicho mecanismo también a la hora de enrutar peticiones.
