@@ -1,6 +1,7 @@
 \documentclass[11pt,spanish,listoffigures]{tfgetsinf}
 \usepackage[utf8]{inputenc}
-\usepackage{xurl}
+\usepackage{xurl} % Evitar que se corten las url al final de la línea
+\usepackage{float} % Congelar la posición de las figuras [H]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -287,12 +288,14 @@ Su configuración es muy básica, teniendo que especificarla en un fichero Json.
 	\label{configuracionBasicaOcelot}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=0.6\textwidth]{imagenes/configuracionAgregacionOcelot}
 \caption[Ejemplo de configuración de Ocelot con una agregación de peticiones.]{Ejemplo de configuración de Ocelot con una agregación de peticiones \cite{Ocelot_documentacion}.}
 	\label{configuracionAgregacionOcelot}
 \end{figure}
+
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPARATIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -595,6 +598,8 @@ Sobre el \emph{proxy} inverso que atañe a este trabajo se imponen los siguiente
 \textbf{Motivación} & Ídem RNF03: guardar coherencia con el resto de los microservicios para poder ser mantenido por personas que hayan trabajado con otros de ellos anteriormente.
 \\ \hline \end{tabular} \end{center}
 
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
+
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISEÑO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	\section{Diseño}
@@ -638,25 +643,13 @@ Tras comentar las capas que forman la arquitectura del \emph{proxy} inverso, se 
 	\label{arquitectura}
 \end{figure}
 
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
+
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CAPA DE LÓGICA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 			\subsubsection{Capa de lógica}
 
 La capa que más ha sido necesario modificar es la de lógica, pues las acciones del \emph{proxy} inverso se implementan en ella. Es por esto que se va a entrar en más detalle acerca de esta capa. Las figuras \ref{proyectoLogica} y \ref{proyectoTestsLogica} muestran la estructura de carpetas y clases que forman los proyectos de la capa de lógica y de sus pruebas, respectivamente. No todas las clases, pero sí las más importantes serán comentadas a continuación.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{imagenes/proyectoLogica}
-\caption{Proyecto de Visual Studio de la capa de lógica.}
-	\label{proyectoLogica}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.7\textwidth]{imagenes/proyectoTestsLogica}
-\caption{Proyecto de Visual Studio de pruebas para la capa de lógica.}
-	\label{proyectoTestsLogica}
-\end{figure}
 
 En el proyecto de lógica de la figura \ref{proyectoLogica} son reseñables los siguientes aspectos:
 
@@ -675,6 +668,22 @@ En el proyecto de lógica de la figura \ref{proyectoLogica} son reseñables los 
 \end{itemize}
 
 En el proyecto de pruebas (figura \ref{proyectoTestsLogica}) simplemente destacar la existencia de tres clases de prueba principales: \emph{AddNewRoutesTests}, \emph{RemoveRoutesTests} y \emph{RoutesUtilsTests}. La primera es para la acción de añadir rutas, la segunda para la de eliminarlas y la tercera para la clase \emph{RoutesUtils}. Por último, la clase \emph{LogicTestUtilities} incluye funciones auxiliares para realizar comprobaciones que se repiten en más de una prueba, como por ejemplo la comprobación de si una determinada ruta existe.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{imagenes/proyectoLogica}
+\caption{Proyecto de Visual Studio de la capa de lógica.}
+	\label{proyectoLogica}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{imagenes/proyectoTestsLogica}
+\caption{Proyecto de Visual Studio de pruebas para la capa de lógica.}
+	\label{proyectoTestsLogica}
+\end{figure}
+
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
 
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PIPELINE DE YARP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -794,7 +803,7 @@ Por otro lado, se añadió un mecanismo de autenticación de peticiones, tal y c
 
 También se creyó conveniente estandarizar el tratamiento de las rutas base de las peticiones que representan una ruta. Esto se hizo para hacer el \emph{proxy} inverso más robusto y evitar posibles malentendidos con YARP, pues espera recibir las rutas de una manera concreta y no otra. Por ejemplo, requiere que se utilicen barras como separadores de ruta en lugar de barras invertidas. Para ello se creó un método \emph{GetYarpNormalizedPath}, en la clase \emph{RoutesUtils}, que normaliza una ruta dada según el esquema que YARP acepta. El método en cuestión se muestra en la figura \ref{getYarpNormalizedPath} y hace cosas como forzar el uso de las barras como separadores o añadir el patrón ''\emph{\{*remainder\}}'' para capturar todas las peticiones con rutas que empiecen con el prefijo indicado independientemente de como sigan.
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=1\textwidth]{imagenes/getYarpNormalizedPath}
 \caption{Método \emph{GetYarpNormalizedPath}.}
@@ -969,6 +978,8 @@ Para finalizar, es interesante resaltar el uso de los \emph{proxy} inversos tant
 	\label{esquemaInteraccionProxyInverso}
 \end{figure}
 
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
+
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	\section{Pruebas} \label{pruebas}
@@ -995,40 +1006,42 @@ A continuación, se va a mostrar una parte de las pruebas de aceptación elabora
 
 Las figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones}, \ref{PAsEnrutamiento}, \ref{PAsPersonalizacionTimeouts} y \ref{PAsMultiinstanciaDeMicroservicios} son capturas de pantalla de las pruebas de aceptación de cuatro unidades de trabajo. Para cada PA se indica un nombre que la identifica, un primer punto con la acción o acciones que hay que llevar a cabo para ejecutarla y otro punto con el resultado esperado.
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/PAsAñadirRutasDinamicamente}
 \caption{Pruebas de aceptación de la unidad de trabajo ''Añadir rutas dinámicamente''.}
 	\label{PAsAñadirRutasDinamicamente}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/PAsNormalizarRutaBasePeticiones}
 \caption{Pruebas de aceptación de la unidad de trabajo ''Normalizar rutas base peticiones''.}
 	\label{PAsNormalizarRutaBasePeticiones}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/PAsEnrutarPeticiones}
 \caption{Pruebas de aceptación de la unidad de trabajo ''Enrutar peticiones''.}
 	\label{PAsEnrutamiento}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/PAsPersonalizarTimeouts}
 \caption{Pruebas de aceptación de la unidad de trabajo ''Personalizar timeouts''.}
 	\label{PAsPersonalizacionTimeouts}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=0.7\textwidth]{imagenes/PAsMultiinstanciarMicroservicios}
 \caption{Pruebas de aceptación de la unidad de trabajo ''Multiinstanciar microservicios''.}
 	\label{PAsMultiinstanciaDeMicroservicios}
 \end{figure}
+
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUEBAS AUTOMATIZADAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1036,21 +1049,21 @@ Las figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePetici
 
 Las figuras \ref{testAñadirRutas}, \ref{testGetYarpNormalizedRequestsBasePath} y \ref{testsEnrutamiento} muestran el código de algunas de las pruebas de aceptación automatizadas. Es interesante mencionar que corresponden a PA cuyas descripciones se han enseñado en la sección anterior, figuras \ref{PAsAñadirRutasDinamicamente}, \ref{PAsNormalizarRutaBasePeticiones} y \ref{PAsEnrutamiento} en concreto. Así pues, se puede observar cómo se han automatizado y reflejado en código para entenderlas mejor.
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=1\textwidth]{imagenes/testAñadirRutas}
 \caption{Prueba de aceptación automatizada de la unidad de trabajo ''Añadir rutas dinámicamente''.}
 	\label{testAñadirRutas}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=1\textwidth]{imagenes/testGetYarpNormalizedRequestsBasePath}
 \caption{Pruebas de aceptación automatizadas de la unidad de trabajo ''Normalizar rutas base peticiones''.}
 	\label{testGetYarpNormalizedRequestsBasePath}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=1\textwidth]{imagenes/testsEnrutarPeticiones}
 \caption{Pruebas de aceptación automatizadas de la unidad de trabajo ''Enrutar peticiones''.}
@@ -1064,6 +1077,8 @@ Las figuras \ref{testAñadirRutas}, \ref{testGetYarpNormalizedRequestsBasePath} 
 Las pruebas de regresión son pruebas que se realizan sobre un producto \emph{software} anteriormente probado al que se le han hecho modificaciones. Con ellas se pretende asegurarse de que no se han introducido defectos que puedan producir errores sobre las funcionalidades implementadas previamente. 
 
 En el caso del \emph{proxy} inverso, han consistido en ejecutar todas las pruebas de aceptación, automatizadas y sin automatizar, de las unidades de trabajo ya terminadas. Se han ejecutado antes de cada despliegue y con ellas se ha verificado el correcto funcionamiento de todas las características del producto de cara a que los despliegues no hicieran fallar el \emph{proxy} inverso ni cualquier otro componente de la aplicación. De esta forma, con estas pruebas se ha pretendido evitar todo tipo de problemas que pudieran entorpecer a los demás miembros del equipo de desarrollo de la aplicación ya que, si el \emph{proxy} inverso quedara caído durante un tiempo, el resto de microservicios y la interfaz de usuario no podrían contactar con nadie y caerían también. Es por esto que se han considerado un seguro de vida para garantizar, en cierta medida, que los despliegues serían un éxito.
+
+\newpage %+++++++++++++++++++++++++++++ SALTO DE PÁGINA +++++++++++++++++++++++++++++%
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% METODOLOGÍA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1336,7 +1351,7 @@ En el caso de este proceso de generación automática de código la mayoría de 
 
 Un ejemplo de clase parcial para el caso del \emph{proxy} inverso se muestra en la figura \ref{claseParcial}. Corresponde a un código llamado por la clase \emph{Startup} para añadir dependencias, de esta forma, la clase parcial permite añadir las dependencias manuales específicas que se crean para tareas como implementar las acciones ad hoc.
 
-\begin{figure}[ht]
+\begin{figure}[H] %+++++++++++++++++++++++++++++ AJUSTE DE FOTO +++++++++++++++++++++++++++++%
 \centering
 \includegraphics[width=1\textwidth]{imagenes/apendice/claseParcial}
 \caption{Ejemplo de clase parcial del \emph{proxy} inverso.}
